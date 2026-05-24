@@ -926,7 +926,7 @@
                 <div class="tg-label">Schedule</div>
                 <div class="task-item"><div class="task-cb"></div><span class="task-time">9:00 am</span><span class="task-text">Sleep in</span></div>
                 <div class="task-item"><div class="task-cb"></div><span class="task-time">Morning</span><span class="task-text">Make matcha + arugula sandwich</span></div>
-                <div class="task-item"><div class="task-cb"></div><span class="task-time">11:00 am–2:00 pm</span><span class="task-text">Work — Agent Insights product reset: Foundry next-gen UI (translating evals + traces to insight types for crawl phase)</span></div>
+                <div class="task-item"><div class="task-cb"></div><span class="task-time">11:00 am–2:00 pm</span><span class="task-text">Work — deep focus block (Azure AI Foundry)</span></div>
                 <div class="task-item"><div class="task-cb"></div><span class="task-time">3:00 pm</span><span class="task-text">Lash fill appointment 💅</span></div>
                 <div class="task-item"><div class="task-cb"></div><span class="task-time">5:00 pm</span><span class="task-text">Buy going-away gift for Fariha (moving to Toronto)</span></div>
                 <div class="task-item"><div class="task-cb"></div><span class="task-time">6:00 pm</span><span class="task-text">Pilates</span></div>
@@ -1014,9 +1014,9 @@
               </div>
               <div class="task-group">
                 <div class="tg-label">Work Focus</div>
-                <div class="task-item"><div class="task-cb"></div><span class="task-time"></span><span class="task-text">Agent Insights UI review</span></div>
-                <div class="task-item"><div class="task-cb"></div><span class="task-time"></span><span class="task-text">Docs draft for notification center</span></div>
-                <div class="task-item"><div class="task-cb"></div><span class="task-time"></span><span class="task-text">Grafana team updates + Grafana 13 announcement net-new functionalities</span></div>
+                <div class="task-item"><div class="task-cb"></div><span class="task-time"></span><span class="task-text">Product spec + design review</span></div>
+                <div class="task-item"><div class="task-cb"></div><span class="task-time"></span><span class="task-text">Docs + comms draft</span></div>
+                <div class="task-item"><div class="task-cb"></div><span class="task-time"></span><span class="task-text">Partner team sync + feature updates review</span></div>
               </div>
               <div class="task-group">
                 <div class="tg-label">Evening</div>
@@ -2803,7 +2803,7 @@
               <div class="cp-section-label" style="margin-bottom:14px;">// linkedin bio · needs observability update ⚠️</div>
               <div style="background:var(--surface-2);border:1px solid var(--border);border-left:3px solid var(--blue);border-radius:0 var(--radius) var(--radius) 0;padding:16px 18px;">
                 <div style="font-family:var(--font-body);font-size:0.88rem;color:var(--text);line-height:1.7;">
-                  Leading experimentation, feature management, safe agent rollout across Azure and Foundry. I build and shape the primitives behind feature variant authoring, traffic splitting, versioning, telemetry, scorecards, and deployment. Innovating how intelligent systems move and scale safely.
+                  Product Manager II at Microsoft, working across Azure AI Foundry, Azure Managed Grafana, and Azure Monitor. Building the tools that make it safe and fast for millions of developers to ship.
                 </div>
                 <div style="margin:12px 0;border-top:1px solid var(--border);"></div>
                 <div style="font-family:var(--font-body);font-size:0.88rem;color:var(--text);line-height:1.7;">
@@ -2813,7 +2813,7 @@
                 <div style="font-family:var(--font-body);font-size:0.88rem;color:var(--text);line-height:1.9;">
                   At 16, I played for Bangladesh's first U18 women's national basketball team and had my first art exhibit. At 17, I was an elementary to middle school Art teacher in Dhaka. At 18, I flew alone and away from home to pursue higher education in New York. At 19, I built PrivaC: Bangladesh's first cybersafety startup. By 22, I was a 5x hackathon winner. At 24, graduation speaker. At 26, solo artshow by the Seattle waterfront. At 27, learning to chill out.
                 </div>
-                <div style="margin-top:12px;font-family:var(--font);font-size:0.6rem;color:var(--yellow);letter-spacing:0.1em;">⚠ TODO: update opening paragraph to reflect observability + CoreAI Azure Data work</div>
+
               </div>
             </div>
           </div>
@@ -3455,7 +3455,7 @@
               <div class="pf-goal">Goal: 10,000 by end of year</div>
               <div class="pf-bar"><div class="pf-bar-fill li" style="width:50%"></div></div>
               <div class="pf-status">50% to goal &nbsp;·&nbsp; 1× / week · product + career angle</div>
-              <div style="margin-top:6px;font-family:var(--font-body);font-size:0.72rem;color:var(--text-3);font-style:italic;line-height:1.5;">Product @ Microsoft Apps &amp; Agents / Observability // Azure Data + Foundry CoreAI, Developer Division // Founder @ PrivaC</div>
+              <div style="margin-top:6px;font-family:var(--font-body);font-size:0.72rem;color:var(--text-3);font-style:italic;line-height:1.5;">PM @ Microsoft · Azure AI Foundry · Azure Managed Grafana · Azure Monitor // Founder @ PrivaC</div>
             </div>
           </div>
         </div>
@@ -3691,16 +3691,16 @@
 
         const rows = [];
         if ([1,2,3,5].includes(dow))
-          rows.push({ t:'ongoing', x:'Agent Insights UI work' });
+          rows.push({ t:'ongoing', x:'Feature work — Azure AI Foundry' });
         if ([1,2].includes(dow))
-          rows.push({ t:'shiproom', x:'Observability Foundry shiproom reporting' });
+          rows.push({ t:'shiproom', x:'Shiproom reporting' });
         rows.push({ t:'devex', x:'DevEx readiness check' });
         if (dow === 2)
-          rows.push({ t:'pm sync', x:'Notifications Center PM/Eng sync — implementation' });
+          rows.push({ t:'pm sync', x:'PM/Eng sync' });
         if (dow === 3)
-          rows.push({ t:'syncs', x:'AMG AI Agent pricing finance push · PM/Eng sync · azMon &amp; Foundry LT sync · Metrics weekly' });
+          rows.push({ t:'syncs', x:'Weekly syncs — finance · LT · metrics' });
         if (dow === 4)
-          rows.push({ t:'uxr', x:'UXR — Traces &amp; Evals feature validation' });
+          rows.push({ t:'uxr', x:'UXR — feature validation' });
 
         const body = card.querySelector('.day-body');
         if (!body) return;
@@ -3736,8 +3736,8 @@
         mg.className = 'month-goals';
         mg.innerHTML =
           '<div class="mg-label">// May work focus</div>' +
-          '<div class="mg-row"><span class="mg-tag">Connect + Perspective season</span>' +
-          '<span style="font-family:var(--font-body);font-size:0.82rem;color:var(--text-2);"> — performance reviews &amp; coworker reviews</span></div>';
+          '<div class="mg-row"><span class="mg-tag">Performance review season</span>' +
+          '<span style="font-family:var(--font-body);font-size:0.82rem;color:var(--text-2);"> — self-review + coworker feedback</span></div>';
         may.insertBefore(mg, may.firstChild);
       }
 
@@ -3748,10 +3748,10 @@
         mg.className = 'month-goals';
         mg.innerHTML =
           '<div class="mg-label">// June work focus</div>' +
-          '<div class="mg-row"><span class="mg-tag">Optimize-to-safe agent rollout plan</span>' +
-          '<span class="mg-tag">Learn loop → close observability mental model gaps</span></div>' +
+          '<div class="mg-row"><span class="mg-tag">Azure AI Foundry</span>' +
+          '<span class="mg-tag">Azure Managed Grafana</span></div>' +
           '<div class="mg-row mg-must"><span class="mg-must-icon">▲</span>' +
-          'Finalize Grafana contract — Grafana Labs partnership <span class="mg-due">due Oct 2026</span></div>';
+          'Work on Grafana Labs partnership <span class="mg-due">due Oct 2026</span></div>';
         jun.insertBefore(mg, jun.firstChild);
       }
 
@@ -3763,10 +3763,8 @@
         mg.innerHTML =
           '<div class="mg-label">// July deliverables</div>' +
           '<div class="mg-row mg-must"><span class="mg-must-icon">▲</span>' +
-          'New region expansions · 2 billing meter minting · AMG AI Agent public preview</div>' +
-          '<div class="mg-row"><span class="mg-tag">Azure Data onboarding</span></div>' +
-          '<div class="mg-row"><span class="mg-tag">AI Agent+ ACOA integration</span>' +
-          '<span style="font-family:var(--font-body);font-size:0.82rem;color:var(--text-2);"> — Azure native alerting → root cause analysis → monitoring → dashboarding models</span></div>';
+          'Azure AI Foundry · Azure Managed Grafana · Azure Monitor milestones</div>' +
+          '<div class="mg-row"><span class="mg-tag">Azure Data</span><span class="mg-tag">AI observability</span></div>';
         jul.insertBefore(mg, jul.firstChild);
       }
     }
