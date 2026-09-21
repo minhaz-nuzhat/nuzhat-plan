@@ -6,7 +6,7 @@
   <title>NUZHAT // PLAN MGR</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
   <style>
     /* ─── RESET ─────────────────────────────────────────────── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -28,14 +28,17 @@
       --yellow:    #e3b341;
       --blue:      #58a6ff;
       --font:      'JetBrains Mono', 'Fira Code', Consolas, monospace;
-      --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+      --font-body: 'DM Sans', system-ui, -apple-system, sans-serif;
+      --font-display: 'DM Sans', system-ui, -apple-system, sans-serif;
       --radius:    4px;
     }
 
     html { font-size: 16px; scroll-behavior: smooth; }
 
     body {
-      background: var(--bg);
+      background:
+        repeating-linear-gradient(90deg, transparent 0, transparent 79px, rgba(255,255,255,0.012) 80px),
+        var(--bg);
       color: var(--text);
       font-family: var(--font);
       min-height: 100vh;
@@ -111,34 +114,6 @@
       letter-spacing: 0.01em;
     }
 
-    /* ─── MAIN NAV ───────────────────────────────────────────── */
-    .main-nav {
-      background: var(--surface);
-      border-bottom: 1px solid var(--border);
-      padding: 0 28px;
-      display: flex;
-    }
-
-    .main-nav-tab {
-      padding: 11px 18px;
-      cursor: pointer;
-      font-family: var(--font);
-      font-size: 0.72rem;
-      font-weight: 500;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--text-3);
-      border: none;
-      border-bottom: 2px solid transparent;
-      background: none;
-      transition: color 0.15s, border-color 0.15s;
-      user-select: none;
-      white-space: nowrap;
-    }
-    .main-nav-tab .idx { color: var(--red); margin-right: 6px; font-size: 0.65rem; }
-    .main-nav-tab.active { color: var(--text); border-bottom-color: var(--red); }
-    .main-nav-tab:hover:not(.active) { color: var(--text-2); }
-
     /* ─── PAGE ───────────────────────────────────────────────── */
     .page { display: none; }
     .page.active { display: block; }
@@ -176,6 +151,64 @@
     .sub-nav-tab.active { color: var(--red); border-bottom-color: var(--red); }
     .sub-nav-tab:hover:not(.active) { color: var(--text-2); }
 
+    .day-nav {
+      min-height: 48px;
+      padding: 7px 28px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      overflow-x: auto;
+      flex-shrink: 0;
+      background: rgba(10,10,10,0.96);
+      border-bottom: 1px solid var(--border);
+    }
+    .day-nav::before {
+      content: 'jump to';
+      margin-right: 7px;
+      font-size: 0.53rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-3);
+      white-space: nowrap;
+    }
+    .day-jump {
+      min-width: 54px;
+      padding: 4px 9px 5px;
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--text-2);
+      cursor: pointer;
+      text-align: left;
+      transition: color 0.15s, border-color 0.15s, background 0.15s;
+    }
+    .day-jump:hover, .day-jump:focus-visible {
+      color: var(--text);
+      border-color: var(--red-dim);
+      background: var(--red-glow);
+      outline: none;
+    }
+    .day-jump-date {
+      display: block;
+      font-family: var(--font);
+      font-size: 0.55rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--red);
+      white-space: nowrap;
+    }
+    .day-jump-name {
+      display: block;
+      max-width: 92px;
+      overflow: hidden;
+      font-family: var(--font-display);
+      font-size: 0.9rem;
+      line-height: 1.05;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
     /* ─── DUAL PANEL ─────────────────────────────────────────── */
     .month-panels {
       display: grid;
@@ -192,6 +225,18 @@
       padding: 14px 20px 28px;
     }
     .checklist-panel.active { display: block; }
+
+    .archive-month { margin-bottom: 42px; }
+    .archive-month:last-child { margin-bottom: 0; }
+    .archive-month-title {
+      margin: 8px 0 14px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--text);
+    }
+    .archive-month-title span { color: var(--red); }
 
     /* ─── CATEGORY LEGEND ──────────────────────────────────────── */
     .cat-legend {
@@ -257,19 +302,102 @@
       padding: 7px 0;
     }
 
-    /* ─── DAY CARD ───────────────────────────────────────────── */
-    .day-card {
+    /* ─── WEEK RHYTHM ───────────────────────────────────────── */
+    .week-map {
+      display: flex;
+      gap: 1px;
+      margin: 0 0 10px;
       border: 1px solid var(--border);
       border-radius: var(--radius);
+      background: var(--border);
+      overflow-x: auto;
+    }
+    .wm-intro, .wm-day {
+      min-height: 78px;
       background: var(--surface);
-      margin-bottom: 4px;
+      padding: 9px 10px;
+    }
+    .wm-intro {
+      width: 108px;
+      flex: 0 0 108px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .wm-intro span, .wm-count {
+      font-size: 0.53rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-3);
+    }
+    .wm-intro strong {
+      font-size: 0.62rem;
+      font-weight: 600;
+      color: var(--red);
+    }
+    .wm-day {
+      flex: 1 0 86px;
+      min-width: 86px;
+      position: relative;
       overflow: hidden;
+    }
+    .wm-date {
+      font-size: 0.56rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-2);
+    }
+    .wm-title {
+      margin-top: 2px;
+      font-family: var(--font-body);
+      font-size: 0.69rem;
+      color: var(--text-3);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .wm-signal {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      min-height: 16px;
+      margin: 5px 0 3px;
+      font-size: 0.52rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--red);
+    }
+    .wm-signal::before {
+      content: '';
+      width: 7px;
+      height: 7px;
+      flex: 0 0 7px;
+      background: var(--red);
+      transform: rotate(45deg);
+    }
+    .wm-day.travel .wm-signal { color: var(--blue); }
+    .wm-day.travel .wm-signal::before { background: var(--blue); }
+    .wm-day.special .wm-signal { color: #f472b6; }
+    .wm-day.special .wm-signal::before { background: #f472b6; }
+
+    /* ─── DAY CARD ───────────────────────────────────────────── */
+    .day-card {
+      border: 0;
+      border-top: 1px solid var(--border-2);
+      border-radius: 0;
+      background: rgba(17,17,17,0.72);
+      margin-bottom: 12px;
+      overflow: hidden;
+      scroll-margin-top: 16px;
     }
     /* last card before a divider gets extra breathing room */
     .day-card + .week-divider { margin-top: 32px; }
     .day-card.special {
-      border-color: var(--red-dim);
-      box-shadow: 0 0 0 1px var(--red-dim), inset 0 0 24px var(--red-glow);
+      border-top-color: var(--red);
+      box-shadow: inset 3px 0 0 var(--red-dim);
     }
     .day-card.travel {
       border-color: #1e3255;
@@ -280,13 +408,14 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 8px 12px;
-      border-bottom: 1px solid var(--border);
+      padding: 13px 12px 11px;
+      border-bottom: 1px solid transparent;
       cursor: pointer;
-      background: var(--surface-2);
+      background: transparent;
       user-select: none;
     }
-    .day-header:hover { background: var(--surface-3); }
+    .day-header:hover { background: rgba(255,255,255,0.018); }
+    .day-card:not(.collapsed) .day-header { border-bottom-color: var(--border); }
 
     .dh-left { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
     .day-date {
@@ -298,10 +427,11 @@
       white-space: nowrap;
     }
     .day-title {
-      font-family: var(--font-body);
-      font-size: 0.82rem;
-      font-weight: 600;
-      letter-spacing: 0.01em;
+      font-family: var(--font-display);
+      font-size: 1.28rem;
+      font-weight: 400;
+      line-height: 1;
+      letter-spacing: 0;
       color: var(--text);
     }
     .badges { display: flex; gap: 5px; flex-wrap: wrap; }
@@ -322,6 +452,7 @@
     .b-holiday { background:#201e0e; color:var(--yellow); border:1px solid #3a3a1a; }
     .b-bday    { background:var(--red-dim); color:#ff6b8a; border:1px solid #8b0c24; }
     .b-memo    { background:#201e0e; color:var(--yellow); border:1px solid #3a3a1a; }
+    .b-fitness { background:#122117; color:var(--green); border:1px solid #21412a; }
 
     .day-toggle {
       color: var(--text-3);
@@ -367,12 +498,39 @@
       cursor: pointer;
     }
     .task-item:hover { background: var(--surface-3); }
+    .task-icon, .day-marker {
+      width: 20px;
+      height: 20px;
+      flex: 0 0 20px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-3);
+    }
+    .task-icon {
+      margin-top: 3px;
+      border: 1px solid currentColor;
+      border-radius: 50%;
+      opacity: 0.82;
+    }
+    .task-icon.is-empty { border-color: var(--border); opacity: 0.38; }
+    .task-icon svg { width: 11px; height: 11px; stroke-width: 1.6; }
+    .day-marker svg { width: 15px; height: 15px; stroke-width: 1.5; }
+    .t-work .task-icon { color: #58a6ff; }
+    .t-selfcare .task-icon { color: #a78bfa; }
+    .t-errand .task-icon { color: #f59e0b; }
+    .t-content .task-icon { color: #f472b6; }
+    .t-holiday .task-icon { color: #22d3ee; }
+    .t-work .task-text { color: #91c7f8; }
+    .t-work .task-time { color: #6daee8; }
+    .day-card.travel .day-marker { color: var(--blue); }
+    .day-card.special .day-marker { color: #f472b6; }
     /* category colours — 5-tier system */
-    .t-work     { border-left-color: #58a6ff; background: rgba(88,166,255,0.07); }
-    .t-selfcare { border-left-color: #a78bfa; background: rgba(167,139,250,0.07); }
-    .t-errand   { border-left-color: #f59e0b; background: rgba(245,158,11,0.07); }
-    .t-content  { border-left-color: #f472b6; background: rgba(244,114,182,0.07); }
-    .t-holiday  { border-left-color: #22d3ee; background: rgba(34,211,238,0.07); }
+    .t-work     { border-left-color: #58a6ff; }
+    .t-selfcare { border-left-color: #a78bfa; }
+    .t-errand   { border-left-color: #f59e0b; }
+    .t-content  { border-left-color: #f472b6; }
+    .t-holiday  { border-left-color: #22d3ee; }
     .t-work:hover     { background: rgba(88,166,255,0.13) !important; }
     .t-selfcare:hover { background: rgba(167,139,250,0.13) !important; }
     .t-errand:hover   { background: rgba(245,158,11,0.13) !important; }
@@ -826,7 +984,10 @@
     .art-work-title { font-family: var(--font); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text); margin-bottom: 2px; }
     .art-work-meta { font-family: var(--font); font-size: 0.58rem; color: var(--text-3); letter-spacing: 0.1em; margin-bottom: 8px; }
     .art-work-desc { font-family: var(--font-body); font-size: 0.84rem; color: var(--text-2); line-height: 1.65; }
+
   </style>
+  <link rel="stylesheet" href="desktop.css" media="(min-width: 761px)" />
+  <link rel="stylesheet" href="mobile.css" media="(max-width: 760px)" />
 </head>
 <body>
 
@@ -848,18 +1009,21 @@
     <span class="mantra-text">Everything can be moved for loved ones. I am not tied to my work hours — I put it in because I am passionate about the products I own and the work I do.</span>
   </div>
 
-  <!-- ═══ MAIN NAV ════════════════════════════════════════════ -->
-  <nav class="main-nav">
-    <button class="main-nav-tab active" data-tab="summer">
-      <span class="idx">01</span>Summer Planning
-    </button>
-    <button class="main-nav-tab" data-tab="content">
-      <span class="idx">02</span>Content Creation
-    </button>
-    <button class="main-nav-tab" data-tab="career">
-      <span class="idx">03</span>Career Milestones
-    </button>
-  </nav>
+  <section class="portfolio-masthead" aria-labelledby="portfolio-title">
+    <div class="portfolio-heading">
+      <span class="portfolio-kicker">// owned by Nuzhat</span>
+      <h1 id="portfolio-title">Apps + Agents Platform Observability</h1>
+    </div>
+    <div class="portfolio-list">
+      <div class="portfolio-item"><i data-lucide="layout-dashboard"></i><span>Azure Managed Grafana</span></div>
+      <div class="portfolio-item"><i data-lucide="panels-top-left"></i><span>Azure Monitor Dashboards with Grafana</span><small>Codename Helios · Embedded Grafana</small></div>
+      <div class="portfolio-item"><i data-lucide="handshake"></i><span>Grafana Labs partnership</span></div>
+      <div class="portfolio-item"><i data-lucide="gauge"></i><span>Code Optimizations</span><small>Application Insights</small></div>
+      <div class="portfolio-item"><i data-lucide="scan-search"></i><span>Service Profiler</span></div>
+      <div class="portfolio-item"><i data-lucide="bot"></i><span>Agent Insights</span><small>Code-first experiences · Alerts experience in Foundry</small></div>
+      <div class="portfolio-item"><i data-lucide="code-2"></i><span>Coding agents observability</span><small>Developer experiences · partnerships</small></div>
+    </div>
+  </section>
 
   <!-- ═══════════════════════════════════════════════════════════
        TAB 1: SUMMER PLANNING
@@ -869,18 +1033,25 @@
 
       <!-- SUB-NAV -->
       <nav class="sub-nav">
-        <button class="sub-nav-tab active" data-month="may">May</button>
-        <button class="sub-nav-tab" data-month="june">June</button>
-        <button class="sub-nav-tab" data-month="july">July</button>
-        <button class="sub-nav-tab" data-month="august">August</button>
-        <button class="sub-nav-tab" data-month="september">September</button>
+        <button class="sub-nav-tab" data-month="archive">Archive</button>
+        <button class="sub-nav-tab active" data-month="september">September</button>
+        <button class="sub-nav-tab" data-month="october">October</button>
+        <button class="sub-nav-tab" data-month="november">November</button>
+        <button class="sub-nav-tab" data-month="december">December</button>
       </nav>
+      <nav class="day-nav" id="day-nav" aria-label="Jump to a day"></nav>
+      <div class="mobile-view-switch" aria-label="Planner view">
+        <button class="mobile-view-button active" type="button" data-mobile-view="day">Selected day</button>
+        <button class="mobile-view-button" type="button" data-mobile-view="budget">Budget</button>
+      </div>
 
       <!-- DUAL PANEL -->
       <div class="month-panels">
 
         <!-- ══════════ MAY ══════════ -->
-        <div class="checklist-panel active" id="checklist-may">
+        <div class="checklist-panel" id="checklist-archive">
+        <section class="archive-month" id="archive-may">
+          <div class="archive-month-title"><span>//</span> May 2026</div>
 
           <div class="week-divider"><div class="wd-line"></div><div class="wd-label">Week of May 24</div><div class="wd-line"></div></div>
 
@@ -1125,10 +1296,11 @@
             </div>
           </div>
 
-        </div><!-- end checklist-may -->
+        </section><!-- end archive-may -->
 
         <!-- ══════════ JUNE ══════════ -->
-        <div class="checklist-panel" id="checklist-june">
+        <section class="archive-month" id="archive-june">
+          <div class="archive-month-title"><span>//</span> June 2026</div>
 
           <div class="week-divider"><div class="wd-line"></div><div class="wd-label">Week of June 1</div><div class="wd-line"></div></div>
 
@@ -1659,10 +1831,11 @@
             </div>
           </div>
 
-        </div><!-- end checklist-june -->
+        </section><!-- end archive-june -->
 
         <!-- ══════════ JULY ══════════ -->
-        <div class="checklist-panel" id="checklist-july">
+        <section class="archive-month" id="archive-july">
+          <div class="archive-month-title"><span>//</span> July 2026</div>
 
           <div class="week-divider"><div class="wd-line"></div><div class="wd-label">Jul 1–3 · Week Opener</div><div class="wd-line"></div></div>
 
@@ -1931,10 +2104,11 @@
             </div>
           </div>
 
-        </div><!-- end checklist-july -->
+        </section><!-- end archive-july -->
 
         <!-- ══════════ AUGUST ══════════ -->
-        <div class="checklist-panel" id="checklist-august">
+        <section class="archive-month" id="archive-august">
+          <div class="archive-month-title"><span>//</span> August 2026</div>
 
           <div class="week-divider"><div class="wd-line"></div><div class="wd-label">Week of Aug 1</div><div class="wd-line"></div></div>
 
@@ -2536,14 +2710,416 @@
               <div class="day-stats"><div class="stat"><span class="stat-lbl">Calories</span><span class="stat-val">1400–1800</span></div><div class="stat"><span class="stat-lbl">Movement</span><span class="stat-val">2–4 miles</span></div><div class="stat"><span class="stat-lbl">Sleep</span><span class="stat-val">6–7 hrs</span></div></div>
             </div>
           </div>
-        </div><!-- end checklist-august -->
+        </section><!-- end archive-august -->
+        </div><!-- end checklist-archive -->
 
         <!-- ══════════ SEPTEMBER ══════════ -->
-        <div class="checklist-panel" id="checklist-september">
+        <div class="checklist-panel active" id="checklist-september">
 
-          <div class="flag">📅 September → aggressive 12–17 hr workdays for MS Ignite. Schedule TBD.</div>
+          <div class="month-goals">
+            <div class="mg-label">// September focus</div>
+            <div class="mg-row mg-must"><span class="mg-must-icon">01</span>Code out ObservabilityCon demo across Azure Monitor, Fabric, and Foundry</div>
+            <div class="mg-row mg-must"><span class="mg-must-icon">02</span>Real-Time Intelligence sync introduction for Project Lyra</div>
+            <div class="mg-row mg-must"><span class="mg-must-icon">03</span>Schedule field calls for Strategic 400 customers</div>
+            <div class="mg-row mg-must"><span class="mg-must-icon">04</span>Take ownership of Helios</div>
+            <div class="mg-row mg-must"><span class="mg-must-icon">05</span>Review my on-stage demo proposal with leadership</div>
+            <div class="mg-row mg-must"><span class="mg-must-icon">06</span>Finalize and lead dashboarding and visualizations roadmap with PM LT, then Eng LT</div>
+            <div class="mg-row"><span class="mg-tag">Friday dance nights</span><span class="mg-tag">Pilates 2× / week</span><span class="mg-tag">Running 3× / week</span><span class="mg-tag">Family call every night</span><span class="mg-tag">Thursday date nights</span></div>
+          </div>
+
+          <div class="week-divider"><div class="wd-label">Week of September 20</div></div>
+
+          <div class="day-card">
+            <div class="day-header" onclick="toggleDay(this)"><div class="dh-left"><span class="day-date">Sep 21</span><span class="day-title">Monday</span><div class="badges"><span class="badge b-office">In Office</span></div></div><span class="day-toggle">▾</span></div>
+            <div class="day-body">
+              <div class="task-group"><div class="tg-label">Slow start</div>
+                <div class="task-item"><div class="task-cb"></div><span class="task-time">7:00 am</span><span class="task-text">Slow wake-up — adjust to the morning, exist, roll around in bed</span></div>
+                <div class="task-item"><div class="task-cb"></div><span class="task-time">8:00 am</span><span class="task-text">Matcha + get ready for the workday · do hair (5 min) · do makeup (10 min)</span></div>
+              </div>
+              <div class="task-group"><div class="tg-label">Work</div>
+                <div class="task-item"><div class="task-cb"></div><span class="task-time">9:00 am</span><span class="task-text">Email + Teams replies · metrics and state-of-business slide updates for all products</span></div>
+                <div class="task-item"><div class="task-cb"></div><span class="task-time">10:00 am</span><span class="task-text">Prepare for new ownership of Azure Monitor dashboards with Grafana and 1:1 with Kayode</span></div>
+                <div class="task-item"><div class="task-cb"></div><span class="task-time">10:30 am</span><span class="task-text">Device security compliance check</span></div>
+                <div class="task-item"><div class="task-cb"></div><span class="task-time">11:00 am</span><span class="task-text">Head to office over lunch · grab raspberry/pistachio croissant from Olivier's</span></div>
+                <div class="task-item"><div class="task-cb"></div><span class="task-time">12:00–1:00 pm</span><span class="task-text">1:1 with Kayode · Helios knowledge transfer for Azure Monitor dashboards with Grafana</span></div>
+                <div class="task-item"><div class="task-cb"></div><span class="task-time">1:00 pm</span><span class="task-text">30-minute break · snack, stretch, walk, vitamin water</span></div>
+                <div class="task-item"><div class="task-cb"></div><span class="task-time">1:30–3:00 pm</span><span class="task-text">Build ObservabilityCon demo</span></div>
+                <div class="task-item"><div class="task-cb"></div><span class="task-time">3:00–4:00 pm</span><span class="task-text">Prep Grafana Labs syncs · partner integration asks · AMG and Helios roadmap · set meeting agendas</span></div>
+                <div class="task-item"><div class="task-cb"></div><span class="task-time">4:00–4:30 pm</span><span class="task-text">AMG + Azure Monitor Grafana engineering sync</span></div>
+                <div class="task-item"><div class="task-cb"></div><span class="task-time">4:30–5:00 pm</span><span class="task-text">Engineering sync before Tuesday's Grafana Labs meeting</span></div>
+              </div>
+              <div class="task-group"><div class="tg-label">Reset + evening</div>
+                <div class="task-item"><div class="task-cb"></div><span class="task-time">5:00 pm</span><span class="task-text">Reset downstairs · mall walk · sushi or poke · Sephora + Bath &amp; Body Works</span></div>
+                <div class="task-item"><div class="task-cb"></div><span class="task-time">6:00–8:00 pm</span><span class="task-text">Study confidential product context across Fabric, Foundry, and Azure Monitor observability</span></div>
+                <div class="task-item"><div class="task-cb"></div><span class="task-time">9:00 pm</span><span class="task-text">Come home</span></div>
+                <div class="task-item"><div class="task-cb"></div><span class="task-time">9:00–11:00 pm</span><span class="task-text">Call with Baba · pass out early</span></div>
+              </div>
+              <div class="night-routine"><div class="nr-label">Night Routine</div><div class="nr-tags"><span class="nr-tag">tart cherry juice</span><span class="nr-tag">invisalign</span><span class="nr-tag">plumping hyaluronic face mask</span><span class="nr-tag">sleep</span></div></div>
+            </div>
+          </div>
+
+          <div class="day-card special">
+            <div class="day-header" onclick="toggleDay(this)"><div class="dh-left"><span class="day-date">Sep 22</span><span class="day-title">Tuesday · hardest day</span><div class="badges"><span class="badge b-wfh">WFH</span></div></div><span class="day-toggle">▾</span></div>
+            <div class="day-body">
+              <div class="task-group"><div class="tg-label">Meetings + execution</div>
+                <div class="task-item"><div class="task-cb"></div><span class="task-time">8:00 am</span><span class="task-text">Wake up</span></div>
+                <div class="task-item"><div class="task-cb"></div><span class="task-time">8:30–9:30 am</span><span class="task-text">Grafana Labs sync</span></div>
+                <div class="task-item"><div class="task-cb"></div><span class="task-time">9:30–10:30 am</span><span class="task-text">Supportability PM · customer engagement notes · Service Health check · IcM count</span></div>
+                <div class="task-item"><div class="task-cb"></div><span class="task-time">10:30 am</span><span class="task-text">Supportability sync</span></div>
+                <div class="task-item"><div class="task-cb"></div><span class="task-time">11:00 am</span><span class="task-text">Snack + vitamin water · protected break</span></div>
+                <div class="task-item"><div class="task-cb"></div><span class="task-time">12:00–1:00 pm</span><span class="task-text">ObservabilityCon demo work</span></div>
+                <div class="task-item"><div class="task-cb"></div><span class="task-time">1:00–2:00 pm</span><span class="task-text">Shiproom deck · execution items and status</span></div>
+                <div class="task-item"><div class="task-cb"></div><span class="task-time">2:30 pm</span><span class="task-text">Azure AI Foundry + Azure Monitor sync</span></div>
+                <div class="task-item"><div class="task-cb"></div><span class="task-time">3:00 pm</span><span class="task-text">1:1 with manager</span></div>
+                <div class="task-item"><div class="task-cb"></div><span class="task-time">3:30–4:00 pm</span><span class="task-text">AMG leads PM + engineering sync</span></div>
+                <div class="task-item"><div class="task-cb"></div><span class="task-time">4:00–5:00 pm</span><span class="task-text">Foundry asks for RTI · Azure Monitor sync</span></div>
+              </div>
+              <div class="task-group"><div class="tg-label">Recovery + advising</div>
+                <div class="task-item"><div class="task-cb"></div><span class="task-time">5:00 pm</span><span class="task-text">Nap</span></div>
+                <div class="task-item"><div class="task-cb"></div><span class="task-time">6:00–7:00 pm</span><span class="task-text">Pilates</span></div>
+                <div class="task-item"><div class="task-cb"></div><span class="task-time">Evening</span><span class="task-text">Dinner · no phone calls after back-to-back meetings · text sisters only</span></div>
+                <div class="task-item"><div class="task-cb"></div><span class="task-time">8:00–9:00 pm</span><span class="task-text">Print and organize all materials for US visa appointment</span></div>
+                <div class="task-item"><div class="task-cb"></div><span class="task-time">10:00 pm–12:00 am</span><span class="task-text">Twitch startup advising · 1:1 with Kunal or Snehit</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="day-card">
+            <div class="day-header" onclick="toggleDay(this)"><div class="dh-left"><span class="day-date">Sep 23</span><span class="day-title">Wednesday</span><div class="badges"><span class="badge b-office">In Office</span></div></div><span class="day-toggle">▾</span></div>
+            <div class="day-body">
+              <div class="task-group"><div class="tg-label">Work</div>
+                <div class="task-item"><div class="task-cb"></div><span class="task-time">6:30 am</span><span class="task-text">Wake up</span></div>
+                <div class="task-item"><div class="task-cb"></div><span class="task-time">7:00–9:00 am</span><span class="task-text">US visa appointment</span></div>
+                <div class="task-item"><div class="task-cb"></div><span class="task-time">9:00 am</span><span class="task-text">AMA with leadership team</span></div>
+                <div class="task-item"><div class="task-cb"></div><span class="task-time">10:00 am</span><span class="task-text">Get ready + go to office · do hair (5 min) · do makeup (10 min)</span></div>
+                <div class="task-item"><div class="task-cb"></div><span class="task-time">10:30 am</span><span class="task-text">Elastic + Microsoft partnership demo presentation prep</span></div>
+                <div class="task-item"><div class="task-cb"></div><span class="task-time">11:00 am–12:00 pm</span><span class="task-text">Azure Monitor shiproom</span></div>
+                <div class="task-item"><div class="task-cb"></div><span class="task-time">12:00–2:00 pm</span><span class="task-text">Agent Insights · coding-agent observability for GitHub Copilot and VS Code agents</span></div>
+                <div class="task-item"><div class="task-cb"></div><span class="task-time">2:00–3:00 pm</span><span class="task-text">Infrastructure observability product group</span></div>
+                <div class="task-item"><div class="task-cb"></div><span class="task-time">3:00 pm</span><span class="task-text">Snack + vitamin water · protected break</span></div>
+                <div class="task-item"><div class="task-cb"></div><span class="task-time">4:00–5:00 pm</span><span class="task-text">ObservabilityCon demo work</span></div>
+              </div>
+              <div class="task-group"><div class="tg-label">Evening</div>
+                <div class="task-item"><div class="task-cb"></div><span class="task-time">5:00 pm</span><span class="task-text">Break</span></div>
+                <div class="task-item"><div class="task-cb"></div><span class="task-time">6:00 pm</span><span class="task-text">Run 3–5 miles</span></div>
+                <div class="task-item"><div class="task-cb"></div><span class="task-time">8:00 pm</span><span class="task-text">Dinner + shower</span></div>
+                <div class="task-item"><div class="task-cb"></div><span class="task-time">9:00 pm</span><span class="task-text">Call Choto Fupi</span></div>
+                <div class="task-item"><div class="task-cb"></div><span class="task-time">10:00 pm</span><span class="task-text">Call Ammu</span></div>
+                <div class="task-item"><div class="task-cb"></div><span class="task-time">11:00 pm</span><span class="task-text">Twitch or Jarvis · watch something if brain is fried</span></div>
+              </div>
+              <div class="night-routine"><div class="nr-label">12:00 am · Night Routine</div><div class="nr-tags"><span class="nr-tag">tart cherry juice</span><span class="nr-tag">invisalign</span><span class="nr-tag">skincare</span></div></div>
+            </div>
+          </div>
+
+          <div class="day-card">
+            <div class="day-header" onclick="toggleDay(this)"><div class="dh-left"><span class="day-date">Sep 24</span><span class="day-title">Thursday</span><div class="badges"><span class="badge b-office">In Office</span></div></div><span class="day-toggle">▾</span></div>
+            <div class="day-body">
+              <div class="task-group"><div class="tg-label">Work</div>
+                <div class="task-item"><div class="task-cb"></div><span class="task-time">9:00 am–12:00 pm</span><span class="task-text">Helios deep work · finalize roadmap and PM direction for app and agent platform observability · docs updates</span></div>
+                <div class="task-item"><div class="task-cb"></div><span class="task-time">12:00 pm</span><span class="task-text">Get ready + go to office · do hair (5 min) · do makeup (10 min)</span></div>
+                <div class="task-item"><div class="task-cb"></div><span class="task-time">1:00 pm</span><span class="task-text">Snack + vitamin water break</span></div>
+                <div class="task-item"><div class="task-cb"></div><span class="task-time">2:00 pm</span><span class="task-text">Host Azure Monitor office hours</span></div>
+                <div class="task-item"><div class="task-cb"></div><span class="task-time">3:00 pm</span><span class="task-text">Azure Health Models meeting</span></div>
+                <div class="task-item"><div class="task-cb"></div><span class="task-time">4:00 pm</span><span class="task-text">Elastic demo prep</span></div>
+                <div class="task-item"><div class="task-cb"></div><span class="task-time">5:00–6:00 pm</span><span class="task-text">Managed Grafana weekly team meeting</span></div>
+              </div>
+              <div class="task-group"><div class="tg-label">Evening</div>
+                <div class="task-item"><div class="task-cb"></div><span class="task-time">6:00–7:00 pm</span><span class="task-text">Pilates</span></div>
+                <div class="task-item"><div class="task-cb"></div><span class="task-time">After Pilates</span><span class="task-text">Shower + get ready for date night with Hassan or bachata at Mango's</span></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="day-card">
+            <div class="day-header" onclick="toggleDay(this)"><div class="dh-left"><span class="day-date">Sep 25</span><span class="day-title">Friday</span><div class="badges"><span class="badge b-wfh">WFH</span></div></div><span class="day-toggle">▾</span></div>
+            <div class="day-body"><div class="task-group"><div class="tg-label">Flexible Friday</div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">Morning</span><span class="task-text">Wake up late</span></div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">Workday</span><span class="task-text">Confidential product + Agent Insights · Foundry execution leadership meeting</span></div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">Workday</span><span class="task-text">Submit referrals · student advising · resumes + career coaching</span></div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">3:30 pm</span><span class="task-text">Snack + vitamin water break</span></div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">5:00 pm</span><span class="task-text">Run</span></div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">8:00 pm</span><span class="task-text">Groceries</span></div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">10:00 pm–1:00 am</span><span class="task-text">Bachata at Baza</span></div>
+            </div></div>
+          </div>
+
+          <div class="day-card">
+            <div class="day-header" onclick="toggleDay(this)"><div class="dh-left"><span class="day-date">Sep 26</span><span class="day-title">Saturday</span><div class="badges"><span class="badge b-holiday">friends + open plans</span></div></div><span class="day-toggle">▾</span></div>
+            <div class="day-body"><div class="task-group"><div class="tg-label">Open day</div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">Whenever</span><span class="task-text">Wake up without an alarm</span></div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">Daytime</span><span class="task-text">Run</span></div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">1:00–2:00 pm</span><span class="task-text">Call with Nidhi</span></div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">Afternoon</span><span class="task-text">Go to the beach if it feels right</span></div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">8:00–9:00 pm</span><span class="task-text">Wine night call with Saranya</span></div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">Night</span><span class="task-text">Keep open for friends · board games, bars, exploring, or a movie</span></div>
+            </div></div>
+          </div>
+
+          <div class="day-card">
+            <div class="day-header" onclick="toggleDay(this)"><div class="dh-left"><span class="day-date">Sep 27</span><span class="day-title">Sunday</span><div class="badges"><span class="badge b-holiday">reset day</span></div></div><span class="day-toggle">▾</span></div>
+            <div class="day-body"><div class="task-group"><div class="tg-label">Build + reset</div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">Whenever</span><span class="task-text">Wake up without an alarm</span></div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">Daytime</span><span class="task-text">Work on Jarvis</span></div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">3:30–4:30 pm</span><span class="task-text">Call with Lea</span></div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">5:00–6:00 pm</span><span class="task-text">Salsa lesson</span></div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">6:00 pm</span><span class="task-text">Meal prep · floors · bathroom · prep for workweek</span></div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">8:00 pm</span><span class="task-text">Study + begin unwinding</span></div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">11:00 pm</span><span class="task-text">In bed</span></div>
+            </div></div>
+          </div>
+
+          <div class="week-divider"><div class="wd-label">Week of September 28</div></div>
+          <div class="day-card special">
+            <div class="day-header" onclick="toggleDay(this)"><div class="dh-left"><span class="day-date">Sep 28</span><span class="day-title">Monday</span><div class="badges"><span class="badge b-office">In Office</span><span class="badge b-holiday">nails</span></div></div><span class="day-toggle">▾</span></div>
+            <div class="day-body"><div class="task-group"><div class="tg-label">Work + appointment</div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">Workday</span><span class="task-text">Office day</span></div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">After work</span><span class="task-text">Next nail set · $100 CAD</span></div>
+            </div></div>
+          </div>
+
+          <div class="day-card">
+            <div class="day-header" onclick="toggleDay(this)"><div class="dh-left"><span class="day-date">Sep 29</span><span class="day-title">Tuesday</span><div class="badges"><span class="badge b-wfh">WFH</span></div></div><span class="day-toggle">▾</span></div>
+            <div class="day-body"><div class="task-group"><div class="tg-label">Introductions + execution</div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">9:00–10:00 am</span><span class="task-text">Real-Time Intelligence sync introduction</span></div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">10:30 am–12:00 pm</span><span class="task-text">Strategic 400 customer field calls</span></div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">1:00–3:00 pm</span><span class="task-text">ObservabilityCon demo · Foundry experience</span></div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">3:30–5:00 pm</span><span class="task-text">Helios onboarding · ownership map and open decisions</span></div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">6:00–7:00 pm</span><span class="task-text">Pilates</span></div>
+            </div></div>
+          </div>
+
+          <div class="day-card">
+            <div class="day-header" onclick="toggleDay(this)"><div class="dh-left"><span class="day-date">Sep 30</span><span class="day-title">Wednesday</span><div class="badges"><span class="badge b-office">In Office</span></div></div><span class="day-toggle">▾</span></div>
+            <div class="day-body"><div class="task-group"><div class="tg-label">Onboarding + demo</div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">9:00 am–12:00 pm</span><span class="task-text">Helios onboarding · architecture, partner model, and roadmap</span></div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">1:00–3:00 pm</span><span class="task-text">ObservabilityCon demo · Fabric experience</span></div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">3:00–4:00 pm</span><span class="task-text">Strategic 400 customer call follow-ups and owners</span></div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">6:00 pm</span><span class="task-text">Run 3–5 miles</span></div>
+            </div></div>
+          </div>
+
+          <div class="day-card">
+            <div class="day-header" onclick="toggleDay(this)"><div class="dh-left"><span class="day-date">Oct 1</span><span class="day-title">Thursday</span><div class="badges"><span class="badge b-office">In Office</span></div></div><span class="day-toggle">▾</span></div>
+            <div class="day-body"><div class="task-group"><div class="tg-label">Demo + customer signal</div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">9:00–11:00 am</span><span class="task-text">ObservabilityCon demo · Azure Monitor experience</span></div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">11:00 am–12:00 pm</span><span class="task-text">Real-Time Intelligence sync follow-up</span></div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">1:00–3:00 pm</span><span class="task-text">Strategic 400 customer field calls</span></div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">3:30–5:00 pm</span><span class="task-text">Helios onboarding · embedded Grafana scenarios</span></div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">6:00–7:00 pm</span><span class="task-text">Pilates</span></div>
+            </div></div>
+          </div>
+
+          <div class="day-card">
+            <div class="day-header" onclick="toggleDay(this)"><div class="dh-left"><span class="day-date">Oct 2</span><span class="day-title">Friday</span><div class="badges"><span class="badge b-wfh">WFH</span></div></div><span class="day-toggle">▾</span></div>
+            <div class="day-body"><div class="task-group"><div class="tg-label">Synthesis</div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">9:00–11:00 am</span><span class="task-text">Connect the ObservabilityCon demo across Azure Monitor, Fabric, and Foundry</span></div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">11:00 am–12:00 pm</span><span class="task-text">Helios onboarding notes and next-week plan</span></div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">1:00–3:00 pm</span><span class="task-text">Strategic 400 customer insights · themes and follow-ups</span></div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">5:00 pm</span><span class="task-text">Run</span></div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">Evening</span><span class="task-text">Keep the night open</span></div>
+            </div></div>
+          </div>
+
+          <div class="day-card">
+            <div class="day-header" onclick="toggleDay(this)"><div class="dh-left"><span class="day-date">Oct 3</span><span class="day-title">Saturday</span><div class="badges"><span class="badge b-holiday">off-grid</span></div></div><span class="day-toggle">▾</span></div>
+            <div class="day-body"><div class="task-group"><div class="tg-label">No calls · no agenda</div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">Morning</span><span class="task-text">Sleep in</span></div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">Daytime</span><span class="task-text">Run, wander, or make plans with friends</span></div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">Evening</span><span class="task-text">Unstructured night out or quiet night in</span></div>
+            </div></div>
+          </div>
+
+          <div class="day-card">
+            <div class="day-header" onclick="toggleDay(this)"><div class="dh-left"><span class="day-date">Oct 4</span><span class="day-title">Sunday</span><div class="badges"><span class="badge b-holiday">reset day</span></div></div><span class="day-toggle">▾</span></div>
+            <div class="day-body"><div class="task-group"><div class="tg-label">Reset</div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">Morning</span><span class="task-text">Slow morning</span></div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">Afternoon</span><span class="task-text">Meal prep · groceries · apartment reset</span></div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">Evening</span><span class="task-text">Review the week ahead and wind down early</span></div>
+            </div></div>
+          </div>
 
         </div><!-- end checklist-september -->
+
+        <!-- ══════════ OCTOBER ══════════ -->
+        <div class="checklist-panel" id="checklist-october">
+          <div class="month-goals">
+            <div class="mg-label">// October focus</div>
+            <div class="mg-row mg-must"><span class="mg-must-icon">01</span>Business travel readiness</div>
+            <div class="mg-row mg-must"><span class="mg-must-icon">02</span>On-stage demo rehearsal</div>
+            <div class="mg-row mg-must"><span class="mg-must-icon">03</span>Elastic demo prep</div>
+            <div class="mg-row mg-must"><span class="mg-must-icon">04</span>Shop for what to wear on stage</div>
+          </div>
+
+          <div class="week-divider"><div class="wd-label">Week of October 12 · maintenance + movement</div></div>
+          <div class="day-card">
+            <div class="day-header" onclick="toggleDay(this)"><div class="dh-left"><span class="day-date">Oct 13</span><span class="day-title">Tuesday</span><div class="badges"><span class="badge b-wfh">WFH</span></div></div><span class="day-toggle">▾</span></div>
+            <div class="day-body"><div class="task-group"><div class="tg-label">Work + movement</div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">1:00–2:00 pm</span><span class="task-text">Project Lyra · RTI PM working session</span></div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">6:00–7:00 pm</span><span class="task-text">Pilates · session 1 of 2</span></div>
+            </div></div>
+          </div>
+          <div class="day-card special">
+            <div class="day-header" onclick="toggleDay(this)"><div class="dh-left"><span class="day-date">Oct 15</span><span class="day-title">Thursday</span><div class="badges"><span class="badge b-office">In Office</span><span class="badge b-holiday">bang trim</span></div></div><span class="day-toggle">▾</span></div>
+            <div class="day-body"><div class="task-group"><div class="tg-label">Maintenance + movement</div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">Workday</span><span class="task-text">Office day</span></div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">2:30–3:00 pm</span><span class="task-text">Project Lyra · RTI PM roadmap and decisions checkpoint</span></div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">After work</span><span class="task-text">Bang trim appointment</span></div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">7:00–8:00 pm</span><span class="task-text">Pilates · session 2 of 2</span></div>
+            </div></div>
+          </div>
+
+          <div class="week-divider"><div class="wd-label">Oct 17–18 · Conference prep</div></div>
+          <div class="day-card">
+            <div class="day-header" onclick="toggleDay(this)"><div class="dh-left"><span class="day-date">Oct 17</span><span class="day-title">Saturday</span><div class="badges"><span class="badge b-holiday">shopping</span></div></div><span class="day-toggle">▾</span></div>
+            <div class="day-body"><div class="task-group"><div class="tg-label">ObservabilityCon prep</div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">Afternoon</span><span class="task-text">Conference shopping · presentation outfit · travel-size essentials · anything missing for SF and Seattle</span></div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">Evening</span><span class="task-text">Lay out complete Vancouver presentation look and SF stage look</span></div>
+            </div></div>
+          </div>
+          <div class="day-card">
+            <div class="day-header" onclick="toggleDay(this)"><div class="dh-left"><span class="day-date">Oct 18</span><span class="day-title">Sunday</span><div class="badges"><span class="badge b-travel">pack</span></div></div><span class="day-toggle">▾</span></div>
+            <div class="day-body"><div class="task-group"><div class="tg-label">Travel readiness</div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">8:30 am</span><span class="task-text">Final Elastic + Microsoft presentation run-through</span></div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">10:00 am</span><span class="task-text">Haircut appointment</span></div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">12:00 pm</span><span class="task-text">Next nail set · $100 CAD</span></div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">2:00 pm</span><span class="task-text">Pack for San Francisco + Seattle · stage outfit · work laptop · chargers · Invisalign</span></div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">Evening</span><span class="task-text">Confirm flights, hotel, event registration, ground transport, and demo backups</span></div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">11:00 pm</span><span class="task-text">In bed</span></div>
+            </div></div>
+          </div>
+
+          <div class="week-divider"><div class="wd-label">Oct 19–22 · Vancouver → San Francisco</div></div>
+          <div class="day-card special">
+            <div class="day-header" onclick="toggleDay(this)"><div class="dh-left"><span class="day-date">Oct 19</span><span class="day-title">Monday · Elastic + Microsoft</span><div class="badges"><span class="badge b-office">presenting</span><span class="badge b-travel">YVR → SFO</span></div></div><span class="day-toggle">▾</span></div>
+            <div class="day-body"><div class="task-group"><div class="tg-label">Vancouver</div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">9:00 am–5:00 pm</span><span class="task-text">Present for Elastic + Microsoft in Vancouver</span></div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">After 5:00 pm</span><span class="task-text">Head to airport and fly Vancouver → San Francisco</span></div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">Night</span><span class="task-text">Hotel check-in · charge devices · protect sleep</span></div>
+            </div></div>
+          </div>
+          <div class="day-card travel">
+            <div class="day-header" onclick="toggleDay(this)"><div class="dh-left"><span class="day-date">Oct 20</span><span class="day-title">Tuesday · ObservabilityCon</span><div class="badges"><span class="badge b-travel">San Francisco</span></div></div><span class="day-toggle">▾</span></div>
+            <div class="day-body"><div class="task-group"><div class="tg-label">Field day</div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">All day</span><span class="task-text">Attend ObservabilityCon · talk to customers and field teams</span></div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">Evening</span><span class="task-text">Final on-stage demo check · capture customer themes and follow-ups</span></div>
+            </div></div>
+          </div>
+          <div class="day-card special">
+            <div class="day-header" onclick="toggleDay(this)"><div class="dh-left"><span class="day-date">Oct 21</span><span class="day-title">Wednesday · On Stage</span><div class="badges"><span class="badge b-bday">demo talk</span></div></div><span class="day-toggle">▾</span></div>
+            <div class="day-body"><div class="task-group"><div class="tg-label">ObservabilityCon</div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">Stage slot</span><span class="task-text">Deliver ObservabilityCon demo talk</span></div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">After talk</span><span class="task-text">Customer meetings · field conversations · Grafana Labs leadership meetings</span></div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">End of day</span><span class="task-text">Log decisions, product signals, owners, and follow-up dates while fresh</span></div>
+            </div></div>
+          </div>
+          <div class="day-card travel">
+            <div class="day-header" onclick="toggleDay(this)"><div class="dh-left"><span class="day-date">Oct 22</span><span class="day-title">Thursday · Wrap + Seattle</span><div class="badges"><span class="badge b-travel">SFO → SEA</span></div></div><span class="day-toggle">▾</span></div>
+            <div class="day-body"><div class="task-group"><div class="tg-label">Close out</div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">Daytime</span><span class="task-text">Wrap customer calls and remaining conference follow-ups</span></div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">After calls</span><span class="task-text">Fly San Francisco → Seattle</span></div>
+            </div></div>
+          </div>
+
+          <div class="week-divider"><div class="wd-label">Oct 23–27 · Seattle + Redmond</div></div>
+          <div class="day-card">
+            <div class="day-header" onclick="toggleDay(this)"><div class="dh-left"><span class="day-date">Oct 23</span><span class="day-title">Friday · Redmond HQ</span><div class="badges"><span class="badge b-office">HQ</span></div></div><span class="day-toggle">▾</span></div>
+            <div class="day-body"><div class="task-group"><div class="tg-label">Team + city</div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">Morning</span><span class="task-text">Go to Redmond · meet Azure Monitor team and leadership</span></div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">Friday night</span><span class="task-text">Seattle begins · Pike Place Market, waterfront, Pioneer Square, friends</span></div>
+            </div></div>
+          </div>
+          <div class="day-card travel">
+            <div class="day-header" onclick="toggleDay(this)"><div class="dh-left"><span class="day-date">Oct 24–25</span><span class="day-title">Seattle Weekend</span><div class="badges"><span class="badge b-holiday">fully off</span></div></div><span class="day-toggle">▾</span></div>
+            <div class="day-body"><div class="task-group"><div class="tg-label">Nothing but Seattle</div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">Weekend</span><span class="task-text">Pike Place Market · waterfront · Pioneer Square · friends · no work agenda</span></div>
+            </div></div>
+          </div>
+          <div class="day-card">
+            <div class="day-header" onclick="toggleDay(this)"><div class="dh-left"><span class="day-date">Oct 26</span><span class="day-title">Monday · Redmond HQ</span><div class="badges"><span class="badge b-office">HQ</span></div></div><span class="day-toggle">▾</span></div>
+            <div class="day-body"><div class="task-group"><div class="tg-label">Repeat Redmond schedule</div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">Workday</span><span class="task-text">Azure Monitor team + leadership meetings at Redmond HQ</span></div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">2:00–3:00 pm</span><span class="task-text">Project Lyra · RTI PM follow-up and next steps</span></div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">End of day</span><span class="task-text">Consolidate conference, customer, Grafana Labs, and team follow-ups</span></div>
+            </div></div>
+          </div>
+          <div class="day-card travel">
+            <div class="day-header" onclick="toggleDay(this)"><div class="dh-left"><span class="day-date">Oct 27</span><span class="day-title">Tuesday · Home</span><div class="badges"><span class="badge b-travel">SEA → YVR</span></div></div><span class="day-toggle">▾</span></div>
+            <div class="day-body"><div class="task-group"><div class="tg-label">Return</div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">Travel</span><span class="task-text">Return to Vancouver · unpack · decompress · low-demand evening</span></div>
+            </div></div>
+          </div>
+        </div><!-- end checklist-october -->
+
+        <!-- ══════════ NOVEMBER ══════════ -->
+        <div class="checklist-panel" id="checklist-november">
+          <div class="month-goals">
+            <div class="mg-label">// November focus</div>
+            <div class="mg-row mg-must"><span class="mg-must-icon">01</span>Microsoft Ignite</div>
+            <div class="mg-row mg-must"><span class="mg-must-icon">02</span>Saranya's wedding in San Francisco</div>
+            <div class="mg-row mg-must"><span class="mg-must-icon">03</span>Wedding shopping for cousins</div>
+            <div class="mg-row mg-must"><span class="mg-must-icon">04</span>Fitness</div>
+            <div class="mg-row mg-must"><span class="mg-must-icon">05</span>Dental work</div>
+            <div class="mg-row mg-must"><span class="mg-must-icon">06</span>Fall activities!!!</div>
+          </div>
+
+          <div class="week-divider"><div class="wd-label">Nov 2–8 · movement week 1</div></div>
+          <div class="day-card"><div class="day-header" onclick="toggleDay(this)"><div class="dh-left"><span class="day-date">Nov 2–8</span><span class="day-title">Movement Rhythm</span><div class="badges"><span class="badge b-fitness">4 runs · 2 Pilates</span></div></div><span class="day-toggle">▾</span></div><div class="day-body"><div class="task-group"><div class="tg-label">Weekly movement</div>
+            <div class="task-item"><div class="task-cb"></div><span class="task-time">Monday</span><span class="task-text">Easy run · 3 miles</span></div>
+            <div class="task-item"><div class="task-cb"></div><span class="task-time">Tuesday</span><span class="task-text">Pilates · session 1 of 2</span></div>
+            <div class="task-item"><div class="task-cb"></div><span class="task-time">Wednesday</span><span class="task-text">Tempo run or intervals · 3–4 miles</span></div>
+            <div class="task-item"><div class="task-cb"></div><span class="task-time">Thursday</span><span class="task-text">Pilates · session 2 of 2</span></div>
+            <div class="task-item"><div class="task-cb"></div><span class="task-time">Friday</span><span class="task-text">Steady run · 4–5 miles</span></div>
+            <div class="task-item"><div class="task-cb"></div><span class="task-time">Sunday</span><span class="task-text">Recovery run · 2–3 miles</span></div>
+          </div></div></div>
+
+          <div class="week-divider"><div class="wd-label">Nov 9–15 · movement week 2</div></div>
+          <div class="day-card"><div class="day-header" onclick="toggleDay(this)"><div class="dh-left"><span class="day-date">Nov 9–15</span><span class="day-title">Movement Rhythm</span><div class="badges"><span class="badge b-fitness">4 runs · 2 Pilates</span></div></div><span class="day-toggle">▾</span></div><div class="day-body"><div class="task-group"><div class="tg-label">Weekly movement</div>
+            <div class="task-item"><div class="task-cb"></div><span class="task-time">Monday</span><span class="task-text">Easy run · 3 miles</span></div>
+            <div class="task-item"><div class="task-cb"></div><span class="task-time">Tuesday</span><span class="task-text">Pilates · session 1 of 2</span></div>
+            <div class="task-item"><div class="task-cb"></div><span class="task-time">Wednesday</span><span class="task-text">Tempo run or intervals · 3–4 miles</span></div>
+            <div class="task-item"><div class="task-cb"></div><span class="task-time">Thursday</span><span class="task-text">Pilates · session 2 of 2</span></div>
+            <div class="task-item"><div class="task-cb"></div><span class="task-time">Friday</span><span class="task-text">Steady run · 4–5 miles</span></div>
+            <div class="task-item"><div class="task-cb"></div><span class="task-time">Sunday</span><span class="task-text">Recovery run · 2–3 miles</span></div>
+          </div></div></div>
+
+          <div class="week-divider"><div class="wd-label">Nov 16–22 · movement week 3</div></div>
+          <div class="day-card"><div class="day-header" onclick="toggleDay(this)"><div class="dh-left"><span class="day-date">Nov 16–22</span><span class="day-title">Movement Rhythm</span><div class="badges"><span class="badge b-fitness">4 runs · 2 Pilates</span></div></div><span class="day-toggle">▾</span></div><div class="day-body"><div class="task-group"><div class="tg-label">Weekly movement</div>
+            <div class="task-item"><div class="task-cb"></div><span class="task-time">Monday</span><span class="task-text">Easy run · 3 miles</span></div>
+            <div class="task-item"><div class="task-cb"></div><span class="task-time">Tuesday</span><span class="task-text">Pilates · session 1 of 2</span></div>
+            <div class="task-item"><div class="task-cb"></div><span class="task-time">Wednesday</span><span class="task-text">Tempo run or intervals · 3–4 miles</span></div>
+            <div class="task-item"><div class="task-cb"></div><span class="task-time">Thursday</span><span class="task-text">Pilates · session 2 of 2</span></div>
+            <div class="task-item"><div class="task-cb"></div><span class="task-time">Friday</span><span class="task-text">Steady run · 4–5 miles</span></div>
+            <div class="task-item"><div class="task-cb"></div><span class="task-time">Sunday</span><span class="task-text">Recovery run · 2–3 miles</span></div>
+          </div></div></div>
+
+          <div class="week-divider"><div class="wd-label">Last week of November · dates TBD</div></div>
+          <div class="day-card"><div class="day-header" onclick="toggleDay(this)"><div class="dh-left"><span class="day-date">Late Nov</span><span class="day-title">Flexible Movement Floor</span><div class="badges"><span class="badge b-fitness">travel-aware</span></div></div><span class="day-toggle">▾</span></div><div class="day-body"><div class="task-group"><div class="tg-label">Move around the events</div>
+            <div class="task-item"><div class="task-cb"></div><span class="task-time">2× this week</span><span class="task-text">Pilates · studio, hotel, or mat session</span></div>
+            <div class="task-item"><div class="task-cb"></div><span class="task-time">3–4× this week</span><span class="task-text">Run · flexible distance around wedding and Ignite schedule</span></div>
+          </div></div></div>
+          <div class="day-card special">
+            <div class="day-header" onclick="toggleDay(this)"><div class="dh-left"><span class="day-date">Late Nov</span><span class="day-title">Saranya's Wedding</span><div class="badges"><span class="badge b-holiday">wedding</span></div></div><span class="day-toggle">▾</span></div>
+            <div class="day-body"><div class="task-group"><div class="tg-label">Hold the space</div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">Dates TBD</span><span class="task-text">Saranya's wedding · travel, outfits, gifts, and celebration logistics</span></div>
+            </div></div>
+          </div>
+          <div class="day-card special">
+            <div class="day-header" onclick="toggleDay(this)"><div class="dh-left"><span class="day-date">Late Nov</span><span class="day-title">Microsoft Ignite</span><div class="badges"><span class="badge b-office">Ignite</span></div></div><span class="day-toggle">▾</span></div>
+            <div class="day-body"><div class="task-group"><div class="tg-label">Hold the space</div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">Dates TBD</span><span class="task-text">Microsoft Ignite · event schedule, work commitments, and travel logistics</span></div>
+            </div></div>
+          </div>
+        </div><!-- end checklist-november -->
+
+        <!-- ══════════ DECEMBER ══════════ -->
+        <div class="checklist-panel" id="checklist-december">
+          <div class="month-goals">
+            <div class="mg-label">// December focus</div>
+            <div class="mg-row mg-must"><span class="mg-must-icon">01</span>Shop for family</div>
+            <div class="mg-row mg-must"><span class="mg-must-icon">02</span>Packing</div>
+            <div class="mg-row mg-must"><span class="mg-must-icon">03</span>Household chores before being gone for one month</div>
+          </div>
+        </div><!-- end checklist-december -->
 
         <!-- ══════════ EXPENDITURE PANEL (shared) ══════════ -->
         <div class="expense-panel" id="expense-panel">
@@ -3516,6 +4092,7 @@
   <!-- ═══════════════════════════════════════════════════════════
        JAVASCRIPT
   ════════════════════════════════════════════════════════════ -->
+    <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.js"></script>
   <script>
     // ── Live date ──────────────────────────────────────────────
     const liveDate = document.getElementById('live-date');
@@ -3524,18 +4101,14 @@
       weekday: 'short', year: 'numeric', month: 'short', day: 'numeric'
     }).toUpperCase();
 
-    // ── Main tab switching ─────────────────────────────────────
-    document.querySelectorAll('.main-nav-tab').forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.querySelectorAll('.main-nav-tab').forEach(b => b.classList.remove('active'));
-        document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-        btn.classList.add('active');
-        document.getElementById('page-' + btn.dataset.tab).classList.add('active');
-      });
-    });
-
     // ── Expenditure data ───────────────────────────────────────
     const expData = {
+      archive: {
+        title: 'MAY–AUGUST 2026',
+        recurring: [],
+        oneTime: [],
+        trips: []
+      },
       may: {
         title: 'MAY 2026',
         recurring: [
@@ -3615,14 +4188,105 @@
         ],
         oneTime: [],
         trips: []
+      },
+      september: {
+        title: 'SEPTEMBER 2026',
+        recurring: [
+          { name: 'Rent', cadence: '1st · fixed', amt: 'fixed', cls: 'v' },
+          { name: 'Family remittance', cadence: '2nd · fixed', amt: 'fixed', cls: 'v' },
+          { name: 'Student loan', cadence: '21st', amt: 'variable', cls: 'v' },
+          { name: 'Nails', cadence: 'Every 3 weeks', amt: '$100 CAD', cls: '' },
+          { name: 'Lashes', cadence: 'Once / month', amt: '$80 CAD', cls: '' },
+          { name: 'Pilates', cadence: '8-class pack', amt: '$150 CAD', cls: '' },
+          { name: 'Salsa / Bachata', cadence: 'Monthly', amt: '$25 CAD', cls: '' },
+          { name: 'Netflix + Spotify', cadence: 'Monthly', amt: 'variable', cls: 'v' },
+          { name: 'Credit cards', cadence: 'Pay in full by 25th', amt: 'variable', cls: 'v' },
+        ],
+        oneTime: [],
+        trips: [
+          {
+            name: 'US visa + business travel',
+            dates: 'September 2026',
+            lines: [
+              { label: 'US visa', val: '$750 USD · personal' },
+              { label: 'Flight', val: '$400 USD · reimbursed' },
+              { label: 'Hotel', val: '$1,200 USD · reimbursed' },
+              { label: 'Transport / Uber', val: '$200 USD · reimbursed' },
+              { label: 'Meals', val: '$250 USD · reimbursed' },
+            ],
+            total: '$2,800 USD · $2,050 reimbursed · $750 personal'
+          }
+        ]
+      },
+      october: {
+        title: 'OCTOBER 2026',
+        recurring: [
+          { name: 'Rent', cadence: '1st · fixed', amt: 'fixed', cls: 'v' },
+          { name: 'Family remittance', cadence: '2nd · fixed', amt: 'fixed', cls: 'v' },
+          { name: 'Student loan', cadence: '21st', amt: 'variable', cls: 'v' },
+          { name: 'Nails', cadence: 'Every 3 weeks', amt: '$100 CAD', cls: '' },
+          { name: 'Lashes', cadence: 'Once / month', amt: '$80 CAD', cls: '' },
+          { name: 'Pilates', cadence: '8-class pack', amt: '$150 CAD', cls: '' },
+          { name: 'Salsa / Bachata', cadence: 'Monthly', amt: '$25 CAD', cls: '' },
+          { name: 'Netflix + Spotify', cadence: 'Monthly', amt: 'variable', cls: 'v' },
+          { name: 'Credit cards', cadence: 'Pay in full by 25th', amt: 'variable', cls: 'v' },
+        ],
+        oneTime: [],
+        trips: [
+          {
+            name: 'SF + Seattle work trip',
+            dates: 'Oct 19–27',
+            lines: [
+              { label: 'Flights + hotels', val: 'TBD' },
+              { label: 'Ground transport + meals', val: 'TBD' },
+            ],
+            total: 'TBD'
+          }
+        ]
+      },
+      november: {
+        title: 'NOVEMBER 2026',
+        recurring: [
+          { name: 'Rent', cadence: '1st · fixed', amt: 'fixed', cls: 'v' },
+          { name: 'Family remittance', cadence: '2nd · fixed', amt: 'fixed', cls: 'v' },
+          { name: 'Student loan', cadence: '21st', amt: 'variable', cls: 'v' },
+          { name: 'Nails', cadence: 'Every 3 weeks', amt: '$100 CAD', cls: '' },
+          { name: 'Lashes', cadence: 'Once / month', amt: '$80 CAD', cls: '' },
+          { name: 'Pilates', cadence: '8-class pack', amt: '$150 CAD', cls: '' },
+          { name: 'Salsa / Bachata', cadence: 'Monthly', amt: '$25 CAD', cls: '' },
+          { name: 'Netflix + Spotify', cadence: 'Monthly', amt: 'variable', cls: 'v' },
+          { name: 'Credit cards', cadence: 'Pay in full by 25th', amt: 'variable', cls: 'v' },
+        ],
+        oneTime: [],
+        trips: []
+      },
+      december: {
+        title: 'DECEMBER 2026',
+        recurring: [
+          { name: 'Rent', cadence: '1st · fixed', amt: 'fixed', cls: 'v' },
+          { name: 'Family remittance', cadence: '2nd · fixed', amt: 'fixed', cls: 'v' },
+          { name: 'Student loan', cadence: '21st', amt: 'variable', cls: 'v' },
+          { name: 'Nails', cadence: 'Every 3 weeks', amt: '$100 CAD', cls: '' },
+          { name: 'Lashes', cadence: 'Once / month', amt: '$80 CAD', cls: '' },
+          { name: 'Pilates', cadence: '8-class pack', amt: '$150 CAD', cls: '' },
+          { name: 'Salsa / Bachata', cadence: 'Monthly', amt: '$25 CAD', cls: '' },
+          { name: 'Netflix + Spotify', cadence: 'Monthly', amt: 'variable', cls: 'v' },
+          { name: 'Credit cards', cadence: 'Pay in full by 25th', amt: 'variable', cls: 'v' },
+        ],
+        oneTime: [],
+        trips: []
       }
     };
 
-    function renderExpenses(month) {
-      const d = expData[month];
-      const panel = document.getElementById('expense-panel');
-      let h = `<div class="exp-header"><div class="exp-title">${d.title}</div><div class="exp-sub">Expenditure overview</div></div>`;
+    ['september', 'october', 'november', 'december'].forEach(month => {
+      expData[month].recurring.splice(3, 0,
+        { name: 'Groceries', cadence: 'Monthly budget', amt: '$500 CAD', cls: '' },
+        { name: 'Fun money', cadence: 'Concerts · nights out · shopping', amt: '$500 CAD', cls: '' }
+      );
+    });
 
+    function renderExpenseSections(d) {
+      let h = '';
       if (d.recurring.length) {
         h += `<div class="exp-section"><div class="exp-section-title">Recurring</div>`;
         d.recurring.forEach(r => {
@@ -3651,7 +4315,22 @@
         h += `</div>`;
       }
 
-      panel.innerHTML = h;
+      return h;
+    }
+
+    function renderExpenses(month) {
+      const panel = document.getElementById('expense-panel');
+
+      if (month === 'archive') {
+        panel.innerHTML = ['may', 'june', 'july', 'august'].map(key => {
+          const archivedMonth = expData[key];
+          return `<div class="exp-header"><div class="exp-title">${archivedMonth.title}</div><div class="exp-sub">Expenditure overview</div></div>${renderExpenseSections(archivedMonth)}`;
+        }).join('');
+        return;
+      }
+
+      const d = expData[month];
+      panel.innerHTML = `<div class="exp-header"><div class="exp-title">${d.title}</div><div class="exp-sub">Expenditure overview</div></div>${renderExpenseSections(d)}`;
     }
 
     // ── Month sub-tab switching ────────────────────────────────
@@ -3662,11 +4341,61 @@
         btn.classList.add('active');
         document.getElementById('checklist-' + btn.dataset.month).classList.add('active');
         renderExpenses(btn.dataset.month);
+        renderDayNavigation(btn.dataset.month);
       });
     });
 
-    // ── Init May expenses ──────────────────────────────────────
-    renderExpenses('may');
+    function renderDayNavigation(month) {
+      const nav = document.getElementById('day-nav');
+      const panel = document.getElementById('checklist-' + month);
+      if (!nav || !panel) return;
+      nav.replaceChildren();
+
+      const targets = month === 'archive'
+        ? [...panel.querySelectorAll('.archive-month')]
+        : [...panel.querySelectorAll('.day-card')];
+
+      panel.querySelectorAll('.mobile-selected').forEach(target => target.classList.remove('mobile-selected'));
+      targets[0]?.classList.add('mobile-selected');
+
+      targets.forEach((target, index) => {
+        const date = month === 'archive'
+          ? target.querySelector('.archive-month-title')?.textContent.replace('//', '').trim()
+          : target.querySelector('.day-date')?.textContent.trim();
+        const title = month === 'archive'
+          ? 'archive'
+          : target.querySelector('.day-title')?.textContent.trim();
+        if (!date) return;
+
+        target.id = `day-${month}-${index}`;
+        const button = document.createElement('button');
+        button.className = 'day-jump';
+        button.type = 'button';
+        if (index === 0) button.classList.add('mobile-active');
+        const shortTitle = (title || date).split(/[ ·]/)[0].slice(0, 3);
+        button.innerHTML = `<span class="day-jump-date">${date}</span><span class="day-jump-name">${title || ''}</span><span class="day-jump-short">${shortTitle}</span>`;
+        button.addEventListener('click', () => {
+          targets.forEach(item => item.classList.remove('mobile-selected'));
+          nav.querySelectorAll('.day-jump').forEach(item => item.classList.remove('mobile-active'));
+          target.classList.add('mobile-selected');
+          button.classList.add('mobile-active');
+          target.classList.remove('collapsed');
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+        nav.appendChild(button);
+      });
+    }
+
+    document.querySelectorAll('.mobile-view-button').forEach(button => {
+      button.addEventListener('click', () => {
+        document.querySelectorAll('.mobile-view-button').forEach(item => item.classList.remove('active'));
+        button.classList.add('active');
+        document.querySelector('.summer-wrap')?.classList.toggle('mobile-budget-view', button.dataset.mobileView === 'budget');
+      });
+    });
+
+    // ── Init current month expenses ────────────────────────────
+    renderExpenses('september');
 
     // ── Day card collapse ──────────────────────────────────────
     function toggleDay(header) {
@@ -3730,7 +4459,7 @@
       });
 
       // May panel goals
-      const may = document.getElementById('checklist-may');
+      const may = document.getElementById('archive-may');
       if (may) {
         const mg = document.createElement('div');
         mg.className = 'month-goals';
@@ -3738,11 +4467,11 @@
           '<div class="mg-label">// May work focus</div>' +
           '<div class="mg-row"><span class="mg-tag">Performance review season</span>' +
           '<span style="font-family:var(--font-body);font-size:0.82rem;color:var(--text-2);"> — self-review + coworker feedback</span></div>';
-        may.insertBefore(mg, may.firstChild);
+        may.insertBefore(mg, may.querySelector('.week-divider'));
       }
 
       // June panel goals
-      const jun = document.getElementById('checklist-june');
+      const jun = document.getElementById('archive-june');
       if (jun) {
         const mg = document.createElement('div');
         mg.className = 'month-goals';
@@ -3752,11 +4481,11 @@
           '<span class="mg-tag">Azure Managed Grafana</span></div>' +
           '<div class="mg-row mg-must"><span class="mg-must-icon">▲</span>' +
           'Work on Grafana Labs partnership <span class="mg-due">due Oct 2026</span></div>';
-        jun.insertBefore(mg, jun.firstChild);
+        jun.insertBefore(mg, jun.querySelector('.week-divider'));
       }
 
       // July panel goals
-      const jul = document.getElementById('checklist-july');
+      const jul = document.getElementById('archive-july');
       if (jul) {
         const mg = document.createElement('div');
         mg.className = 'month-goals';
@@ -3765,7 +4494,7 @@
           '<div class="mg-row mg-must"><span class="mg-must-icon">▲</span>' +
           'Azure AI Foundry · Azure Managed Grafana · Azure Monitor milestones</div>' +
           '<div class="mg-row"><span class="mg-tag">Azure Data</span><span class="mg-tag">AI observability</span></div>';
-        jul.insertBefore(mg, jul.firstChild);
+        jul.insertBefore(mg, jul.querySelector('.week-divider'));
       }
     }
 
@@ -3784,20 +4513,19 @@
       });
     }
 
-    addWorkTasks();
-    initTasks();
-
     // ── Auto-categorize tasks ──────────────────────────────────
     function classifyTask(text) {
       const t = text.toLowerCase();
+      // personal preparation, even when it mentions the workday or office
+      if (/\b(get ready|do hair|do makeup|getting ready|head to office)\b/.test(t)) return 't-selfcare';
       // work — office/deep-work items
-      if (/\b(work|agent\s+insights|foundry|grafana|notification center|docs draft|ui review|product reset|evals|traces|crawl phase|deep work block|in office|wfo)\b/.test(t)) return 't-work';
+      if (/\b(work|workday|agent\s+insights|foundry|grafana|azure|helios|observability|supportability|shiproom|amg|rti|pm\b|engineering|manager|leadership|customer|field team|conference|presentation|demo|roadmap|docs|product|metrics|office|security compliance|career coaching|referrals?|resumes?|startup advising|notification center|ui review|evals|traces|crawl phase|in office|wfo)\b/.test(t)) return 't-work';
       // content creation
       if (/\b(content review|social media|tiktok|instagram|bc dance|zarif shabab|help out bc|content day)\b/.test(t)) return 't-content';
       // errands & admin
-      if (/\b(groceries?|grocery|laundry|mop|floor|bills?|flight|hotel|book summer|book.*flight|going.away gift|gift|milk|pack|pick up|fly|financial|life admin|window shop|whole foods)\b/.test(t)) return 't-errand';
+      if (/\b(groceries?|grocery|laundry|mop|floor|bills?|flight|hotel|visa|print all materials|book summer|book.*flight|going.away gift|gift|milk|pack|pick up|fly|financial|life admin|window shop|whole foods)\b/.test(t)) return 't-errand';
       // social & holiday
-      if (/\b(out with friends|friends|family calls?|chaa|adda|birthday|family time|fariha|fateeha|fupi|lea |bestie|dancing|salsa|bachata|board games|wine|cocktail|prayer|danc)\b/.test(t)) return 't-holiday';
+      if (/\b(out with friends|friends|family calls?|chaa|adda|birthday|family time|fariha|fateeha|fupi|nidhi|saranya|lea|bestie|dancing|salsa|bachata|board games|wine|cocktail|prayer|danc)\b/.test(t)) return 't-holiday';
       // self-care & wellness
       if (/\b(run|pilates|sleep|haircut|lash|nails?|skincare|shower|matcha|arugula|nap|croissant|dinner|breakfast|snack|pizza|hotdog|meal prep|self.care|self.maintenance|get dressed|hair care|black cherry|invisalign)\b/.test(t)) return 't-selfcare';
       return '';
@@ -3813,6 +4541,7 @@
 
     function addCategoryLegends() {
       document.querySelectorAll('.checklist-panel').forEach(panel => {
+        if (!panel.querySelector('.task-item')) return;
         const legend = document.createElement('div');
         legend.className = 'cat-legend';
         legend.innerHTML =
@@ -3852,9 +4581,81 @@
       });
     }
 
-    autoClassifyTasks();
-    addCategoryLegends();
-    addContentFilming();
+    function addSundayMealPrep() {
+      document.querySelectorAll('#checklist-september .day-card, #checklist-october .day-card, #checklist-november .day-card, #checklist-december .day-card').forEach(card => {
+        const dayTitle = (card.querySelector('.day-title')?.textContent ?? '').toLowerCase();
+        const body = card.querySelector('.day-body');
+        if (!dayTitle.includes('sunday') || !body || /meal prep/i.test(body.textContent)) return;
+
+        const item = document.createElement('div');
+        item.className = 'task-item meal-prep-row';
+        item.innerHTML = '<div class="task-cb"></div><span class="task-time">Afternoon</span><span class="task-text">Meal prep for the week</span>';
+        const firstGroup = body.querySelector('.task-group');
+        (firstGroup ?? body).appendChild(item);
+      });
+    }
+
+    function moveSaturdayCallsToWorkdays() {
+      document.querySelectorAll('#checklist-september .day-card, #checklist-october .day-card, #checklist-november .day-card, #checklist-december .day-card').forEach(card => {
+        const title = (card.querySelector('.day-title')?.textContent ?? '').toLowerCase();
+        if (!title.includes('saturday')) return;
+
+        const calls = [...card.querySelectorAll('.task-item')].filter(item =>
+          /\bcall\b/i.test(item.querySelector('.task-text')?.textContent ?? '')
+        );
+        if (!calls.length) return;
+
+        let weekday = card.previousElementSibling;
+        while (weekday && (!weekday.classList.contains('day-card') || /saturday|sunday/i.test(weekday.querySelector('.day-title')?.textContent ?? ''))) {
+          weekday = weekday.previousElementSibling;
+        }
+        const destination = weekday?.querySelector('.task-group:last-of-type');
+        if (!destination) return;
+
+        calls.forEach(item => {
+          item.classList.add('moved-call-row');
+          destination.appendChild(item);
+        });
+      });
+    }
+
+    function sortTasksByTime() {
+      const timeRank = (value) => {
+        const text = value.trim().toLowerCase();
+        const exactTime = text.match(/^~?(\d{1,2})(?::(\d{2}))?\s*(am|pm)?/);
+        if (exactTime) {
+          let hour = Number(exactTime[1]);
+          const minutes = Number(exactTime[2] || 0);
+          let period = exactTime[3];
+          if (!period) {
+            const rangeEnd = text.match(/[\u2013\u2014-].*?(\d{1,2})(?::\d{2})?\s*(am|pm)/);
+            if (hour === 12) period = 'pm';
+            else if (rangeEnd?.[2] === 'pm' && hour <= Number(rangeEnd[1])) period = 'pm';
+            else period = 'am';
+          }
+          if (period === 'pm' && hour !== 12) hour += 12;
+          if (period === 'am' && hour === 12) hour = 0;
+          return hour + minutes / 60;
+        }
+
+        const namedTimes = [
+          [/whenever|all day/, 7], [/morning/, 8], [/workday/, 9],
+          [/midday/, 12], [/daytime/, 13], [/afternoon/, 14],
+          [/after work|end of day/, 17.5], [/evening|friday night/, 19],
+          [/after pilates/, 19.1], [/late night/, 23], [/night/, 21]
+        ];
+        return namedTimes.find(([pattern]) => pattern.test(text))?.[1] ?? Number.POSITIVE_INFINITY;
+      };
+
+      document.querySelectorAll('.task-group').forEach(group => {
+        const tasks = [...group.querySelectorAll(':scope > .task-item')];
+        tasks.sort((first, second) =>
+          timeRank(first.querySelector('.task-time')?.textContent ?? '') -
+          timeRank(second.querySelector('.task-time')?.textContent ?? '')
+        );
+        tasks.forEach(task => group.appendChild(task));
+      });
+    }
 
     // ── Content page sub-tab switching ────────────────────────
     document.querySelectorAll('.cp-subnav-tab').forEach(btn => {
@@ -3914,7 +4715,177 @@
       });
     }
 
+    // ── Current-plan wellness and connection cadence ─────────
+    function addDailyRoutines() {
+      const monthIndexes = { Sep: 8, Oct: 9, Nov: 10, Dec: 11 };
+      const cadenceStart = Date.UTC(2026, 8, 21);
+      const dayMs = 24 * 60 * 60 * 1000;
+
+      document.querySelectorAll('#checklist-september .day-card, #checklist-october .day-card, #checklist-november .day-card, #checklist-december .day-card').forEach(card => {
+        const dateText = (card.querySelector('.day-date')?.textContent ?? '').trim();
+        const match = dateText.match(/^([A-Z][a-z]{2}) (\d{1,2})(?:[\u2013\u2014-]\d{1,2})?$/);
+        if (!match || monthIndexes[match[1]] === undefined) return;
+
+        const date = Date.UTC(2026, monthIndexes[match[1]], Number(match[2]));
+        const dayOffset = Math.round((date - cadenceStart) / dayMs);
+        const dayOfWeek = new Date(date).getUTCDay();
+        const isHairCareNight = dayOffset >= 0 && dayOffset % 2 === 0;
+        const isDateRange = /[\u2013\u2014-]/.test(dateText);
+        const body = card.querySelector('.day-body');
+        if (!body) return;
+
+        const taskText = body.textContent.toLowerCase();
+        if (!isDateRange && dayOfWeek >= 1 && dayOfWeek <= 5 && !/snack|vitamin water/.test(taskText)) {
+          const breakItem = document.createElement('div');
+          breakItem.className = 'task-item routine-break-row';
+          breakItem.innerHTML = '<div class="task-cb"></div><span class="task-time">Midday reset</span><span class="task-text">Snack + vitamin water break</span>';
+          body.querySelector('.task-group')?.appendChild(breakItem);
+        }
+
+        let routine = body.querySelector('.night-routine');
+        if (!routine) {
+          routine = document.createElement('div');
+          routine.className = 'night-routine';
+          routine.innerHTML = '<div class="nr-label">Night Routine</div><div class="nr-tags"></div>';
+          body.appendChild(routine);
+        }
+        const tags = routine.querySelector('.nr-tags');
+        if (tags) {
+          [...tags.children].forEach(tag => {
+            if (/^(skincare|black cherry juice|tart cherry juice|plumping hyaluronic face mask)$/i.test(tag.textContent.trim())) tag.remove();
+          });
+          const ensureTag = (text) => {
+            if ([...tags.children].some(tag => tag.textContent.trim().toLowerCase() === text.toLowerCase())) return;
+            const tag = document.createElement('span');
+            tag.className = 'nr-tag';
+            tag.textContent = text;
+            tags.appendChild(tag);
+          };
+          ['face wash', 'moisturizer', 'hyaluronic plump mask', 'invisalign'].forEach(ensureTag);
+          if (isHairCareNight || isDateRange) {
+            ensureTag('tart cherry juice · every 2 days');
+            ensureTag('hair serum · every 2 days');
+          }
+        }
+
+        if (isHairCareNight && !isDateRange) {
+          const title = (card.querySelector('.day-title')?.textContent ?? '').toLowerCase();
+          const hasConflict = card.classList.contains('travel') || card.querySelector('.b-travel') ||
+            /hardest|date night|on stage|observabilitycon|redmond|wedding|ignite/.test(title) ||
+            dayOfWeek === 6;
+          const hasFamilyCall = /family|baba|ammu|fupi/.test(taskText);
+          if (!hasConflict && !hasFamilyCall) {
+            const familyItem = document.createElement('div');
+            familyItem.className = 'task-item family-call-row';
+            familyItem.innerHTML = '<div class="task-cb"></div><span class="task-time">9:00–10:00 pm</span><span class="task-text">Call with family</span>';
+            const groups = body.querySelectorAll('.task-group');
+            groups[groups.length - 1]?.appendChild(familyItem);
+          }
+        }
+      });
+    }
+
+    // ── Visual workload summary for each week ────────────────
+    function addWeekMaps() {
+      document.querySelectorAll('.checklist-panel .week-divider').forEach(divider => {
+        const cards = [];
+        let next = divider.nextElementSibling;
+        while (next && !next.classList.contains('week-divider')) {
+          if (next.classList.contains('day-card')) cards.push(next);
+          next = next.nextElementSibling;
+        }
+        if (!cards.length) return;
+
+        const map = document.createElement('div');
+        map.className = 'week-map';
+        map.innerHTML = `<div class="wm-intro"><span>week rhythm</span><strong>${cards.length} ${cards.length === 1 ? 'block' : 'days'}</strong></div>`;
+
+        cards.forEach(card => {
+          const taskCount = card.querySelectorAll('.task-item').length;
+          const day = document.createElement('div');
+          day.className = 'wm-day';
+          if (card.classList.contains('travel')) day.classList.add('travel');
+          if (card.classList.contains('special')) day.classList.add('special');
+          let loadLabel = taskCount >= 12 ? 'intense' : taskCount >= 8 ? 'full' : taskCount >= 4 ? 'steady' : 'light';
+          if (card.classList.contains('travel')) loadLabel = 'travel';
+          else if (card.classList.contains('special')) loadLabel = 'priority';
+          const date = card.querySelector('.day-date')?.textContent ?? '';
+          const title = card.querySelector('.day-title')?.textContent ?? '';
+          day.innerHTML = `<div class="wm-date">${date}</div><div class="wm-title" title="${title}">${title}</div><div class="wm-signal">${loadLabel}</div><div class="wm-count">${taskCount} ${taskCount === 1 ? 'item' : 'items'}</div>`;
+          map.appendChild(day);
+        });
+
+        divider.insertAdjacentElement('afterend', map);
+      });
+    }
+
+    // ── Semantic line-icon markers ────────────────────────────
+    function addVisualMarkers() {
+      const taskIcon = (item) => {
+        const text = (item.querySelector('.task-text')?.textContent ?? '').toLowerCase();
+        if (/haircut|bang trim|hair serum|scalp oil/.test(text)) return 'scissors';
+        if (/nail|lash|skincare|face mask|massage/.test(text)) return 'sparkles';
+        if (/run|walk/.test(text)) return 'footprints';
+        if (/pilates|stretch/.test(text)) return 'activity';
+        if (/flight|fly|airport|travel|pack/.test(text)) return 'plane';
+        if (/family|nidhi|saranya|lea|call /.test(text)) return 'phone';
+        if (/meal|dinner|snack|croissant|vitamin water|matcha/.test(text)) return 'coffee';
+        if (/grocer|shopping|sephora|bath & body/.test(text)) return 'shopping-bag';
+        if (/salsa|bachata|dancing/.test(text)) return 'music';
+        if (/wake up/.test(text)) return 'sun';
+        if (/sleep|in bed|pass out/.test(text)) return 'moon';
+        if (/email|metrics|slide|study|prepare|build|product|demo|roadmap|docs|office|leadership/.test(text)) return 'briefcase';
+        if (item.classList.contains('t-work')) return 'briefcase';
+        if (item.classList.contains('t-selfcare')) return 'heart-pulse';
+        if (item.classList.contains('t-errand')) return 'shopping-bag';
+        if (item.classList.contains('t-content')) return 'aperture';
+        if (item.classList.contains('t-holiday')) return 'users-round';
+        return '';
+      };
+
+      document.querySelectorAll('.task-item').forEach(item => {
+        if (item.querySelector('.task-icon')) return;
+        const icon = taskIcon(item);
+        const marker = document.createElement('span');
+        marker.className = `task-icon${icon ? '' : ' is-empty'}`;
+        marker.setAttribute('aria-hidden', 'true');
+        if (icon) marker.innerHTML = `<i data-lucide="${icon}"></i>`;
+        item.insertBefore(marker, item.firstChild);
+      });
+
+      document.querySelectorAll('.day-card').forEach(card => {
+        const left = card.querySelector('.dh-left');
+        const date = left?.querySelector('.day-date');
+        if (!left || !date || left.querySelector('.day-marker')) return;
+        let icon = 'calendar-days';
+        if (card.classList.contains('travel') || card.querySelector('.b-travel')) icon = 'plane';
+        else if (card.classList.contains('special')) icon = 'sparkles';
+        else if (card.querySelector('.b-fitness')) icon = 'activity';
+        else if (card.querySelector('.b-office')) icon = 'building-2';
+        else if (card.querySelector('.b-wfh')) icon = 'house';
+        const marker = document.createElement('span');
+        marker.className = 'day-marker';
+        marker.setAttribute('aria-hidden', 'true');
+        marker.innerHTML = `<i data-lucide="${icon}"></i>`;
+        date.insertAdjacentElement('afterend', marker);
+      });
+
+      if (window.lucide) window.lucide.createIcons();
+    }
+
+    addWorkTasks();
+    addContentFilming();
+    addSundayMealPrep();
+    moveSaturdayCallsToWorkdays();
     addSaturdaySelfCare();
+    addDailyRoutines();
+    sortTasksByTime();
+    addWeekMaps();
+    autoClassifyTasks();
+    addVisualMarkers();
+    addCategoryLegends();
+    initTasks();
+    renderDayNavigation('september');
   </script>
 </body>
 </html>

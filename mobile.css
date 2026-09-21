@@ -1,0 +1,324 @@
+/* Mobile composition: one selected day, with budget as a separate view. */
+body {
+  background: var(--bg);
+}
+
+.topbar {
+  height: 48px;
+  padding: 0 14px;
+}
+
+.topbar-brand {
+  font-size: 0.68rem;
+}
+
+.topbar-date {
+  max-width: 112px;
+  font-size: 0.54rem;
+  text-align: right;
+}
+
+.mantra-banner {
+  min-height: 34px;
+  padding: 7px 14px;
+  display: flex;
+  gap: 7px;
+  overflow: hidden;
+}
+
+.mantra-icon {
+  font-size: 0.54rem;
+}
+
+.mantra-text {
+  overflow: hidden;
+  font-size: 0.64rem;
+  line-height: 1.35;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.portfolio-masthead {
+  padding: 10px 12px 8px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border-2);
+}
+
+.portfolio-kicker {
+  display: block;
+  margin-bottom: 3px;
+  font-family: var(--font);
+  font-size: 0.52rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--red);
+}
+
+.portfolio-heading h1 {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: 0;
+  color: var(--text);
+}
+
+.portfolio-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 7px 12px;
+  margin-top: 8px;
+  padding-bottom: 0;
+  overflow: visible;
+}
+
+.portfolio-item {
+  width: auto;
+  min-height: 0;
+  display: grid;
+  grid-template-columns: 15px minmax(0, 1fr);
+  column-gap: 6px;
+  align-content: start;
+  padding: 0;
+  border: 0;
+  font-family: var(--font-body);
+  font-size: 0.61rem;
+  line-height: 1.25;
+  color: var(--text);
+}
+
+.portfolio-item svg {
+  grid-row: 1 / span 2;
+  width: 15px;
+  height: 15px;
+  color: var(--red);
+  stroke-width: 1.5;
+}
+
+.portfolio-item small {
+  display: none;
+}
+
+.summer-wrap {
+  height: auto;
+  min-height: 0;
+}
+
+.sub-nav {
+  padding: 0 10px;
+  overflow-x: auto;
+}
+
+.sub-nav-tab {
+  padding: 9px 11px;
+  font-size: 0.56rem;
+}
+
+.day-nav {
+  min-height: 48px;
+  padding: 7px 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  overflow-x: auto;
+  background: var(--bg);
+}
+
+.day-nav::before,
+.day-jump-date,
+.day-jump-name {
+  display: none;
+}
+
+.day-jump {
+  min-width: 48px;
+  flex: 0 0 48px;
+  padding: 8px 5px;
+  border: 1px solid var(--border-2);
+  border-radius: 0;
+  text-align: center;
+}
+
+.day-jump-short {
+  display: block;
+  font-family: var(--font);
+  font-size: 0.56rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.day-jump.mobile-active {
+  border-color: var(--red);
+  background: var(--red-glow);
+  color: var(--red);
+}
+
+.mobile-view-switch {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 8px 12px 0;
+  background: var(--bg);
+}
+
+.mobile-view-button {
+  padding: 8px;
+  border: 0;
+  border-bottom: 2px solid var(--border);
+  background: transparent;
+  color: var(--text-3);
+  font-family: var(--font);
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.mobile-view-button.active {
+  border-bottom-color: var(--red);
+  color: var(--text);
+}
+
+.month-panels {
+  display: block;
+  overflow: visible;
+}
+
+.checklist-panel {
+  overflow: visible;
+  padding: 12px;
+}
+
+.checklist-panel.active .week-divider,
+.checklist-panel.active .week-map,
+.checklist-panel.active .cat-legend {
+  display: none;
+}
+
+.checklist-panel.active .day-card {
+  display: none;
+}
+
+.checklist-panel.active .day-card.mobile-selected,
+.checklist-panel.active .archive-month.mobile-selected .day-card {
+  display: block;
+}
+
+.checklist-panel.active .archive-month {
+  display: none;
+}
+
+.checklist-panel.active .archive-month.mobile-selected {
+  display: block;
+}
+
+.month-goals {
+  margin-bottom: 12px;
+  padding: 10px 12px;
+}
+
+.mg-row {
+  display: grid;
+  grid-template-columns: 24px 1fr;
+  gap: 7px;
+  font-size: 0.7rem;
+}
+
+.mg-row:not(.mg-must) {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 9px;
+}
+
+.mg-row:not(.mg-must) .mg-tag {
+  width: auto;
+  max-width: 100%;
+  padding: 4px 7px;
+  font-size: 0.61rem;
+  line-height: 1.25;
+  white-space: normal;
+}
+
+.day-card {
+  margin-bottom: 0;
+}
+
+.day-header {
+  padding: 12px 8px;
+}
+
+.day-title {
+  font-size: 1.02rem;
+}
+
+.day-body {
+  columns: 1;
+  padding: 10px 8px 14px;
+}
+
+.task-item {
+  display: grid;
+  grid-template-columns: 20px 13px minmax(0, 1fr);
+  gap: 2px 8px;
+  padding: 7px 3px;
+}
+
+.task-icon {
+  grid-column: 1;
+  grid-row: 1 / span 2;
+  margin-top: 1px;
+}
+
+.task-cb {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  margin-top: 4px;
+}
+
+.task-time {
+  grid-column: 3;
+  grid-row: 1;
+  min-width: 0;
+  margin-top: 0;
+  font-size: 0.53rem;
+}
+
+.task-text {
+  grid-column: 3;
+  grid-row: 2;
+  font-size: 0.82rem;
+  line-height: 1.42;
+}
+
+.night-routine {
+  margin-top: 12px;
+  padding: 7px;
+}
+
+.night-routine .nr-label {
+  font-size: 0.48rem;
+}
+
+.night-routine .nr-tag {
+  padding: 1px 5px;
+  font-size: 0.58rem;
+}
+
+.expense-panel {
+  display: none;
+  min-height: 60vh;
+  overflow: visible;
+  border: 0;
+  padding: 18px 16px 40px;
+}
+
+.summer-wrap.mobile-budget-view .checklist-panel.active,
+.summer-wrap.mobile-budget-view .day-nav {
+  display: none;
+}
+
+.summer-wrap.mobile-budget-view .expense-panel {
+  display: block;
+}

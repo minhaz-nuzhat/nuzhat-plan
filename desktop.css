@@ -1,0 +1,86 @@
+/* Desktop composition: full portfolio and multi-day planning canvas. */
+.mobile-view-switch {
+  display: none;
+}
+
+.day-jump-short {
+  display: none;
+}
+
+.portfolio-masthead {
+  min-height: 82px;
+  padding: 10px 28px;
+  display: grid;
+  grid-template-columns: 210px minmax(0, 1fr);
+  gap: 22px;
+  align-items: center;
+  background: rgba(14, 14, 14, 0.97);
+  border-bottom: 1px solid var(--border-2);
+}
+
+.portfolio-heading {
+  padding-right: 20px;
+  border-right: 1px solid var(--red-dim);
+}
+
+.portfolio-kicker {
+  display: block;
+  margin-bottom: 3px;
+  font-family: var(--font);
+  font-size: 0.56rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--red);
+}
+
+.portfolio-heading h1 {
+  max-width: 200px;
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 400;
+  line-height: 1.02;
+  letter-spacing: 0;
+  color: var(--text);
+}
+
+.portfolio-list {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(100px, 1fr));
+  gap: 10px;
+}
+
+.portfolio-item {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: 18px 1fr;
+  column-gap: 8px;
+  align-items: start;
+  font-family: var(--font-body);
+  font-size: 0.64rem;
+  line-height: 1.2;
+  color: var(--text);
+}
+
+.portfolio-item svg {
+  grid-row: 1 / span 2;
+  width: 15px;
+  height: 15px;
+  margin-top: 1px;
+  color: var(--red);
+  stroke-width: 1.5;
+}
+
+.portfolio-item small {
+  grid-column: 2;
+  margin-top: 2px;
+  font-family: var(--font);
+  font-size: 0.43rem;
+  line-height: 1.3;
+  color: var(--text-3);
+}
+
+.summer-wrap {
+  height: calc(100vh - 170px);
+  min-height: 440px;
+}
