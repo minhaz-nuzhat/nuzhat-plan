@@ -12,10 +12,43 @@ body {
   font-size: 0.68rem;
 }
 
-.topbar-date {
-  max-width: 112px;
-  font-size: 0.54rem;
-  text-align: right;
+.topbar-actions {
+  gap: 7px;
+}
+
+.legend-button {
+  padding: 4px 6px;
+  font-size: 0.46rem;
+  letter-spacing: 0.04em;
+}
+
+.legend-dialog {
+  width: calc(100vw - 20px);
+  max-height: calc(100vh - 20px);
+}
+
+.legend-dialog-header {
+  padding: 11px 12px;
+}
+
+.legend-public-note {
+  padding: 9px 12px;
+  font-size: 0.68rem;
+}
+
+.legend-list {
+  max-height: calc(100vh - 150px);
+  padding: 4px 12px 14px;
+}
+
+.legend-entry {
+  grid-template-columns: 1fr;
+  gap: 3px;
+  padding: 9px 0;
+}
+
+.legend-entry dd {
+  font-size: 0.74rem;
 }
 
 .mantra-banner {

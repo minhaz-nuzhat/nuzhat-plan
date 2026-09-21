@@ -69,6 +69,7 @@
       display: flex;
       align-items: center;
       gap: 8px;
+      white-space: nowrap;
       font-size: 0.82rem;
       font-weight: 700;
       letter-spacing: 0.14em;
@@ -90,6 +91,89 @@
       font-size: 0.68rem;
       color: var(--text-3);
       letter-spacing: 0.08em;
+    }
+
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .legend-button,
+    .legend-close {
+      border: 1px solid var(--red-dim);
+      border-radius: var(--radius);
+      background: var(--red-glow);
+      color: var(--text);
+      font-family: var(--font);
+      font-size: 0.56rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+    .legend-button { padding: 5px 8px; }
+    .legend-button:hover,
+    .legend-close:hover { border-color: var(--red); color: var(--red); }
+    .legend-dialog {
+      width: min(620px, calc(100vw - 32px));
+      max-height: min(760px, calc(100vh - 32px));
+      margin: auto;
+      padding: 0;
+      overflow: hidden;
+      border: 1px solid var(--border-2);
+      border-radius: 6px;
+      background: var(--surface);
+      color: var(--text);
+      box-shadow: 0 24px 80px rgba(0,0,0,0.75);
+    }
+    .legend-dialog::backdrop { background: rgba(0,0,0,0.78); }
+    .legend-dialog-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--border-2);
+    }
+    .legend-dialog-title {
+      font-size: 0.72rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+    .legend-close {
+      width: 28px;
+      height: 28px;
+      font-size: 0.82rem;
+    }
+    .legend-public-note {
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+      font-family: var(--font-body);
+      font-size: 0.72rem;
+      color: var(--text-2);
+    }
+    .legend-list {
+      max-height: calc(100vh - 180px);
+      padding: 6px 16px 18px;
+      overflow-y: auto;
+    }
+    .legend-entry {
+      display: grid;
+      grid-template-columns: minmax(150px, 0.8fr) minmax(0, 1.7fr);
+      gap: 14px;
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .legend-entry dt {
+      font-size: 0.64rem;
+      font-weight: 700;
+      color: var(--red);
+    }
+    .legend-entry dd {
+      font-family: var(--font-body);
+      font-size: 0.78rem;
+      line-height: 1.5;
+      color: var(--text-2);
     }
 
     /* ─── MANTRA BANNER ──────────────────────────────────────── */
@@ -1000,8 +1084,35 @@
       PLAN MGR
       <span class="cursor"></span>
     </div>
-    <div class="topbar-date" id="live-date"></div>
+    <div class="topbar-actions">
+      <button class="legend-button" type="button" id="open-legend">Legend for Hassan</button>
+    </div>
   </header>
+
+  <dialog class="legend-dialog" id="hassan-legend" aria-labelledby="legend-title">
+    <div class="legend-dialog-header">
+      <h2 class="legend-dialog-title" id="legend-title">Legend for Hassan</h2>
+      <button class="legend-close" type="button" id="close-legend" aria-label="Close legend">×</button>
+    </div>
+    <p class="legend-public-note">All terminology here describes public information and is not confidential.</p>
+    <dl class="legend-list">
+      <div class="legend-entry"><dt>Apps &amp; Agents Platform Observability</dt><dd>The group of products I own.</dd></div>
+      <div class="legend-entry"><dt>Grafana Labs</dt><dd>An external dashboarding and visualizations startup whose product we own a portion of.</dd></div>
+      <div class="legend-entry"><dt>Azure Monitor</dt><dd>The division I am in.</dd></div>
+      <div class="legend-entry"><dt>Fabric</dt><dd>The organization I am in, which includes the division.</dd></div>
+      <div class="legend-entry"><dt>Foundry</dt><dd>Microsoft's cutting-edge platform for building AI agents. It is in a different division and organization, but I help drive parts of it.</dd></div>
+      <div class="legend-entry"><dt>Sync meetings</dt><dd>Engineering and PM meetings where we work together on what needs to get done that week. There are multiple syncs because I own multiple products across multiple engineering teams, as the only PM across 24 engineers.</dd></div>
+      <div class="legend-entry"><dt>Roadmap</dt><dd>Plans for what we will do this quarter and next.</dd></div>
+      <div class="legend-entry"><dt>LT</dt><dd>Leadership team: director, CVP, EVP, or president.</dd></div>
+      <div class="legend-entry"><dt>PM</dt><dd>Someone who invents, maintains, and improves products, partnerships, features, concepts, and architecture based on data, research, and revenue projections, then hands the work to engineers for implementation.</dd></div>
+      <div class="legend-entry"><dt>Baba</dt><dd>Dad.</dd></div>
+      <div class="legend-entry"><dt>Ammu</dt><dd>Mom.</dd></div>
+      <div class="legend-entry"><dt>Fupi</dt><dd>Dad's sister or sisters.</dd></div>
+      <div class="legend-entry"><dt>Chachhu</dt><dd>Dad's brother or brothers.</dd></div>
+      <div class="legend-entry"><dt>Juju</dt><dd>My middle sister.</dd></div>
+      <div class="legend-entry"><dt>Puju / Nuru</dt><dd>My youngest sister.</dd></div>
+    </dl>
+  </dialog>
 
   <!-- ═══ MANTRA ══════════════════════════════════════════════ -->
   <div class="mantra-banner">
@@ -2733,8 +2844,8 @@
             <div class="day-header" onclick="toggleDay(this)"><div class="dh-left"><span class="day-date">Sep 21</span><span class="day-title">Monday</span><div class="badges"><span class="badge b-office">In Office</span></div></div><span class="day-toggle">▾</span></div>
             <div class="day-body">
               <div class="task-group"><div class="tg-label">Slow start</div>
-                <div class="task-item"><div class="task-cb"></div><span class="task-time">7:00 am</span><span class="task-text">Slow wake-up — adjust to the morning, exist, roll around in bed</span></div>
-                <div class="task-item"><div class="task-cb"></div><span class="task-time">8:00 am</span><span class="task-text">Matcha + get ready for the workday · do hair (5 min) · do makeup (10 min)</span></div>
+                <div class="task-item"><div class="task-cb"></div><span class="task-time">7:00 am</span><span class="task-text">Slow wake-up — adjust to the morning, exist, roll around in bed · warm water immediately after</span></div>
+                <div class="task-item"><div class="task-cb"></div><span class="task-time">8:00 am</span><span class="task-text">Matcha + get ready for the workday · shower (20 min) · do hair (10 min) · do makeup (10 min) · get dressed (10 min)</span></div>
               </div>
               <div class="task-group"><div class="tg-label">Work</div>
                 <div class="task-item"><div class="task-cb"></div><span class="task-time">9:00 am</span><span class="task-text">Email + Teams replies · metrics and state-of-business slide updates for all products</span></div>
@@ -2791,7 +2902,7 @@
                 <div class="task-item"><div class="task-cb"></div><span class="task-time">6:30 am</span><span class="task-text">Wake up</span></div>
                 <div class="task-item"><div class="task-cb"></div><span class="task-time">7:00–9:00 am</span><span class="task-text">US visa appointment</span></div>
                 <div class="task-item"><div class="task-cb"></div><span class="task-time">9:00 am</span><span class="task-text">AMA with leadership team</span></div>
-                <div class="task-item"><div class="task-cb"></div><span class="task-time">10:00 am</span><span class="task-text">Get ready + go to office · do hair (5 min) · do makeup (10 min)</span></div>
+                <div class="task-item"><div class="task-cb"></div><span class="task-time">10:00 am</span><span class="task-text">Get ready + go to office · shower (20 min) · do hair (10 min) · do makeup (10 min) · get dressed (10 min)</span></div>
                 <div class="task-item"><div class="task-cb"></div><span class="task-time">10:30 am</span><span class="task-text">Elastic + Microsoft partnership demo presentation prep</span></div>
                 <div class="task-item"><div class="task-cb"></div><span class="task-time">11:00 am–12:00 pm</span><span class="task-text">Azure Monitor shiproom</span></div>
                 <div class="task-item"><div class="task-cb"></div><span class="task-time">12:00–2:00 pm</span><span class="task-text">Agent Insights · coding-agent observability for GitHub Copilot and VS Code agents</span></div>
@@ -2816,7 +2927,7 @@
             <div class="day-body">
               <div class="task-group"><div class="tg-label">Work</div>
                 <div class="task-item"><div class="task-cb"></div><span class="task-time">9:00 am–12:00 pm</span><span class="task-text">Helios deep work · finalize roadmap and PM direction for app and agent platform observability · docs updates</span></div>
-                <div class="task-item"><div class="task-cb"></div><span class="task-time">12:00 pm</span><span class="task-text">Get ready + go to office · do hair (5 min) · do makeup (10 min)</span></div>
+                <div class="task-item"><div class="task-cb"></div><span class="task-time">12:00 pm</span><span class="task-text">Get ready + go to office · shower (20 min) · do hair (10 min) · do makeup (10 min) · get dressed (10 min)</span></div>
                 <div class="task-item"><div class="task-cb"></div><span class="task-time">1:00 pm</span><span class="task-text">Snack + vitamin water break</span></div>
                 <div class="task-item"><div class="task-cb"></div><span class="task-time">2:00 pm</span><span class="task-text">Host Azure Monitor office hours</span></div>
                 <div class="task-item"><div class="task-cb"></div><span class="task-time">3:00 pm</span><span class="task-text">Azure Health Models meeting</span></div>
@@ -3060,6 +3171,7 @@
             <div class="mg-row mg-must"><span class="mg-must-icon">04</span>Fitness</div>
             <div class="mg-row mg-must"><span class="mg-must-icon">05</span>Dental work</div>
             <div class="mg-row mg-must"><span class="mg-must-icon">06</span>Fall activities!!!</div>
+            <div class="mg-row mg-must"><span class="mg-must-icon">07</span>Finalize and submit Juju's Early Decision application to RIT</div>
           </div>
 
           <div class="week-divider"><div class="wd-label">Nov 2–8 · movement week 1</div></div>
@@ -3118,6 +3230,8 @@
             <div class="mg-row mg-must"><span class="mg-must-icon">01</span>Shop for family</div>
             <div class="mg-row mg-must"><span class="mg-must-icon">02</span>Packing</div>
             <div class="mg-row mg-must"><span class="mg-must-icon">03</span>Household chores before being gone for one month</div>
+            <div class="mg-row mg-must"><span class="mg-must-icon">04</span>Help Juju complete college applications for 15 colleges</div>
+            <div class="mg-row mg-must"><span class="mg-must-icon">05</span>Bangladesh · December 21–January 22</div>
           </div>
         </div><!-- end checklist-december -->
 
@@ -4094,13 +4208,6 @@
   ════════════════════════════════════════════════════════════ -->
     <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.js"></script>
   <script>
-    // ── Live date ──────────────────────────────────────────────
-    const liveDate = document.getElementById('live-date');
-    const now = new Date();
-    liveDate.textContent = now.toLocaleDateString('en-CA', {
-      weekday: 'short', year: 'numeric', month: 'short', day: 'numeric'
-    }).toUpperCase();
-
     // ── Expenditure data ───────────────────────────────────────
     const expData = {
       archive: {
@@ -4353,7 +4460,9 @@
 
       const targets = month === 'archive'
         ? [...panel.querySelectorAll('.archive-month')]
-        : [...panel.querySelectorAll('.day-card')];
+        : [...panel.querySelectorAll('.day-card')].filter(card =>
+            /^[A-Z][a-z]{2} \d{1,2}$/.test(card.querySelector('.day-date')?.textContent.trim() ?? '')
+          );
 
       panel.querySelectorAll('.mobile-selected').forEach(target => target.classList.remove('mobile-selected'));
       targets[0]?.classList.add('mobile-selected');
@@ -4392,6 +4501,13 @@
         button.classList.add('active');
         document.querySelector('.summer-wrap')?.classList.toggle('mobile-budget-view', button.dataset.mobileView === 'budget');
       });
+    });
+
+    const hassanLegend = document.getElementById('hassan-legend');
+    document.getElementById('open-legend')?.addEventListener('click', () => hassanLegend?.showModal());
+    document.getElementById('close-legend')?.addEventListener('click', () => hassanLegend?.close());
+    hassanLegend?.addEventListener('click', event => {
+      if (event.target === hassanLegend) hassanLegend.close();
     });
 
     // ── Init current month expenses ────────────────────────────
@@ -4715,6 +4831,235 @@
       });
     }
 
+    function fillDailyPlanThroughDecember() {
+      const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      const weekdayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+      const templates = {};
+
+      document.querySelectorAll('#checklist-september .day-card').forEach(card => {
+        const dateText = card.querySelector('.day-date')?.textContent.trim() ?? '';
+        const match = dateText.match(/^Sep (2[1-7])$/);
+        if (!match) return;
+        const date = new Date(Date.UTC(2026, 8, Number(match[1])));
+        templates[date.getUTCDay()] = card;
+      });
+
+      const makeDivider = (date) => {
+        const divider = document.createElement('div');
+        divider.className = 'week-divider';
+        divider.innerHTML = `<div class="wd-label">Week of ${monthNames[date.getUTCMonth()]} ${date.getUTCDate()}</div>`;
+        return divider;
+      };
+
+      const cloneForDate = (date, source = templates[date.getUTCDay()]) => {
+        const card = source.cloneNode(true);
+        card.classList.remove('special', 'mobile-selected');
+        card.dataset.repeatedDay = 'true';
+        card.querySelector('.day-date').textContent = `${monthNames[date.getUTCMonth()]} ${date.getUTCDate()}`;
+        card.querySelector('.day-title').textContent = weekdayNames[date.getUTCDay()];
+        card.querySelectorAll('.task-item').forEach(item => {
+          const text = item.querySelector('.task-text');
+          const value = text?.textContent.trim() ?? '';
+          if (/^US visa appointment$/i.test(value)) {
+            item.remove();
+            return;
+          }
+          if (date.getUTCMonth() === 9 && /twitch|jarvis/i.test(value)) {
+            text.textContent = 'ObservabilityCon demo work';
+          }
+          if (date.getUTCMonth() === 10 && /call with nidhi/i.test(value)) {
+            item.querySelector('.task-time').textContent = '8:00–9:00 pm';
+            text.textContent = 'SAT prep with Juju · her Bangladesh morning';
+          }
+          if (date.getUTCMonth() === 10 && /call with saranya/i.test(value)) {
+            item.querySelector('.task-time').textContent = '9:00–10:00 pm';
+            text.textContent = 'College applications with Juju · her Bangladesh morning';
+          }
+        });
+        return card;
+      };
+
+      const mergeForDate = (date, existing) => {
+        const card = cloneForDate(date);
+        if (existing.classList.contains('special')) card.classList.add('special');
+        if (existing.classList.contains('travel')) card.classList.add('travel');
+
+        const existingTitle = existing.querySelector('.day-title')?.textContent.trim();
+        const title = card.querySelector('.day-title');
+        if (title && existingTitle && existingTitle !== weekdayNames[date.getUTCDay()]) {
+          title.textContent = existingTitle.includes('Weekend')
+            ? `${weekdayNames[date.getUTCDay()]} · ${existingTitle}`
+            : existingTitle;
+        }
+
+        const badges = existing.querySelector('.badges');
+        if (badges) card.querySelector('.badges').innerHTML = badges.innerHTML;
+
+        const body = card.querySelector('.day-body');
+        const routine = body.querySelector('.night-routine');
+        const repeatedTasks = new Set([...body.querySelectorAll('.task-text')].map(item => item.textContent.trim().toLowerCase()));
+        existing.querySelectorAll('.day-body > .task-group').forEach(group => {
+          const customGroup = group.cloneNode(true);
+          customGroup.querySelectorAll('.task-item').forEach(item => {
+            const text = item.querySelector('.task-text')?.textContent.trim().toLowerCase() ?? '';
+            if (repeatedTasks.has(text) || text === 'us visa appointment') item.remove();
+          });
+          if (customGroup.querySelector('.task-item')) body.insertBefore(customGroup, routine);
+        });
+        return card;
+      };
+
+      document.querySelectorAll('#checklist-september > .day-card').forEach(card => {
+        const dateText = card.querySelector('.day-date')?.textContent.trim() ?? '';
+        const match = dateText.match(/^(Sep|Oct) (\d{1,2})$/);
+        if (!match || (match[1] === 'Sep' && Number(match[2]) < 28)) return;
+        const monthIndex = match[1] === 'Sep' ? 8 : 9;
+        const date = new Date(Date.UTC(2026, monthIndex, Number(match[2])));
+        card.replaceWith(mergeForDate(date, card));
+      });
+
+      const rebuildMonth = (panelId, monthIndex, firstDay, lastDay) => {
+        const panel = document.getElementById(panelId);
+        const goals = panel?.querySelector('.month-goals');
+        if (!panel || !goals) return;
+
+        const cards = [...panel.querySelectorAll(':scope > .day-card')];
+        const existingByDay = new Map();
+        cards.forEach(card => {
+          const dateText = card.querySelector('.day-date')?.textContent.trim() ?? '';
+          const match = dateText.match(new RegExp(`^${monthNames[monthIndex]} (\\d{1,2})$`));
+          if (match) existingByDay.set(Number(match[1]), card);
+        });
+
+        const weekendRange = cards.find(card => card.querySelector('.day-date')?.textContent.trim() === 'Oct 24–25');
+        const lateNovemberEvents = monthIndex === 10
+          ? cards.filter(card => card.classList.contains('special') && card.querySelector('.day-date')?.textContent.trim() === 'Late Nov')
+          : [];
+
+        [...panel.children].forEach(child => {
+          if (child.classList.contains('week-divider') || child.classList.contains('day-card')) child.remove();
+        });
+
+        const fragment = document.createDocumentFragment();
+        for (let day = firstDay; day <= lastDay; day += 1) {
+          const date = new Date(Date.UTC(2026, monthIndex, day));
+          if (day === firstDay || date.getUTCDay() === 1) fragment.appendChild(makeDivider(date));
+
+          const existing = existingByDay.get(day);
+          if (existing) {
+            fragment.appendChild(mergeForDate(date, existing));
+          } else if (monthIndex === 9 && (day === 24 || day === 25) && weekendRange) {
+            fragment.appendChild(mergeForDate(date, weekendRange));
+          } else {
+            fragment.appendChild(cloneForDate(date));
+          }
+        }
+
+        if (lateNovemberEvents.length) {
+          const divider = document.createElement('div');
+          divider.className = 'week-divider';
+          divider.innerHTML = '<div class="wd-label">Late November · event dates TBD</div>';
+          fragment.appendChild(divider);
+          lateNovemberEvents.forEach(card => fragment.appendChild(card));
+        }
+        goals.insertAdjacentElement('afterend', document.createElement('span'));
+        goals.nextElementSibling.replaceWith(fragment);
+      };
+
+      rebuildMonth('checklist-october', 9, 5, 31);
+      rebuildMonth('checklist-november', 10, 1, 30);
+      rebuildMonth('checklist-december', 11, 1, 31);
+    }
+
+    function addDetailedWorkNotes() {
+      document.querySelectorAll('#checklist-september .day-card, #checklist-october .day-card, #checklist-november .day-card').forEach(card => {
+        const dateText = card.querySelector('.day-date')?.textContent.trim() ?? '';
+        const dateMatch = dateText.match(/^(Sep|Oct|Nov) (\d{1,2})$/);
+        if (!dateMatch) return;
+
+        if (dateMatch[1] !== 'Nov') {
+          card.querySelectorAll('.task-text').forEach(text => {
+            if (/observabilitycon demo/i.test(text.textContent) && !/deliver .*talk/i.test(text.textContent) && !/deploy cloud resources/i.test(text.textContent)) {
+              text.textContent += ' · deploy cloud resources';
+            }
+          });
+        }
+
+        const monthIndex = dateMatch[1] === 'Sep' ? 8 : dateMatch[1] === 'Oct' ? 9 : 10;
+        const date = new Date(Date.UTC(2026, monthIndex, Number(dateMatch[2])));
+        if (date.getUTCDay() !== 3 || dateMatch[1] === 'Nov') return;
+
+        const agentInsights = [...card.querySelectorAll('.task-item')].find(item =>
+          item.querySelector('.task-time')?.textContent.trim() === '12:00–2:00 pm' &&
+          /agent insights/i.test(item.querySelector('.task-text')?.textContent ?? '')
+        );
+        const text = agentInsights?.querySelector('.task-text');
+        const detail = dateMatch[1] === 'Sep'
+          ? 'define end-to-end user journey'
+          : 'define alerts journey and pursue partner integration';
+        if (text && !text.textContent.toLowerCase().includes(detail)) text.textContent += ` · ${detail}`;
+      });
+    }
+
+    function addJujuApplicationPlan() {
+      const addTask = (dateText, label, time, text) => {
+        const card = [...document.querySelectorAll('.day-card')].find(item =>
+          item.querySelector('.day-date')?.textContent.trim() === dateText
+        );
+        const body = card?.querySelector('.day-body');
+        if (!body || body.textContent.includes(text)) return;
+
+        const group = document.createElement('div');
+        group.className = 'task-group juju-application-group';
+        group.innerHTML = `<div class="tg-label">${label}</div><div class="task-item"><div class="task-cb"></div><span class="task-time">${time}</span><span class="task-text">${text}</span></div>`;
+        const routine = body.querySelector('.night-routine');
+        body.insertBefore(group, routine);
+      };
+
+      addTask(
+        'Nov 1',
+        'Early Decision',
+        '6:00–8:00 pm',
+        "Finalize and submit Juju's Early Decision application to RIT · her Bangladesh morning"
+      );
+
+      const decemberDates = [1, 2, 3, 5, 6, 7, 8, 9, 12, 13, 14, 15, 16, 19, 20];
+      decemberDates.forEach((day, index) => {
+        const sequence = String(index + 1).padStart(2, '0');
+        addTask(
+          `Dec ${day}`,
+          'Juju · college applications',
+          '8:00–9:00 pm',
+          `College applications with Juju · college ${sequence} of 15 · her Bangladesh morning`
+        );
+      });
+    }
+
+    function addBangladeshTravelWindow() {
+      document.querySelectorAll('#checklist-december > .day-card').forEach(card => {
+        const dateText = card.querySelector('.day-date')?.textContent.trim() ?? '';
+        const match = dateText.match(/^Dec (\d{1,2})$/);
+        if (!match || Number(match[1]) < 21) return;
+
+        card.classList.add('travel');
+        const badges = card.querySelector('.badges');
+        if (badges && !/bangladesh/i.test(badges.textContent)) {
+          const badge = document.createElement('span');
+          badge.className = 'badge b-travel';
+          badge.textContent = Number(match[1]) === 21 ? 'Bangladesh · departure' : 'Bangladesh';
+          badges.appendChild(badge);
+        }
+
+        if (Number(match[1]) === 21) {
+          const body = card.querySelector('.day-body');
+          const group = document.createElement('div');
+          group.className = 'task-group bangladesh-travel-group';
+          group.innerHTML = '<div class="tg-label">Travel</div><div class="task-item"><div class="task-cb"></div><span class="task-time">Travel day</span><span class="task-text">Travel to Bangladesh · trip continues through January 22</span></div>';
+          body?.insertBefore(group, body.querySelector('.night-routine'));
+        }
+      });
+    }
+
     // ── Current-plan wellness and connection cadence ─────────
     function addDailyRoutines() {
       const monthIndexes = { Sep: 8, Oct: 9, Nov: 10, Dec: 11 };
@@ -4773,7 +5118,7 @@
           const hasConflict = card.classList.contains('travel') || card.querySelector('.b-travel') ||
             /hardest|date night|on stage|observabilitycon|redmond|wedding|ignite/.test(title) ||
             dayOfWeek === 6;
-          const hasFamilyCall = /family|baba|ammu|fupi/.test(taskText);
+          const hasFamilyCall = /family|baba|ammu|fupi|chachhu|juju|puju|nuru/.test(taskText);
           if (!hasConflict && !hasFamilyCall) {
             const familyItem = document.createElement('div');
             familyItem.className = 'task-item family-call-row';
@@ -4873,6 +5218,10 @@
       if (window.lucide) window.lucide.createIcons();
     }
 
+    fillDailyPlanThroughDecember();
+    addDetailedWorkNotes();
+    addJujuApplicationPlan();
+    addBangladeshTravelWindow();
     addWorkTasks();
     addContentFilming();
     addSundayMealPrep();
