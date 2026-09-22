@@ -660,6 +660,14 @@
       line-height: 1.5;
       flex: 1;
     }
+    .task-title { display: block; font-weight: 600; }
+    .task-details {
+      margin: 5px 0 0 17px;
+      color: var(--text-2);
+      font-size: 0.8rem;
+      line-height: 1.55;
+    }
+    .t-work .task-details { color: #7caed8; }
     .task-item.done .task-text {
       color: var(--text-3);
       text-decoration: line-through;
@@ -2835,6 +2843,7 @@
             <div class="mg-row mg-must"><span class="mg-must-icon">04</span>Take ownership of Helios</div>
             <div class="mg-row mg-must"><span class="mg-must-icon">05</span>Review my on-stage demo proposal with leadership</div>
             <div class="mg-row mg-must"><span class="mg-must-icon">06</span>Finalize and lead dashboarding and visualizations roadmap with PM LT, then Eng LT</div>
+            <div class="mg-row mg-must"><span class="mg-must-icon">07</span>Lead the SuperApp observability story</div>
             <div class="mg-row"><span class="mg-tag">Friday dance nights</span><span class="mg-tag">Pilates 2× / week</span><span class="mg-tag">Running 3× / week</span><span class="mg-tag">Family call every night</span><span class="mg-tag">Thursday date nights</span></div>
           </div>
 
@@ -2873,9 +2882,9 @@
             <div class="day-header" onclick="toggleDay(this)"><div class="dh-left"><span class="day-date">Sep 22</span><span class="day-title">Tuesday · hardest day</span><div class="badges"><span class="badge b-wfh">WFH</span></div></div><span class="day-toggle">▾</span></div>
             <div class="day-body">
               <div class="task-group"><div class="tg-label">Meetings + execution</div>
-                <div class="task-item"><div class="task-cb"></div><span class="task-time">8:00 am</span><span class="task-text">Wake up</span></div>
+                <div class="task-item"><div class="task-cb"></div><span class="task-time">7:00 am</span><span class="task-text">Wake up</span></div>
                 <div class="task-item"><div class="task-cb"></div><span class="task-time">8:30–9:30 am</span><span class="task-text">Grafana Labs sync</span></div>
-                <div class="task-item"><div class="task-cb"></div><span class="task-time">9:30–10:30 am</span><span class="task-text">Supportability PM · customer engagement notes · Service Health check · IcM count</span></div>
+                <div class="task-item"><div class="task-cb"></div><span class="task-time">9:30–10:30 am</span><span class="task-text">Work on SuperApp</span></div>
                 <div class="task-item"><div class="task-cb"></div><span class="task-time">10:30 am</span><span class="task-text">Supportability sync</span></div>
                 <div class="task-item"><div class="task-cb"></div><span class="task-time">11:00 am</span><span class="task-text">Snack + vitamin water · protected break</span></div>
                 <div class="task-item"><div class="task-cb"></div><span class="task-time">12:00–1:00 pm</span><span class="task-text">ObservabilityCon demo work</span></div>
@@ -4701,7 +4710,7 @@
       document.querySelectorAll('#checklist-september .day-card, #checklist-october .day-card, #checklist-november .day-card, #checklist-december .day-card').forEach(card => {
         const dayTitle = (card.querySelector('.day-title')?.textContent ?? '').toLowerCase();
         const body = card.querySelector('.day-body');
-        if (!dayTitle.includes('sunday') || !body || /meal prep/i.test(body.textContent)) return;
+        if (!dayTitle.includes('sunday') || !body || card.classList.contains('travel') || card.querySelector('.b-travel') || /meal prep/i.test(body.textContent)) return;
 
         const item = document.createElement('div');
         item.className = 'task-item meal-prep-row';
@@ -4770,6 +4779,17 @@
           timeRank(second.querySelector('.task-time')?.textContent ?? '')
         );
         tasks.forEach(task => group.appendChild(task));
+      });
+
+      document.querySelectorAll('.day-body').forEach(body => {
+        const groups = [...body.querySelectorAll(':scope > .task-group')];
+        groups.sort((first, second) => {
+          const firstTime = first.querySelector(':scope > .task-item .task-time')?.textContent ?? '';
+          const secondTime = second.querySelector(':scope > .task-item .task-time')?.textContent ?? '';
+          return timeRank(firstTime) - timeRank(secondTime);
+        });
+        const routine = body.querySelector(':scope > .night-routine');
+        groups.forEach(group => body.insertBefore(group, routine));
       });
     }
 
@@ -4880,6 +4900,19 @@
       };
 
       const mergeForDate = (date, existing) => {
+        const isOctoberTravelWindow = date.getUTCMonth() === 9 && date.getUTCDate() >= 19 && date.getUTCDate() <= 26;
+        if (isOctoberTravelWindow) {
+          const card = existing.cloneNode(true);
+          card.classList.remove('mobile-selected');
+          card.dataset.repeatedDay = 'false';
+          card.querySelector('.day-date').textContent = `${monthNames[date.getUTCMonth()]} ${date.getUTCDate()}`;
+          const existingTitle = card.querySelector('.day-title')?.textContent.trim() ?? '';
+          if (existingTitle.includes('Weekend')) {
+            card.querySelector('.day-title').textContent = `${weekdayNames[date.getUTCDay()]} · ${existingTitle}`;
+          }
+          return card;
+        }
+
         const card = cloneForDate(date);
         if (existing.classList.contains('special')) card.classList.add('special');
         if (existing.classList.contains('travel')) card.classList.add('travel');
@@ -5001,6 +5034,35 @@
       });
     }
 
+    function updateCurrentSeptemberEvenings() {
+      const currentWeekdays = new Set(['Sep 21', 'Sep 22', 'Sep 23', 'Sep 24', 'Sep 25']);
+      document.querySelectorAll('#checklist-september > .day-card').forEach(card => {
+        const dateText = card.querySelector('.day-date')?.textContent.trim() ?? '';
+        if (!currentWeekdays.has(dateText)) return;
+
+        const body = card.querySelector('.day-body');
+        if (!body) return;
+        card.querySelectorAll('.task-item').forEach(item => {
+          const time = item.querySelector('.task-time')?.textContent.trim().toLowerCase() ?? '';
+          if (/^(5:00|6:00|after pilates)/.test(time) || time === 'evening') item.remove();
+        });
+
+        const group = document.createElement('div');
+        group.className = 'task-group superapp-evening-group';
+        const isToday = dateText === 'Sep 21';
+        const resetText = isToday
+          ? '$10 mall sushi <3 · little walk to Miniso · maybe get a capybara? · Sephora treat: new lipstick'
+          : 'Brain reset break · dinner · mall walk · sushi · Sephora';
+        const superAppContent = isToday
+          ? '<span class="task-title">Back to work on SuperApp</span><ul class="task-details"><li>Create a visual walkthrough inside the Code tab</li><li>Available today / inventory</li><li>Needs validation with eng / other teams</li><li>Potential Ignite delta assumption</li><li>Post-Ignite / North Star</li></ul>'
+          : 'Work on SuperApp';
+        group.innerHTML = '<div class="tg-label">Reset + SuperApp</div>' +
+          `<div class="task-item"><div class="task-cb"></div><span class="task-time">5:00–6:00 pm</span><span class="task-text">${resetText}</span></div>` +
+          `<div class="task-item"><div class="task-cb"></div><span class="task-time">6:00–9:00 pm</span><div class="task-text">${superAppContent}</div></div>`;
+        body.insertBefore(group, body.querySelector('.night-routine'));
+      });
+    }
+
     function addJujuApplicationPlan() {
       const addTask = (dateText, label, time, text) => {
         const card = [...document.querySelectorAll('.day-card')].find(item =>
@@ -5076,11 +5138,12 @@
         const dayOfWeek = new Date(date).getUTCDay();
         const isHairCareNight = dayOffset >= 0 && dayOffset % 2 === 0;
         const isDateRange = /[\u2013\u2014-]/.test(dateText);
+        const isOctoberTravelWindow = match[1] === 'Oct' && Number(match[2]) >= 19 && Number(match[2]) <= 26;
         const body = card.querySelector('.day-body');
         if (!body) return;
 
         const taskText = body.textContent.toLowerCase();
-        if (!isDateRange && dayOfWeek >= 1 && dayOfWeek <= 5 && !/snack|vitamin water/.test(taskText)) {
+        if (!isDateRange && !isOctoberTravelWindow && dayOfWeek >= 1 && dayOfWeek <= 5 && !/snack|vitamin water/.test(taskText)) {
           const breakItem = document.createElement('div');
           breakItem.className = 'task-item routine-break-row';
           breakItem.innerHTML = '<div class="task-cb"></div><span class="task-time">Midday reset</span><span class="task-text">Snack + vitamin water break</span>';
@@ -5220,6 +5283,7 @@
 
     fillDailyPlanThroughDecember();
     addDetailedWorkNotes();
+    updateCurrentSeptemberEvenings();
     addJujuApplicationPlan();
     addBangladeshTravelWindow();
     addWorkTasks();
