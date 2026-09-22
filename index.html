@@ -2923,9 +2923,8 @@
                 <div class="task-item"><div class="task-cb"></div><span class="task-time">5:00 pm</span><span class="task-text">Break</span></div>
                 <div class="task-item"><div class="task-cb"></div><span class="task-time">6:00 pm</span><span class="task-text">Run 3–5 miles</span></div>
                 <div class="task-item"><div class="task-cb"></div><span class="task-time">8:00 pm</span><span class="task-text">Dinner + shower</span></div>
-                <div class="task-item"><div class="task-cb"></div><span class="task-time">9:00 pm</span><span class="task-text">Call Choto Fupi</span></div>
-                <div class="task-item"><div class="task-cb"></div><span class="task-time">10:00 pm</span><span class="task-text">Call Ammu</span></div>
-                <div class="task-item"><div class="task-cb"></div><span class="task-time">11:00 pm</span><span class="task-text">Twitch or Jarvis · watch something if brain is fried</span></div>
+                <div class="task-item"><div class="task-cb"></div><span class="task-time">9:00–10:00 pm</span><span class="task-text">Prep for Thursday morning's SuperApp state of Ignite demo to Kim</span></div>
+                <div class="task-item"><div class="task-cb"></div><span class="task-time">10:00 pm</span><span class="task-text">Wind down and sleep early</span></div>
               </div>
               <div class="night-routine"><div class="nr-label">12:00 am · Night Routine</div><div class="nr-tags"><span class="nr-tag">tart cherry juice</span><span class="nr-tag">invisalign</span><span class="nr-tag">skincare</span></div></div>
             </div>
@@ -5182,7 +5181,7 @@
           const title = (card.querySelector('.day-title')?.textContent ?? '').toLowerCase();
           const hasConflict = card.classList.contains('travel') || card.querySelector('.b-travel') ||
             /hardest|date night|on stage|observabilitycon|redmond|wedding|ignite/.test(title) ||
-            dayOfWeek === 6;
+            dateText === 'Sep 23' || dayOfWeek === 6;
           const hasFamilyCall = /family|baba|ammu|fupi|chachhu|juju|puju|nuru/.test(taskText);
           if (!hasConflict && !hasFamilyCall) {
             const familyItem = document.createElement('div');
