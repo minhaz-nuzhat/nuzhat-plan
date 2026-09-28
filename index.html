@@ -1093,7 +1093,7 @@
       <span class="cursor"></span>
     </div>
     <div class="topbar-actions">
-      <button class="legend-button" type="button" id="open-legend">Legend for Hassan</button>
+      <button class="legend-button" type="button" id="open-legend" hidden>Legend for Hassan</button>
     </div>
   </header>
 
@@ -2844,7 +2844,9 @@
             <div class="mg-row mg-must"><span class="mg-must-icon">05</span>Take ownership of Helios</div>
             <div class="mg-row mg-must"><span class="mg-must-icon">06</span>Review my on-stage demo proposal with leadership</div>
             <div class="mg-row mg-must"><span class="mg-must-icon">07</span>Finalize and lead dashboarding and visualizations roadmap with PM LT, then Eng LT</div>
-            <div class="mg-row"><span class="mg-tag">Friday dance nights</span><span class="mg-tag">Pilates 2× / week</span><span class="mg-tag">Running 3× / week</span><span class="mg-tag">Family call every night</span><span class="mg-tag">Thursday date nights</span></div>
+            <div class="mg-row mg-must"><span class="mg-must-icon">08</span>Sign L1 immigration forms for early return to the US</div>
+            <div class="mg-row mg-must"><span class="mg-must-icon">09</span>Sign US immigration forms and withdraw PR petition interest from Microsoft HR pipelines</div>
+            <div class="mg-row"><span class="mg-tag">Friday dance nights</span><span class="mg-tag">Pilates 2× / week</span><span class="mg-tag">Running 3× / week</span><span class="mg-tag">Family call every night</span><span class="mg-tag">Thursday Salsa at Mango's</span></div>
           </div>
 
           <div class="week-divider"><div class="wd-label">Week of September 20</div></div>
@@ -2995,6 +2997,7 @@
               <div class="task-item"><div class="task-cb"></div><span class="task-time">7:00 am</span><span class="task-text">Protected catch-up block · focus on metrics variable pending PM spec</span></div>
               <div class="task-item"><div class="task-cb"></div><span class="task-time">8:00 am</span><span class="task-text">HorizonDB team meeting · align on AMG requirements, asks, and next steps</span></div>
               <div class="task-item"><div class="task-cb"></div><span class="task-time">9:00 am</span><span class="task-text">Azure health models study hour · protected learning block before the next sync</span></div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">9:00 am</span><span class="task-text">Set up appointment with Microsoft US immigration lawyer</span></div>
               <div class="task-item"><div class="task-cb"></div><span class="task-time">10:00 am</span><span class="task-text">SuperApp coding agents working session with the Copilot team</span></div>
             </div><div class="task-group"><div class="tg-label">Office + customer work</div>
               <div class="task-item"><div class="task-cb"></div><span class="task-time">11:00 am–12:00 pm</span><span class="task-text">Transition to the office over lunch · commute, settle in, reset</span></div>
@@ -5034,6 +5037,46 @@
       rebuildMonth('checklist-december', 11, 1, 31);
     }
 
+    function updateDanceNights() {
+      const monthIndexes = { Sep: 8, Oct: 9, Nov: 10, Dec: 11 };
+      const cadenceStart = Date.UTC(2026, 8, 28);
+
+      document.querySelectorAll('#checklist-september .day-card, #checklist-october .day-card, #checklist-november .day-card, #checklist-december .day-card').forEach(card => {
+        const dateText = card.querySelector('.day-date')?.textContent.trim() ?? '';
+        const match = dateText.match(/^([A-Z][a-z]{2}) (\d{1,2})$/);
+        if (!match || monthIndexes[match[1]] === undefined) return;
+
+        const date = Date.UTC(2026, monthIndexes[match[1]], Number(match[2]));
+        if (date < cadenceStart || card.classList.contains('travel') || card.querySelector('.b-travel')) return;
+
+        const dayOfWeek = new Date(date).getUTCDay();
+        if (dayOfWeek !== 4 && dayOfWeek !== 5) return;
+
+        card.querySelectorAll('.task-item').forEach(item => {
+          const text = item.querySelector('.task-text')?.textContent ?? '';
+          if (/Hassan|date night/i.test(text)) item.remove();
+        });
+        card.querySelectorAll('.task-group').forEach(group => {
+          if (!group.querySelector('.task-item')) {
+            group.remove();
+            return;
+          }
+          const label = group.querySelector('.tg-label');
+          if (label && /date night/i.test(label.textContent)) label.textContent = 'Evening reset';
+        });
+
+        const body = card.querySelector('.day-body');
+        const danceText = dayOfWeek === 4 ? "Salsa at Mango's" : 'Friday night Salsa at Baza Dance Studio';
+        if (!body || body.textContent.includes(danceText)) return;
+
+        const group = document.createElement('div');
+        group.className = 'task-group dance-night-group';
+        const time = dayOfWeek === 4 ? 'Evening' : '10:00–11:30 pm';
+        group.innerHTML = `<div class="tg-label">Dance night</div><div class="task-item"><div class="task-cb"></div><span class="task-time">${time}</span><span class="task-text">${danceText}</span></div>`;
+        body.insertBefore(group, body.querySelector('.night-routine'));
+      });
+    }
+
     function addDetailedWorkNotes() {
       document.querySelectorAll('#checklist-september .day-card, #checklist-october .day-card, #checklist-november .day-card').forEach(card => {
         const dateText = card.querySelector('.day-date')?.textContent.trim() ?? '';
@@ -5316,6 +5359,7 @@
     }
 
     fillDailyPlanThroughDecember();
+    updateDanceNights();
     addDetailedWorkNotes();
     updateCurrentSeptemberEvenings();
     addJujuApplicationPlan();
