@@ -781,6 +781,19 @@
     }
     .mg-row:last-child { margin-bottom: 0; }
     .mg-must { color: var(--text); font-weight: 500; }
+    .mg-deferred {
+      color: var(--text-3);
+      text-decoration: line-through;
+      text-decoration-color: var(--red-dim);
+    }
+    .mg-deferred-note {
+      margin: 1px 0 7px 25px;
+      font-family: var(--font);
+      font-size: 0.62rem;
+      color: var(--red);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
     .mg-tag {
       background: rgba(88,166,255,0.07);
       border: 1px solid rgba(88,166,255,0.18);
@@ -1093,7 +1106,7 @@
       <span class="cursor"></span>
     </div>
     <div class="topbar-actions">
-      <button class="legend-button" type="button" id="open-legend" hidden>Legend for Hassan</button>
+      <button class="legend-button" type="button" id="open-legend">Legend for Hassan</button>
     </div>
   </header>
 
@@ -2837,8 +2850,9 @@
 
           <div class="month-goals">
             <div class="mg-label">// September focus</div>
-            <div class="mg-row mg-must"><span class="mg-must-icon">08</span>Sign L1 immigration forms for early return to the US</div>
-            <div class="mg-row mg-must"><span class="mg-must-icon">09</span>Sign US immigration forms and withdraw Canada PR petition interest from Microsoft HR pipelines</div>
+            <div class="mg-row mg-must mg-deferred"><span class="mg-must-icon">08</span>Sign L1 immigration forms for early return to the US</div>
+            <div class="mg-row mg-must mg-deferred"><span class="mg-must-icon">09</span>Sign US immigration forms and withdraw Canada PR petition interest from Microsoft HR pipelines</div>
+            <div class="mg-deferred-note">Deferred to January</div>
             <div class="mg-row mg-must"><span class="mg-must-icon">01★</span>Lead the SuperApp coding agent / observability story</div>
             <div class="mg-row mg-must"><span class="mg-must-icon">02</span>Code out ObservabilityCon demo across Azure Monitor, Fabric, and Foundry</div>
             <div class="mg-row mg-must"><span class="mg-must-icon">03</span>Real-Time Intelligence sync introduction for Project Lyra</div>
@@ -3015,46 +3029,62 @@
             </div></div>
           </div>
 
-          <div class="day-card">
+          <div class="day-card exact-plan">
             <div class="day-header" onclick="toggleDay(this)"><div class="dh-left"><span class="day-date">Sep 29</span><span class="day-title">Tuesday</span><div class="badges"><span class="badge b-wfh">WFH</span></div></div><span class="day-toggle">▾</span></div>
-            <div class="day-body"><div class="task-group"><div class="tg-label">Introductions + execution</div>
-              <div class="task-item"><div class="task-cb"></div><span class="task-time">9:00–10:00 am</span><span class="task-text">Real-Time Intelligence sync introduction</span></div>
-              <div class="task-item"><div class="task-cb"></div><span class="task-time">10:30 am–12:00 pm</span><span class="task-text">Strategic 400 customer field calls</span></div>
-              <div class="task-item"><div class="task-cb"></div><span class="task-time">1:00–3:00 pm</span><span class="task-text">ObservabilityCon demo · Foundry experience</span></div>
-              <div class="task-item"><div class="task-cb"></div><span class="task-time">3:30–5:00 pm</span><span class="task-text">Helios onboarding · ownership map and open decisions</span></div>
-              <div class="task-item"><div class="task-cb"></div><span class="task-time">6:00–7:00 pm</span><span class="task-text">Pilates</span></div>
+            <div class="day-body"><div class="task-group"><div class="tg-label">Recovery + immigration admin</div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">5:00–8:00 pm</span><span class="task-text">Protected nap · recover before the evening reset</span></div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">8:00–9:00 pm</span><span class="task-text">Dinner · wake up slowly and refuel</span></div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">9:00–10:00 pm</span><span class="task-text">Complete US visa bond payment</span></div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">10:00–11:00 pm</span><span class="task-text">Work on ObservabilityCon demo</span></div>
             </div></div>
           </div>
 
-          <div class="day-card">
+          <div class="day-card special exact-plan">
             <div class="day-header" onclick="toggleDay(this)"><div class="dh-left"><span class="day-date">Sep 30</span><span class="day-title">Wednesday</span><div class="badges"><span class="badge b-office">In Office</span></div></div><span class="day-toggle">▾</span></div>
-            <div class="day-body"><div class="task-group"><div class="tg-label">Onboarding + demo</div>
-              <div class="task-item"><div class="task-cb"></div><span class="task-time">9:00 am–12:00 pm</span><span class="task-text">Helios onboarding · architecture, partner model, and roadmap</span></div>
-              <div class="task-item"><div class="task-cb"></div><span class="task-time">1:00–3:00 pm</span><span class="task-text">ObservabilityCon demo · Fabric experience</span></div>
-              <div class="task-item"><div class="task-cb"></div><span class="task-time">3:00–4:00 pm</span><span class="task-text">Strategic 400 customer call follow-ups and owners</span></div>
-              <div class="task-item"><div class="task-cb"></div><span class="task-time">6:00 pm</span><span class="task-text">Run 3–5 miles</span></div>
+            <div class="day-body"><div class="task-group"><div class="tg-label">Morning ramp-up</div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">8:00 am</span><span class="task-text">Wake up</span></div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">8:00–9:00 am</span><span class="task-text">Matcha + catch up on emails</span></div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">9:00–10:00 am</span><span class="task-text">Work on ObservabilityCon demo · pivot to agent health demo</span></div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">10:00 am</span><span class="task-text">Azure Monitor shiproom</span></div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">11:00 am</span><span class="task-text">Azure Monitor standup</span></div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">11:00 am–12:00 pm</span><span class="task-text">Go to office · pick up a croissant</span></div>
+            </div><div class="task-group"><div class="tg-label">Big delivery</div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">12:00–5:00 pm</span><span class="task-text">Finish the ObservabilityCon demo · must be done today!</span></div>
+            </div><div class="task-group"><div class="tg-label">Come home + evening reset</div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">5:00–6:00 pm</span><span class="task-text">Come home + shower</span></div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">6:00 pm</span><span class="task-text">Groceries with Hassan</span></div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">7:00 pm</span><span class="task-text">Cook dinner</span></div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">8:00 pm</span><span class="task-text">Gym</span></div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">9:00 pm</span><span class="task-text">Dinner</span></div>
             </div></div>
           </div>
 
-          <div class="day-card">
+          <div class="day-card exact-plan">
             <div class="day-header" onclick="toggleDay(this)"><div class="dh-left"><span class="day-date">Oct 1</span><span class="day-title">Thursday</span><div class="badges"><span class="badge b-office">In Office</span></div></div><span class="day-toggle">▾</span></div>
-            <div class="day-body"><div class="task-group"><div class="tg-label">Demo + customer signal</div>
-              <div class="task-item"><div class="task-cb"></div><span class="task-time">9:00–11:00 am</span><span class="task-text">ObservabilityCon demo · Azure Monitor experience</span></div>
-              <div class="task-item"><div class="task-cb"></div><span class="task-time">11:00 am–12:00 pm</span><span class="task-text">Real-Time Intelligence sync follow-up</span></div>
-              <div class="task-item"><div class="task-cb"></div><span class="task-time">1:00–3:00 pm</span><span class="task-text">Strategic 400 customer field calls</span></div>
-              <div class="task-item"><div class="task-cb"></div><span class="task-time">3:30–5:00 pm</span><span class="task-text">Helios onboarding · embedded Grafana scenarios</span></div>
-              <div class="task-item"><div class="task-cb"></div><span class="task-time">6:00–7:00 pm</span><span class="task-text">Pilates</span></div>
+            <div class="day-body"><div class="task-group"><div class="tg-label">Team + demo walkthrough</div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">9:00 am</span><span class="task-text">Wake up</span></div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">10:00 am</span><span class="task-text">Introduction to Andy · new UI/UX designer on the team</span></div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">10:30 am</span><span class="task-text">Walk the team through my ObservabilityCon demo</span></div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">11:00 am</span><span class="task-text">Infrastructure observability team meeting</span></div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">12:00 pm</span><span class="task-text">Protected break</span></div>
+            </div><div class="task-group"><div class="tg-label">Agent observability prototype</div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">1:00 pm</span><span class="task-text">Start working on agent observability prototype for Judson</span></div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">2:00 pm</span><span class="task-text">Helios office hours</span></div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">4:00–6:00 pm</span><span class="task-text">Build agent observability demo</span></div>
+            </div><div class="task-group"><div class="tg-label">Admin + farewell</div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">Today</span><span class="task-text">Apply for corporate credit card + complete bond payment</span></div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">9:00 pm</span><span class="task-text">Saquib farewell</span></div>
             </div></div>
           </div>
 
-          <div class="day-card">
-            <div class="day-header" onclick="toggleDay(this)"><div class="dh-left"><span class="day-date">Oct 2</span><span class="day-title">Friday</span><div class="badges"><span class="badge b-wfh">WFH</span></div></div><span class="day-toggle">▾</span></div>
-            <div class="day-body"><div class="task-group"><div class="tg-label">Synthesis</div>
-              <div class="task-item"><div class="task-cb"></div><span class="task-time">9:00–11:00 am</span><span class="task-text">Connect the ObservabilityCon demo across Azure Monitor, Fabric, and Foundry</span></div>
-              <div class="task-item"><div class="task-cb"></div><span class="task-time">11:00 am–12:00 pm</span><span class="task-text">Helios onboarding notes and next-week plan</span></div>
-              <div class="task-item"><div class="task-cb"></div><span class="task-time">1:00–3:00 pm</span><span class="task-text">Strategic 400 customer insights · themes and follow-ups</span></div>
-              <div class="task-item"><div class="task-cb"></div><span class="task-time">5:00 pm</span><span class="task-text">Run</span></div>
-              <div class="task-item"><div class="task-cb"></div><span class="task-time">Evening</span><span class="task-text">Keep the night open</span></div>
+          <div class="day-card special exact-plan">
+            <div class="day-header" onclick="toggleDay(this)"><div class="dh-left"><span class="day-date">Oct 2</span><span class="day-title">Friday · Demo Day</span><div class="badges"><span class="badge b-wfh">WFH</span><span class="badge b-holiday">concert night</span></div></div><span class="day-toggle">▾</span></div>
+            <div class="day-body"><div class="task-group"><div class="tg-label">Demo day</div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">All day</span><span class="task-text">ObservabilityCon demo day · stay focused and deliver</span></div>
+            </div><div class="task-group"><div class="tg-label">The Neighbourhood</div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">5:00 pm</span><span class="task-text">Pregame with Jessica</span></div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">6:30 pm</span><span class="task-text">Head to the concert with Jessica</span></div>
+              <div class="task-item"><div class="task-cb"></div><span class="task-time">7:00–11:00 pm</span><span class="task-text">The Neighbourhood concert &lt;3</span></div>
             </div></div>
           </div>
 
@@ -5047,7 +5077,7 @@
         if (!match || monthIndexes[match[1]] === undefined) return;
 
         const date = Date.UTC(2026, monthIndexes[match[1]], Number(match[2]));
-        if (date < cadenceStart || card.classList.contains('travel') || card.querySelector('.b-travel')) return;
+        if (date < cadenceStart || card.classList.contains('exact-plan') || card.classList.contains('travel') || card.querySelector('.b-travel')) return;
 
         const dayOfWeek = new Date(date).getUTCDay();
         if (dayOfWeek !== 4 && dayOfWeek !== 5) return;
@@ -5079,6 +5109,8 @@
 
     function addDetailedWorkNotes() {
       document.querySelectorAll('#checklist-september .day-card, #checklist-october .day-card, #checklist-november .day-card').forEach(card => {
+        if (card.classList.contains('exact-plan')) return;
+
         const dateText = card.querySelector('.day-date')?.textContent.trim() ?? '';
         const dateMatch = dateText.match(/^(Sep|Oct|Nov) (\d{1,2})$/);
         if (!dateMatch) return;
