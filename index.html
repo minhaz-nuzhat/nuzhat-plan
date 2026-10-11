@@ -1090,11 +1090,125 @@
     .art-work-meta { font-family: var(--font); font-size: 0.58rem; color: var(--text-3); letter-spacing: 0.1em; margin-bottom: 8px; }
     .art-work-desc { font-family: var(--font-body); font-size: 0.84rem; color: var(--text-2); line-height: 1.65; }
 
+    /* ─── OCTOBER LOCK-IN ───────────────────────────────────── */
+    .october-campaign {
+      min-height: 100vh;
+      background:
+        linear-gradient(rgba(220,20,60,0.035), transparent 280px),
+        repeating-linear-gradient(90deg, transparent 0, transparent 79px, rgba(255,255,255,0.012) 80px),
+        var(--bg);
+    }
+    body.october-campaign-active > :not(.october-campaign):not(script) { display: none !important; }
+    .october-campaign[hidden] { display: none; }
+    .october-campaign-header {
+      position: sticky;
+      top: 0;
+      z-index: 300;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 24px;
+      align-items: center;
+      padding: 18px 28px;
+      border-bottom: 1px solid var(--red-dim);
+      background: rgba(10,10,10,0.96);
+      backdrop-filter: blur(16px);
+    }
+    .october-campaign-kicker {
+      margin-bottom: 3px;
+      font-size: 0.58rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--red);
+    }
+    .october-campaign-title {
+      max-width: 940px;
+      font-family: var(--font-display);
+      font-size: clamp(1.15rem, 2.2vw, 1.8rem);
+      font-weight: 500;
+      line-height: 1.18;
+      letter-spacing: 0;
+      color: var(--text);
+    }
+    .october-exit {
+      padding: 8px 12px;
+      border: 1px solid var(--red);
+      border-radius: var(--radius);
+      background: var(--red-glow);
+      color: var(--text);
+      font-family: var(--font);
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+    }
+    .october-exit:hover { background: rgba(220,20,60,0.18); }
+    .october-campaign-range {
+      padding: 12px 28px 10px;
+      font-size: 0.62rem;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-3);
+    }
+    .october-campaign-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      padding: 0 28px 40px;
+    }
+    .october-campaign .day-card {
+      margin: 0;
+      background: rgba(17,17,17,0.88);
+      border: 1px solid var(--border-2);
+      border-top-color: var(--red-dim);
+    }
+    .october-campaign .day-card.special { border-top-color: var(--red); }
+    .october-campaign .day-body { columns: 1; }
+    .october-campaign .task-text { font-size: 0.78rem; }
+    .october-campaign .campaign-outfit {
+      margin: 7px 3px 4px;
+      padding: 7px 9px;
+      border-left: 2px solid var(--blue);
+      background: rgba(88,166,255,0.05);
+      font-family: var(--font-body);
+      font-size: 0.75rem;
+      line-height: 1.45;
+      color: var(--text-2);
+    }
+    .october-campaign .campaign-outfit strong { color: var(--blue); }
+
+    @media (max-width: 1100px) {
+      .october-campaign-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+    @media (max-width: 760px) {
+      .october-campaign-header { padding: 13px 14px; gap: 12px; align-items: start; }
+      .october-campaign-title { font-size: 1rem; line-height: 1.25; }
+      .october-exit { padding: 7px 8px; font-size: 0.52rem; }
+      .october-campaign-range { padding: 10px 14px 8px; }
+      .october-campaign-grid { grid-template-columns: 1fr; padding: 0 12px 30px; }
+      .october-campaign .day-card { display: block; }
+      .october-campaign .day-body { padding: 9px 8px 12px; }
+    }
+
   </style>
   <link rel="stylesheet" href="desktop.css" media="(min-width: 761px)" />
   <link rel="stylesheet" href="mobile.css" media="(max-width: 760px)" />
 </head>
-<body>
+<body class="october-campaign-active">
+
+  <section class="october-campaign" id="october-campaign" aria-labelledby="october-campaign-title">
+    <header class="october-campaign-header">
+      <div>
+        <div class="october-campaign-kicker">// October 10–27 · lock-in mode</div>
+        <h1 class="october-campaign-title" id="october-campaign-title">Baby girl, it's time to lock in for the ObservabilityCon stage demo, Judson Althoff demo, and Ignite planning.</h1>
+      </div>
+      <button class="october-exit" type="button" id="exit-october">Exit October</button>
+    </header>
+    <div class="october-campaign-range">18 days · Vancouver → San Francisco → Seattle</div>
+    <div class="october-campaign-grid" id="october-campaign-grid"></div>
+  </section>
 
   <!-- ═══ TOP BAR ════════════════════════════════════════════ -->
   <header class="topbar">
@@ -5471,6 +5585,153 @@
       if (window.lucide) window.lucide.createIcons();
     }
 
+    function renderOctoberCampaign() {
+      const task = (time, text) => ({ time, text });
+      const group = (label, tasks) => ({ label, tasks });
+      const days = [
+        { date:'Oct 10', title:'Saturday', badge:'No agenda entered', groups:[group('Open day', [task('All day', 'No agenda entered for October 10')])] },
+        { date:'Oct 11', title:'Sunday · Today', special:true, badge:'Life reset', groups:[
+          group('Send-off + family logistics', [
+            task('10:30 am', 'Tavleen send-off'),
+            task('11:00 am–1:00 pm', 'Get life in order · make SAT prep guide for Juju'),
+            task('1:00–2:00 pm', 'Choto Fupi flight · New Hampshire and Dhaka ticket booking + logistics')
+          ]),
+          group('Break + outlet', [task('2:00–3:00 pm', 'Protected break'), task('3:00 pm', 'Shopping with Hritvik at McArthurGlen Outlet Mall'), task('By 6:00 pm', 'Be home')])
+        ]},
+        { date:'Oct 12', title:'Monday', special:true, badge:'Delivery day', groups:[
+          group('Slow start + Judson prototype', [
+            task('7:00–8:00 am', 'Wake up + slow morning routine · matcha'),
+            task('9:00–10:00 am', 'Record agent observability Super Skill plugin prototype for Judson Althoff · CEO of Business Ops review'),
+            task('10:00–11:00 am', 'Finish all Grafana product work · respond to every open thread and Teams message · follow up on ADO items'),
+            task('11:00 am', 'Azure Monitor UX standup')
+          ]),
+          group('Office + ObservabilityCon', [
+            task('12:00 pm', 'Go to office'),
+            task('1:00 pm', 'Record Grafana demo for ObservabilityCon'),
+            task('3:00–3:30 pm', 'AMG + Observability engineering meeting'),
+            task('3:30–4:00 pm', 'Engineering sync before Grafana Labs sync')
+          ])
+        ]},
+        { date:'Oct 13', title:'Tuesday · Judson Review Day', special:true, badge:'No other agenda', groups:[
+          group('Grafana Labs + Judson', [
+            task('Business sync', 'Meet Sofia from Grafana Labs · review contract renewal terms and Azure Monitor asks'),
+            task('Review day', 'Judson review day · no other agenda')
+          ]),
+          group('Travel booking', [
+            task('Today', 'Book flight tickets to San Francisco and Seattle'),
+            task('Rahul 1:1', 'If corporate card is not ready, book flights with Rahul during 1:1')
+          ])
+        ]},
+        { date:'Oct 14', title:'Wednesday', badge:'One month to Ignite', groups:[
+          group('Shiproom + Super Skill', [
+            task('11:00 am', 'Azure Monitor shiproom'),
+            task('Today', 'Finalize contributions for Super Skill plugin · one-month countdown to Ignite CCOA begins')
+          ]),
+          group('ObservabilityCon rehearsal', [
+            task('Rehearsal day', 'Rehearse ObservabilityCon demo · schedule time with Hong, Rahul, and Kayode'),
+            task('7:00–8:00 pm', 'Pilates')
+          ])
+        ]},
+        { date:'Oct 15', title:'Thursday · Payday', special:true, badge:'Final shopping day', groups:[
+          group('Trip shopping checklist', [
+            task('Shopping', 'Clothes'), task('Shopping', 'Skincare'), task('Shopping', 'Toothbrush · undergarments · necessities'),
+            task('Shopping', 'Shoes'), task('Shopping', 'Nail care'), task('Shopping', 'Hair care')
+          ]),
+          group('Work + movement', [
+            task('Workday', 'Infrastructure Observability team meeting'),
+            task('2:00–3:00 pm', 'Helios office hours'),
+            task('After work', 'Go on a run')
+          ])
+        ]},
+        { date:'Oct 16', title:'Friday · Final Wrap Day', special:true, badge:'No meetings', groups:[
+          group('Protected demo work', [task('All day', 'Final day to wrap all demo work · do not schedule any other meetings')])
+        ]},
+        { date:'Oct 17', title:'Saturday · Maintenance Day', badge:'Trip prep', groups:[
+          group('Appointments + care', [
+            task('Today', 'Change phone screen protector'), task('Today', 'Lash touch-up'), task('Today', 'Get nails done'), task('Today', 'Get haircut')
+          ])
+        ]},
+        { date:'Oct 18', title:'Sunday · Final Check', special:true, badge:'Pack everything', groups:[
+          group('Travel readiness', [task('All day', 'Complete packing!'), task('Final check', "Baby, it's final demo check-up day")])
+        ]},
+        { date:'Oct 19', title:'Monday · Vancouver → San Francisco', special:true, travel:true, badge:'Travel day', outfit:'Lululemon jacket + fit-and-flare tights · espresso', groups:[
+          group('Fly + recover', [task('By 10:00 am', 'Fly out'), task('Arrival', 'Check in to hotel'), task('Afternoon', 'NAP!!!! EAT!!!')]),
+          group('Stage rehearsal', [task('5:00 pm', 'On-stage rehearsal at Embarcadero · Pier 27')])
+        ]},
+        { date:'Oct 20', title:'Tuesday · ObservabilityCon', travel:true, badge:'Grafana Labs + customers', outfit:'Azure Managed Grafana jacket · cobalt blue top or white satin shirt', groups:[
+          group('Leadership + roadmap', [
+            task('Conference day', 'Meet Sofia and Grafana Labs leadership'),
+            task('Customer meetings', 'Roadmap review · coding agents Super Skill observability · intent routing · correlation ID')
+          ])
+        ]},
+        { date:'Oct 21', title:"Wednesday · It's Game Day Baby", special:true, travel:true, badge:'Stage demo', outfit:'Light blue satin shirt · dark blue denim · black boots', groups:[
+          group('Stage morning', [
+            task('8:00 am', 'Wake up + get dressed'), task('9:00 am', 'Go to conference · confirm the demo works'),
+            task('10:00 am', 'Touch up makeup + fit'), task('11:00 am', 'Stage demo lightning talk theatre')
+          ]),
+          group('Customers + celebration', [
+            task('All day', 'Spend the day with Strategic 400 customers'), task('Dinner', 'Dinner with Grafana Labs'),
+            task('Late night', 'Hang out with Afia and Alwi')
+          ])
+        ]},
+        { date:'Oct 22', title:'Thursday · San Francisco → Seattle', travel:true, badge:'South Lake Union', groups:[
+          group('Travel + settle in', [
+            task('Morning', 'Fly to Seattle'), task('Arrival', 'Arrive in South Lake Union'), task('Lunch', 'Lunch'),
+            task('After work', 'Check out South Lake Union'), task('Evening', 'Sleep + dinner')
+          ])
+        ]},
+        { date:'Oct 23', title:'Friday · Redmond HQ', special:true, travel:true, badge:'Leadership offsite', groups:[
+          group('Azure Data leadership', [
+            task('Offsite', 'Redmond HQ meeting with Azure Data leadership'),
+            task('Leadership', 'Rahul · Principal PM Manager Lead'), task('Leadership', 'Hong · Director PM Manager'),
+            task('Leadership', 'Shiva · VP of PM'), task('Team', 'Urmi · Super App Observability PM'),
+            task('Team lunch', 'Vidhi · Vivian · Rahul · Hong · Richa')
+          ]),
+          group('Pioneer Square night', [
+            task('After work', 'Go to Saranya'), task('Dinner', "Dinner at Gabrielle's in Pioneer Square"),
+            task('Night', 'Shot at Underbelly'), task('9:30 pm', 'Burlesque show at Can Can by Pike Place Market')
+          ])
+        ]},
+        { date:'Oct 24', title:'Saturday · Big Party', special:true, travel:true, badge:'Seattle', groups:[
+          group('Throw a big party', [
+            task('Invite list', "Sarah · Juan · Nitisha · Rithika · Saranya · Derrick · Malyaka · Shkurte · Akshat · Madison · Sheila · Kayla · Tavleen · Srajan · Efe · Jasmine · Arbab · Arbab's girlfriend · Deepika · Anam · Dwiref · Ronaldo · Jelani · Vinita · Akash · Daniel · Alex · Shimanto · Helen · Serena · Skyla")
+          ])
+        ]},
+        { date:'Oct 25', title:'Sunday · Seattle Solo Day', travel:true, badge:'Pike Place + Cap Hill', groups:[
+          group('Solo Seattle <3', [
+            task('Morning', 'Pike Place Market by myself! <3'), task('Late morning', 'Walk up to Capitol Hill'),
+            task('Bookstore', 'Meet Keely, Brian, and Jon at Elliott Bay Book Company'), task('Lunch', 'Lunch at Oddfellows'),
+            task('Evening', 'Pioneer Square by myself'), task('Night', 'Halloween bar crawl with Tavleen')
+          ])
+        ]},
+        { date:'Oct 26', title:'Monday · Redmond Office', travel:true, badge:'Engineering teams', groups:[
+          group('Office day', [task('All day', 'Day in Redmond office'), task('Team meetings', 'Meet Grafana Engineering team + Code Optimizations team')])
+        ]},
+        { date:'Oct 27', title:'Tuesday · Seattle → Vancouver', travel:true, badge:'Fly home', groups:[
+          group('Travel home', [task('Morning', 'Flight home from Seattle')])
+        ]}
+      ];
+
+      const grid = document.getElementById('october-campaign-grid');
+      if (!grid) return;
+      grid.innerHTML = days.map(day => {
+        const groups = day.groups.map(item => `<div class="task-group"><div class="tg-label">${item.label}</div>${item.tasks.map(entry => `<div class="task-item"><div class="task-cb"></div><span class="task-time">${entry.time}</span><span class="task-text">${entry.text}</span></div>`).join('')}</div>`).join('');
+        const outfit = day.outfit ? `<div class="campaign-outfit"><strong>Outfit</strong> · ${day.outfit}</div>` : '';
+        const classes = ['day-card', 'exact-plan'];
+        if (day.special) classes.push('special');
+        if (day.travel) classes.push('travel');
+        const badgeClass = day.travel ? 'b-travel' : day.special ? 'b-bday' : 'b-holiday';
+        return `<article class="${classes.join(' ')}"><div class="day-header" onclick="toggleDay(this)"><div class="dh-left"><span class="day-date">${day.date}</span><span class="day-title">${day.title}</span><div class="badges"><span class="badge ${badgeClass}">${day.badge}</span></div></div><span class="day-toggle">▾</span></div><div class="day-body">${outfit}${groups}</div></article>`;
+      }).join('');
+
+      document.getElementById('exit-october')?.addEventListener('click', () => {
+        document.body.classList.remove('october-campaign-active');
+        document.getElementById('october-campaign').hidden = true;
+        window.scrollTo({ top: 0, behavior: 'instant' });
+      });
+    }
+
+    renderOctoberCampaign();
     fillDailyPlanThroughDecember();
     updateDanceNights();
     addDetailedWorkNotes();
