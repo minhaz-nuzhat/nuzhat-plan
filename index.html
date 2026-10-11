@@ -1145,18 +1145,93 @@
     }
     .october-exit:hover { background: rgba(220,20,60,0.18); }
     .october-campaign-range {
-      padding: 12px 28px 10px;
-      font-size: 0.62rem;
+      margin: 18px 28px 12px;
+      border: 1px solid var(--border-2);
+      background: var(--surface);
+    }
+    .october-command-status { padding: 13px 15px; }
+    .october-command-label {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 0.52rem;
       font-weight: 700;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: var(--text-3);
+      color: var(--red);
     }
-    .october-campaign-grid {
+    .october-command-status strong {
+      display: block;
+      font-family: var(--font-body);
+      font-size: 0.92rem;
+      font-weight: 500;
+      color: var(--text);
+    }
+    .october-command-status small {
+      font-family: var(--font-body);
+      font-size: 0.7rem;
+      color: var(--text-2);
+    }
+    .october-phase-nav {
+      position: sticky;
+      top: 81px;
+      z-index: 250;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 1px;
+      margin: 0 28px 18px;
+      border: 1px solid var(--border-2);
+      background: var(--border-2);
+    }
+    .october-phase-link {
+      min-width: 0;
+      padding: 9px 11px;
+      border: 0;
+      background: rgba(14,14,14,0.98);
+      color: var(--text-2);
+      text-align: left;
+      cursor: pointer;
+    }
+    .october-phase-link:hover { background: var(--surface-2); color: var(--text); }
+    .october-phase-link span,
+    .october-phase-link strong { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .october-phase-link span { font-size: 0.48rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--red); }
+    .october-phase-link strong { margin-top: 2px; font-family: var(--font-body); font-size: 0.72rem; font-weight: 500; }
+    .october-campaign-grid { padding: 0 28px 40px; }
+    .october-phase {
+      scroll-margin-top: 140px;
+      margin-bottom: 32px;
+    }
+    .october-phase-heading {
+      display: grid;
+      grid-template-columns: auto minmax(0, 1fr) auto;
+      gap: 12px;
+      align-items: end;
+      margin-bottom: 10px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border-2);
+    }
+    .october-phase-number {
+      font-size: 0.58rem;
+      font-weight: 700;
+      color: var(--red);
+      letter-spacing: 0.12em;
+    }
+    .october-phase-title {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-weight: 500;
+      line-height: 1;
+    }
+    .october-phase-objective {
+      margin-top: 4px;
+      font-family: var(--font-body);
+      font-size: 0.7rem;
+      color: var(--text-2);
+    }
+    .october-phase-days {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 12px;
-      padding: 0 28px 40px;
     }
     .october-campaign .day-card {
       margin: 0;
@@ -1165,6 +1240,14 @@
       border-top-color: var(--red-dim);
     }
     .october-campaign .day-card.special { border-top-color: var(--red); }
+    .october-campaign .day-card.campaign-today {
+      border-color: var(--red);
+      box-shadow: inset 3px 0 0 var(--red);
+    }
+    .october-campaign .task-item { cursor: default; }
+    .october-campaign .task-cb,
+    .october-campaign .task-icon { display: none; }
+    .october-campaign .task-item:hover { background: transparent !important; }
     .october-campaign .day-body { columns: 1; }
     .october-campaign .task-text { font-size: 0.78rem; }
     .october-campaign .campaign-outfit {
@@ -1180,14 +1263,18 @@
     .october-campaign .campaign-outfit strong { color: var(--blue); }
 
     @media (max-width: 1100px) {
-      .october-campaign-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .october-phase-days { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
     @media (max-width: 760px) {
       .october-campaign-header { padding: 13px 14px; gap: 12px; align-items: start; }
       .october-campaign-title { font-size: 1rem; line-height: 1.25; }
       .october-exit { padding: 7px 8px; font-size: 0.52rem; }
-      .october-campaign-range { padding: 10px 14px 8px; }
-      .october-campaign-grid { grid-template-columns: 1fr; padding: 0 12px 30px; }
+      .october-campaign-range { margin: 12px; }
+      .october-phase-nav { top: 76px; grid-template-columns: repeat(4, 138px); margin: 0 12px 16px; overflow-x: auto; }
+      .october-campaign-grid { padding: 0 12px 30px; }
+      .october-phase { scroll-margin-top: 132px; margin-bottom: 26px; }
+      .october-phase-heading { grid-template-columns: auto minmax(0, 1fr); }
+      .october-phase-days { grid-template-columns: 1fr; }
       .october-campaign .day-card { display: block; }
       .october-campaign .day-body { padding: 9px 8px 12px; }
     }
@@ -1206,7 +1293,14 @@
       </div>
       <button class="october-exit" type="button" id="exit-october">Exit October</button>
     </header>
-    <div class="october-campaign-range">17 days · Vancouver → San Francisco → Seattle</div>
+    <div class="october-campaign-range">
+      <div class="october-command-status">
+        <span class="october-command-label">Now · October 11</span>
+        <strong>Reset life, support family, clear the runway.</strong>
+        <small>Next critical milestone: Judson prototype recording · October 12 at 9:00 am</small>
+      </div>
+    </div>
+    <nav class="october-phase-nav" id="october-phase-nav" aria-label="October campaign phases"></nav>
     <div class="october-campaign-grid" id="october-campaign-grid"></div>
   </section>
 
@@ -4869,6 +4963,8 @@
     // ── Task checkboxes — keyed by date + text (index-safe) ────
     function initTasks() {
       document.querySelectorAll('.task-item').forEach(item => {
+        if (item.closest('#october-campaign')) return;
+
         const date = (item.closest('.day-card')?.querySelector('.day-date')?.textContent ?? '').trim();
         const text = (item.querySelector('.task-text')?.textContent ?? '').trim().slice(0, 50);
         const key = 'nt::' + (date + '|' + text).replace(/[^\w|. -]/g, '').slice(0, 70);
@@ -5711,17 +5807,66 @@
         ]}
       ];
 
+      const phases = [
+        {
+          id: 'clear-runway',
+          number: '01',
+          title: 'Clear the runway',
+          range: 'Oct 11–13',
+          objective: 'Close life logistics, record the Judson prototype, complete the review, and lock travel.',
+          dates: ['Oct 11', 'Oct 12', 'Oct 13']
+        },
+        {
+          id: 'rehearse-pack',
+          number: '02',
+          title: 'Rehearse, freeze, pack',
+          range: 'Oct 14–18',
+          objective: 'Freeze the demos, rehearse with leadership, finish trip readiness, and protect the no-meeting wrap day.',
+          dates: ['Oct 14', 'Oct 15', 'Oct 16', 'Oct 17', 'Oct 18']
+        },
+        {
+          id: 'take-stage',
+          number: '03',
+          title: 'Take the stage',
+          range: 'Oct 19–21',
+          objective: 'Arrive rested, rehearse at Pier 27, meet customers, and deliver the lightning talk.',
+          dates: ['Oct 19', 'Oct 20', 'Oct 21']
+        },
+        {
+          id: 'seattle-close',
+          number: '04',
+          title: 'Seattle + close out',
+          range: 'Oct 22–27',
+          objective: 'Show up for leadership and teams, make room for people and the city, then fly home.',
+          dates: ['Oct 22', 'Oct 23', 'Oct 24', 'Oct 25', 'Oct 26', 'Oct 27']
+        }
+      ];
+
       const grid = document.getElementById('october-campaign-grid');
       if (!grid) return;
-      grid.innerHTML = days.map(day => {
+      const renderDay = day => {
         const groups = day.groups.map(item => `<div class="task-group"><div class="tg-label">${item.label}</div>${item.tasks.map(entry => `<div class="task-item"><div class="task-cb"></div><span class="task-time">${entry.time}</span><span class="task-text">${entry.text}</span></div>`).join('')}</div>`).join('');
         const outfit = day.outfit ? `<div class="campaign-outfit"><strong>Outfit</strong> · ${day.outfit}</div>` : '';
         const classes = ['day-card', 'exact-plan'];
         if (day.special) classes.push('special');
         if (day.travel) classes.push('travel');
+        if (day.date === 'Oct 11') classes.push('campaign-today');
         const badgeClass = day.travel ? 'b-travel' : day.special ? 'b-bday' : 'b-holiday';
         return `<article class="${classes.join(' ')}"><div class="day-header" onclick="toggleDay(this)"><div class="dh-left"><span class="day-date">${day.date}</span><span class="day-title">${day.title}</span><div class="badges"><span class="badge ${badgeClass}">${day.badge}</span></div></div><span class="day-toggle">▾</span></div><div class="day-body">${outfit}${groups}</div></article>`;
+      };
+
+      grid.innerHTML = phases.map(phase => {
+        const phaseDays = phase.dates.map(date => days.find(day => day.date === date)).filter(Boolean);
+        return `<section class="october-phase" id="phase-${phase.id}" data-phase="${phase.id}"><header class="october-phase-heading"><span class="october-phase-number">PHASE ${phase.number}</span><div><h2 class="october-phase-title">${phase.title}</h2><p class="october-phase-objective">${phase.objective}</p></div></header><div class="october-phase-days">${phaseDays.map(renderDay).join('')}</div></section>`;
       }).join('');
+
+      const phaseNav = document.getElementById('october-phase-nav');
+      if (phaseNav) {
+        phaseNav.innerHTML = phases.map(phase => `<button class="october-phase-link" type="button" data-phase-target="phase-${phase.id}"><span>${phase.number} · ${phase.range}</span><strong>${phase.title}</strong></button>`).join('');
+        phaseNav.querySelectorAll('[data-phase-target]').forEach(button => {
+          button.addEventListener('click', () => document.getElementById(button.dataset.phaseTarget)?.scrollIntoView({ behavior: 'smooth', block: 'start' }));
+        });
+      }
 
       document.getElementById('exit-october')?.addEventListener('click', () => {
         document.body.classList.remove('october-campaign-active');
