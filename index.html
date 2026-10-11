@@ -1250,6 +1250,34 @@
     .october-campaign .task-item:hover { background: transparent !important; }
     .october-campaign .day-body { columns: 1; }
     .october-campaign .task-text { font-size: 0.78rem; }
+    .october-campaign .campaign-list {
+      margin: 5px 4px 8px;
+      padding: 9px 12px;
+      border-left: 2px solid var(--yellow);
+      background: rgba(245,158,11,0.05);
+    }
+    .october-campaign .campaign-list-items {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 4px 16px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .october-campaign .campaign-list-items li {
+      position: relative;
+      padding-left: 12px;
+      font-family: var(--font-body);
+      font-size: 0.78rem;
+      line-height: 1.45;
+      color: var(--text-2);
+    }
+    .october-campaign .campaign-list-items li::before {
+      content: '·';
+      position: absolute;
+      left: 2px;
+      color: var(--yellow);
+    }
     .october-campaign .campaign-outfit {
       margin: 7px 3px 4px;
       padding: 7px 9px;
@@ -1277,6 +1305,7 @@
       .october-phase-days { grid-template-columns: 1fr; }
       .october-campaign .day-card { display: block; }
       .october-campaign .day-body { padding: 9px 8px 12px; }
+      .october-campaign .campaign-list-items { grid-template-columns: 1fr; }
     }
 
   </style>
@@ -5684,6 +5713,26 @@
     function renderOctoberCampaign() {
       const task = (time, text) => ({ time, text });
       const group = (label, tasks) => ({ label, tasks });
+      const list = (label, items) => ({ label, items });
+      const dailyBaseline = {
+        'Oct 11': { morning:'Morning matcha · shower + skincare', dinner:'Salmon, roasted sweet potato, and broccoli · berries or citrus after' },
+        'Oct 12': { morning:'Morning matcha · shower + usual makeup before heading to the office', dinner:'Chicken, brown rice, and sautéed spinach · keep water at your desk' },
+        'Oct 13': { morning:'Morning matcha · shower + get ready', dinner:'Lentil and chickpea bowl with quinoa, cucumber, greens, and yogurt' },
+        'Oct 14': { morning:'Morning matcha · shower + get ready', dinner:'Salmon, quinoa, and asparagus · banana or Greek yogurt after Pilates' },
+        'Oct 15': { morning:'Morning matcha · shower + get ready', care:'After run · rinse off and reset', dinner:'Chicken, rice, and green beans · Greek yogurt and berries for recovery' },
+        'Oct 16': { morning:'Morning matcha · shower + get ready', dinner:'Salmon, sweet potato, and a big mixed salad · walnuts or fruit if focus dips' },
+        'Oct 17': { morning:'Morning matcha · shower + get ready', dinner:'Chicken or tofu stir-fry with brown rice and mixed vegetables' },
+        'Oct 18': { morning:'Morning matcha · shower + get ready', dinner:'Simple pre-travel dinner: salmon or chicken, rice, greens, and plenty of water' },
+        'Oct 19': { morning:'Morning matcha · shower before the airport', dinner:'Post-rehearsal: grilled protein, rice or potatoes, vegetables, and water' },
+        'Oct 20': { morning:'Morning matcha · shower + get ready', dinner:'Chicken or salmon, quinoa, and greens · finish eating early enough for solid sleep' },
+        'Oct 21': { morning:'Morning matcha · shower + full usual makeup before stage prep', dinner:'Grafana Labs dinner · prioritize protein, vegetables, and a steady carb; hydrate after the talk' },
+        'Oct 22': { morning:'Morning matcha · shower before flying', dinner:'Seattle dinner · salmon or chicken, rice, and vegetables; keep the travel day light' },
+        'Oct 23': { morning:'Morning matcha · shower + usual makeup before heading to Redmond HQ', dinner:'Dinner at Gabrielle’s · choose protein + vegetables + potatoes or rice before the late night' },
+        'Oct 24': { morning:'Morning matcha · shower + get ready', dinner:'Party fuel first: chicken or salmon, rice, vegetables, and water before drinks' },
+        'Oct 25': { morning:'Morning matcha · shower + get ready', dinner:'Before the bar crawl: protein bowl or sandwich, fruit, and water' },
+        'Oct 26': { morning:'Morning matcha · shower + usual makeup before heading to the Redmond office', dinner:'Recovery dinner: salmon or tofu, sweet potato, greens, and berries' },
+        'Oct 27': { morning:'Morning matcha · shower before flying home', dinner:'Homecoming dinner: chicken and vegetable soup with rice, or salmon with greens' }
+      };
       const days = [
         { date:'Oct 11', title:'Sunday · Today', special:true, badge:'Life reset', groups:[
           group('Send-off + family logistics', [
@@ -5696,13 +5745,13 @@
         { date:'Oct 12', title:'Monday', special:true, badge:'Delivery day', groups:[
           group('Slow start + Judson prototype', [
             task('7:00–8:00 am', 'Wake up + slow morning routine · matcha'),
-            task('9:00–10:00 am', 'Record agent observability Super Skill plugin prototype for Judson Althoff · CEO of Business Ops review'),
+            task('9:00–10:00 am', 'Record agent observability Super Skill plugin prototype for Judson Althoff · keep the executive story crisp: problem → trace → insight → action'),
             task('10:00–11:00 am', 'Finish all Grafana product work · respond to every open thread and Teams message · follow up on ADO items'),
             task('11:00 am', 'Azure Monitor UX standup')
           ]),
           group('Office + ObservabilityCon', [
             task('12:00 pm', 'Go to office'),
-            task('1:00 pm', 'Record Grafana demo for ObservabilityCon'),
+            task('1:00 pm', 'Record Grafana demo for ObservabilityCon · prove the customer outcome, narrate clean transitions, and keep one recovery line ready'),
             task('3:00–3:30 pm', 'AMG + Observability engineering meeting'),
             task('3:30–4:00 pm', 'Engineering sync before Grafana Labs sync')
           ])
@@ -5720,18 +5769,15 @@
         { date:'Oct 14', title:'Wednesday', badge:'One month to Ignite', groups:[
           group('Shiproom + Super Skill', [
             task('11:00 am', 'Azure Monitor shiproom'),
-            task('Today', 'Finalize contributions for Super Skill plugin · one-month countdown to Ignite CCOA begins')
+            task('Today', 'Finalize contributions for Super Skill plugin · ship the useful version, document the next iteration, and begin the one-month Ignite CCOA countdown')
           ]),
           group('ObservabilityCon rehearsal', [
-            task('Rehearsal day', 'Rehearse ObservabilityCon demo · schedule time with Hong, Rahul, and Kayode'),
+            task('Rehearsal day', 'Rehearse ObservabilityCon demo · schedule Hong, Rahul, and Kayode; practice the opening, transitions, failure recovery, and final takeaway'),
             task('7:00–8:00 pm', 'Pilates')
           ])
         ]},
         { date:'Oct 15', title:'Thursday · Payday', special:true, badge:'Final shopping day', groups:[
-          group('Trip shopping checklist', [
-            task('Shopping', 'Clothes'), task('Shopping', 'Skincare'), task('Shopping', 'Toothbrush · undergarments · necessities'),
-            task('Shopping', 'Shoes'), task('Shopping', 'Nail care'), task('Shopping', 'Hair care')
-          ]),
+          list('Trip shopping · one list', ['Clothes', 'Skincare', 'Toothbrush', 'Undergarments', 'Travel necessities', 'Shoes', 'Nail care', 'Hair care']),
           group('Work + movement', [
             task('Workday', 'Infrastructure Observability team meeting'),
             task('2:00–3:00 pm', 'Helios office hours'),
@@ -5739,7 +5785,7 @@
           ])
         ]},
         { date:'Oct 16', title:'Friday · Final Wrap Day', special:true, badge:'No meetings', groups:[
-          group('Protected demo work', [task('All day', 'Final day to wrap all demo work · do not schedule any other meetings')])
+          group('Protected demo work', [task('All day', 'Final day to wrap all demo work · no other meetings, no perfection spiral: stabilize the golden path, backup, and recovery plan')])
         ]},
         { date:'Oct 17', title:'Saturday · Maintenance Day', badge:'Trip prep', groups:[
           group('Appointments + care', [
@@ -5747,7 +5793,14 @@
           ])
         ]},
         { date:'Oct 18', title:'Sunday · Final Check', special:true, badge:'Pack everything', groups:[
-          group('Travel readiness', [task('All day', 'Complete packing!'), task('Final check', "Baby, it's final demo check-up day")])
+          list('What to pack · keep together', [
+            'Work laptop + charger', 'Phone + charger + power bank', 'Demo backup + offline recording',
+            'ID, wallet, flight + hotel details', 'Stage outfit + backup top', 'Office outfits',
+            'Black boots + comfortable walking shoes', 'Usual makeup + touch-up kit', 'Skincare + SPF',
+            'Toothbrush + Invisalign kit', 'Undergarments + sleepwear', 'Medication + vitamins',
+            'Hair care + brush', 'Reusable water bottle', 'Protein snacks for travel'
+          ]),
+          group('Travel readiness', [task('Final check', "Baby, it's final demo check-up day · run the golden path once, verify the backup, then stop and protect your sleep")])
         ]},
         { date:'Oct 19', title:'Monday · Vancouver → San Francisco', special:true, travel:true, badge:'Travel day', outfit:'Lululemon jacket + fit-and-flare tights · espresso', groups:[
           group('Fly + recover', [task('By 10:00 am', 'Fly out'), task('Arrival', 'Check in to hotel'), task('Afternoon', 'NAP!!!! EAT!!!')]),
@@ -5761,7 +5814,7 @@
         ]},
         { date:'Oct 21', title:"Wednesday · It's Game Day Baby", special:true, travel:true, badge:'Stage demo', outfit:'Light blue satin shirt · dark blue denim · black boots', groups:[
           group('Stage morning', [
-            task('8:00 am', 'Wake up + get dressed'), task('9:00 am', 'Go to conference · confirm the demo works'),
+            task('8:00 am', 'Wake up + get dressed · this is execution, not reinvention'), task('9:00 am', 'Go to conference · confirm the golden path and backup, then leave the build alone'),
             task('10:00 am', 'Touch up makeup + fit'), task('11:00 am', 'Stage demo lightning talk theatre')
           ]),
           group('Customers + celebration', [
@@ -5845,9 +5898,18 @@
       const grid = document.getElementById('october-campaign-grid');
       if (!grid) return;
       const renderDay = day => {
-        const groups = day.groups.map(item => `<div class="task-group"><div class="tg-label">${item.label}</div>${item.tasks.map(entry => `<div class="task-item"><div class="task-cb"></div><span class="task-time">${entry.time}</span><span class="task-text">${entry.text}</span></div>`).join('')}</div>`).join('');
+        const baseline = dailyBaseline[day.date];
+        const existingSchedule = day.groups.flatMap(item => item.tasks ?? []).map(entry => `${entry.time} ${entry.text}`).join(' ').toLowerCase();
+        const baselineTasks = baseline
+          ? [task('Morning', baseline.morning), baseline.care ? task('Recovery', baseline.care) : null, existingSchedule.includes('dinner') ? null : task('Dinner', baseline.dinner)].filter(Boolean)
+          : [];
+        const dayGroups = baselineTasks.length ? [...day.groups, group('Daily baseline · focus + recovery', baselineTasks)] : day.groups;
+        const groups = dayGroups.map(item => {
+          if (item.items) return `<div class="task-group campaign-list"><div class="tg-label">${item.label}</div><ul class="campaign-list-items">${item.items.map(entry => `<li>${entry}</li>`).join('')}</ul></div>`;
+          return `<div class="task-group"><div class="tg-label">${item.label}</div>${item.tasks.map(entry => `<div class="task-item"><div class="task-cb"></div><span class="task-time">${entry.time}</span><span class="task-text">${entry.text}</span></div>`).join('')}</div>`;
+        }).join('');
         const outfit = day.outfit ? `<div class="campaign-outfit"><strong>Outfit</strong> · ${day.outfit}</div>` : '';
-        const classes = ['day-card', 'exact-plan'];
+        const classes = ['day-card', 'exact-plan', 'collapsed'];
         if (day.special) classes.push('special');
         if (day.travel) classes.push('travel');
         if (day.date === 'Oct 11') classes.push('campaign-today');
