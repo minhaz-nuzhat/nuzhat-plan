@@ -13,18 +13,18 @@ body.ignite-active > .ignite { display: block !important; }
 .ignite-range { margin-left: auto; font-size: .62rem; color: var(--muted); letter-spacing: .08em; }
 .ignite-archive { border: 1px solid #49303a; background: #1b1015; color: #e8dfe3; padding: 8px 12px; font: .62rem var(--font); cursor: pointer; }
 .ignite-shell { max-width: 1500px; margin: auto; padding: 0 4%; }
-.ignite-hero { padding: 55px 0 32px; }
+.ignite-hero { padding: 20px 0 16px; }
 .ignite-eyebrow { font: 600 .61rem/1.6 var(--font); letter-spacing: .11em; color: var(--accent); }
 .ignite-status-dot { display: inline-block; height: 6px; width: 6px; margin-right: 7px; background: #60c68b; border-radius: 50%; }
-.ignite-hero h1 { margin: 20px 0; font: 500 clamp(2.7rem, 6vw, 5.8rem)/1.02 var(--font-display); letter-spacing: -.055em; }
+.ignite-hero h1 { margin: 8px 0; font: 500 clamp(1.7rem, 3vw, 2.8rem)/1.1 var(--font-display); letter-spacing: -.04em; }
 .ignite-hero h1 em { font-style: normal; color: var(--accent); }
 .ignite-intro { max-width: 750px; color: var(--muted); font: 1rem/1.7 var(--font-body); }
-.ignite-hero-footer { margin-top: 30px; display: flex; flex-wrap: wrap; gap: 16px 40px; font-size: .61rem; color: var(--muted); }
+.ignite-hero-footer { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 8px 24px; font-size: .61rem; color: var(--muted); }
 .ignite-hero-footer b { color: #f3e7ec; font-weight: 500; margin-right: 8px; }
 .ignite-nav { display: flex; gap: 28px; overflow-x: auto; padding: 15px 0; border-top: 1px solid #342129; border-bottom: 1px solid #342129; }
 .ignite-nav a { white-space: nowrap; font-size: .65rem; color: #c1b6bb; }
 .ignite-nav a:hover, .ignite-footer a:hover { color: var(--accent); }
-.ignite-section { padding-top: 36px; scroll-margin-top: 20px; }
+.ignite-section { padding-top: 24px; scroll-margin-top: 20px; }
 .ignite-section-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 16px; }
 .ignite-section-heading h2 { font: 500 .81rem/1.5 var(--font); color: #e7dce1; }
 .ignite-section-heading > span { font-size: .51rem; letter-spacing: .08em; color: var(--muted); text-align: right; }
@@ -83,9 +83,15 @@ body.october-campaign-active > .ignite-return:not([hidden]) { display: block !im
   .ignite-range { font-size: .52rem; }
   .ignite-archive { font-size: .54rem; padding: 6px 8px; }
   .ignite-shell { padding: 0 16px; }
-  .ignite-hero { padding-top: 32px; }
+  .ignite-hero { padding: 14px 0 12px; }
   .ignite-intro { font-size: .9rem; }
-  .ignite-hero-footer { display: grid; gap: 10px; }
+  .ignite-hero-footer { display: flex; gap: 6px 16px; font-size: .54rem; }
+  .ignite-hero-footer b { margin-right: 4px; }
+  .ignite-hero .ignite-eyebrow { font-size: .5rem; }
+  .ignite-nav { padding: 10px 0; }
+  #ignite-schedule { padding-top: 16px; }
+  #ignite-schedule .ignite-section-heading { margin-bottom: 10px; }
+  #ignite-schedule .ignite-week:first-child { margin-top: 12px; }
   .ignite-nav { gap: 22px; }
   .ignite-section-heading { display: block; }
   .ignite-section-heading > span { display: block; text-align: left; margin-top: 5px; line-height: 1.6; }
