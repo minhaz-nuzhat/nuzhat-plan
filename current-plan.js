@@ -116,7 +116,7 @@
     picker.value = selectedDate;
     previous.disabled = selectedDate === dates[0];
     next.disabled = selectedDate === dates[dates.length-1];
-    root.querySelectorAll('[data-agenda-view]').forEach(button => button.setAttribute('aria-pressed',String(button.dataset.agendaView === view)));
+    root.querySelectorAll('button[data-agenda-view]').forEach(button => button.setAttribute('aria-pressed',String(button.dataset.agendaView === view)));
     document.getElementById('current-agenda-caption').textContent = view === 'day'
       ? `${weekday(selectedDate)}, ${shortDate(selectedDate)} · ${selected.slots.length} items · ${selected.status}`
       : `${period.title} · ${period.label} · local time`;
@@ -142,7 +142,7 @@
   todayButton.disabled = !dates.includes(today);
   if (todayButton.disabled) todayButton.title = 'Today is outside this plan’s date range.';
   todayButton.addEventListener('click', () => selectDate(today));
-  root.querySelectorAll('[data-agenda-view]').forEach(button => button.addEventListener('click', () => {
+  root.querySelectorAll('button[data-agenda-view]').forEach(button => button.addEventListener('click', () => {
     view = button.dataset.agendaView;
     renderAgenda();
   }));
