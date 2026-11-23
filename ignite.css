@@ -1,4 +1,26 @@
 /* Scoped campaign styles; earlier plans retain their original presentation. */
+body.current-plan-active > :not(.current-plan):not(script) { display: none !important; }
+.current-plan { display: none; }
+body.current-plan-active > .current-plan { display: block; }
+.month-links { align-items: center; }
+.month-links button { border: 0; background: none; color: #c1b6bb; font: .65rem var(--font); white-space: nowrap; cursor: pointer; }
+.month-links button:hover { color: var(--accent); }
+.month-links > span { font-size: .65rem; color: var(--accent); white-space: nowrap; }
+.current-empty { max-width: 680px; }
+.archive-period-title { padding: 20px 0 14px; font: 500 1.15rem var(--font-display); }
+.campaign-month-panel .month-campaign { min-height: 0; }
+.campaign-month-panel .october-campaign-header { position: static; padding: 18px; }
+.campaign-month-panel .october-phase-nav { position: static; }
+.campaign-month-panel .october-campaign-range { display: none; }
+.campaign-month-panel .ignite-header { padding: 16px 4%; }
+body.month-campaign-view .day-nav,
+body.month-campaign-view .mobile-view-switch { display: none; }
+.campaign-month-panel .october-campaign .day-header { cursor: pointer; }
+@media (max-width: 760px) {
+  .campaign-month-panel .day-card { display: block !important; }
+  .campaign-month-panel .ignite-days { grid-template-columns: 1fr; }
+  .campaign-month-panel .october-phase-nav { grid-template-columns: repeat(4, 138px); }
+}
 body.ignite-active > :not(.ignite):not(script) { display: none !important; }
 body.ignite-active.october-campaign-active > .ignite,
 body.ignite-active > .ignite { display: block !important; }

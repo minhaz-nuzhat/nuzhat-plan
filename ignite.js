@@ -68,22 +68,59 @@
       try { localStorage.setItem(key, input.checked ? '1' : '0'); } catch { /* Keep in-memory state. */ }
     });
   });
-  const returnButton = document.createElement('button');
-  returnButton.className = 'ignite-return';
-  returnButton.type = 'button';
-  returnButton.textContent = '← Back to Ignite';
-  returnButton.hidden = true;
-  document.body.appendChild(returnButton);
-  document.getElementById('ignite-archive').addEventListener('click', () => {
-    root.hidden = true;
-    document.body.classList.remove('ignite-active');
-    returnButton.hidden = false;
+  // Move the actual plans, rather than cloning them or keeping generated duplicates.
+  const octoberPanel = document.getElementById('checklist-october');
+  const novemberPanel = document.getElementById('checklist-november');
+  const october = document.getElementById('october-campaign');
+  octoberPanel.replaceChildren(october);
+  novemberPanel.replaceChildren(root);
+  octoberPanel.classList.add('campaign-month-panel');
+  novemberPanel.classList.add('campaign-month-panel');
+  october.classList.add('month-campaign');
+  root.classList.add('month-campaign');
+  october.querySelector('.october-campaign-kicker').textContent = 'OCTOBER 11–27, 2026 / ARCHIVED PLAN';
+  october.querySelector('#october-campaign-title').textContent = 'October · ObsCon';
+  october.querySelectorAll('.campaign-today').forEach(card => card.classList.remove('campaign-today'));
+  root.querySelector('.ignite-range').textContent = 'NOVEMBER 2026 · IGNITE ARCHIVE';
+  root.querySelector('.ignite-hero .ignite-eyebrow').textContent = 'ARCHIVED PLAN / AIRLIFT + IGNITE';
+  root.querySelector('#ignite-title').textContent = 'November · Ignite';
+  const lateOctober = document.createElement('section');
+  lateOctober.className = 'ignite month-campaign late-october';
+  lateOctober.innerHTML = '<div class="ignite-shell"><h2 class="archive-period-title">October 30–31 · Ignite prep</h2><div class="ignite-days"></div></div>';
+  root.querySelectorAll('.ignite-day').forEach(card => {
+    if (card.querySelector('time').dateTime.startsWith('2026-10')) lateOctober.querySelector('.ignite-days').appendChild(card);
+  });
+  octoberPanel.appendChild(lateOctober);
+  const firstWeekHeading = root.querySelector('.ignite-week-heading');
+  firstWeekHeading.querySelector('h3').textContent = 'November begins';
+  firstWeekHeading.querySelector('span').textContent = 'NOV 01';
+  document.body.classList.remove('october-campaign-active', 'ignite-active');
+  document.body.classList.add('current-plan-active');
+
+  const tabs = [...document.querySelectorAll('.sub-nav-tab')];
+  const openMonth = month => {
+    document.body.classList.remove('current-plan-active');
+    document.getElementById('page-summer').classList.add('active');
+    document.querySelector('.summer-wrap').classList.remove('mobile-budget-view');
+    document.querySelector('[data-mobile-view="day"]').click();
+    tabs.find(tab => tab.dataset.month === month)?.click();
+    window.scrollTo(0, 0);
+  };
+  tabs.forEach(tab => tab.addEventListener('click', () => {
+    document.body.classList.toggle('month-campaign-view', ['october', 'november'].includes(tab.dataset.month));
+  }));
+  document.querySelectorAll('[data-open-month]').forEach(button => {
+    button.addEventListener('click', () => openMonth(button.dataset.openMonth));
+  });
+  document.getElementById('ignite-archive').remove();
+  document.getElementById('exit-october').remove();
+  const currentButton = document.createElement('button');
+  currentButton.className = 'legend-button';
+  currentButton.type = 'button';
+  currentButton.textContent = 'Current plan';
+  currentButton.addEventListener('click', () => {
+    document.body.classList.add('current-plan-active');
     window.scrollTo(0, 0);
   });
-  returnButton.addEventListener('click', () => {
-    root.hidden = false;
-    document.body.classList.add('ignite-active');
-    returnButton.hidden = true;
-    window.scrollTo(0, 0);
-  });
+  document.querySelector('.topbar-actions').prepend(currentButton);
 })();

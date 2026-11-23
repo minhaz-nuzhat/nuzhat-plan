@@ -1,0 +1,77 @@
+/* Current landing stays compact and schedule-first. */
+.current-section-nav { display: flex; gap: 20px; padding: 10px 0; overflow-x: auto; }
+.current-section-nav a { font: .62rem var(--font); color: #c7b4bd; white-space: nowrap; }
+.current-section-nav a:hover { color: var(--accent); }
+.current-deadline-strip { display: flex; flex-wrap: wrap; gap: 5px 20px; padding: 9px 0; border-bottom: 1px solid #342129; font: .55rem/1.6 var(--font); color: #cf92a8; }
+#current-schedule { padding-top: 18px; }
+#current-week-nav { display: flex; gap: 8px; padding-bottom: 10px; overflow-x: auto; }
+#current-week-nav button { flex: 0 0 auto; background: #161114; border: 1px solid #3a2931; padding: 8px 10px; color: #c9b6c0; font: .58rem var(--font); cursor: pointer; }
+#current-week-nav button[aria-pressed="true"] { border-color: #dc143c; background: #32101b; color: #ff829d; }
+.current-day[hidden], #current-day-nav[hidden], #current-week-nav[hidden] { display: none !important; }
+.current-schedule-heading { align-items: center; }
+.current-view-switch { display: flex; border: 1px solid #3c2b33; }
+.current-view-switch button { background: #131013; border: 0; padding: 7px 14px; font: .64rem var(--font); color: #b5a6ae; cursor: pointer; }
+.current-view-switch button[aria-pressed="true"] { background: #39121f; color: #ff8ba4; }
+.current-agenda-tools { position: sticky; top: 0; z-index: 210; padding: 8px 0 6px; background: #0d0b0cf5; backdrop-filter: blur(12px); border-bottom: 1px solid #392831; }
+.current-agenda-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 10px; }
+.current-day-controls { display: flex; gap: 6px; }
+.current-day-controls button { background: #191116; border: 1px solid #47303a; color: #e4ced8; padding: 8px 12px; font: .65rem var(--font); cursor: pointer; min-height: 36px; }
+.current-day-controls button:disabled { color: #6c5e64; border-color: #252024; cursor: default; }
+.current-date-picker { display: flex; align-items: center; gap: 10px; color: #af919f; font: .6rem var(--font); }
+.current-date-picker input { color-scheme: dark; background: #191116; border: 1px solid #47303a; border-radius: 0; color: #e4ced8; font: .68rem var(--font); padding: 7px 9px; min-height: 36px; }
+#current-day-nav { display: flex; gap: 6px; overflow-x: auto; padding: 2px 0 5px; }
+#current-day-nav button { flex: 1 0 70px; padding: 8px 6px; display: grid; gap: 3px; text-align: center; border: 1px solid #33262c; background: #151013; color: #c7b7bf; font: .62rem var(--font); cursor: pointer; }
+#current-day-nav button span { font-size: .55rem; color: #a68e99; }
+#current-day-nav button strong { font-size: .65rem; font-weight: 500; }
+#current-day-nav button small { font-size: .48rem; color: #b88396; }
+#current-day-nav button[aria-pressed="true"] { border-color: #ee345b; background: #34111e; color: #ff9bb1; }
+.current-agenda-caption { color: #b69faa; font: .58rem/1.6 var(--font); padding-top: 4px; }
+#current-schedule[data-agenda-view="day"] .current-week > .ignite-week-heading { display: none; }
+#current-schedule[data-agenda-view="day"] .ignite-days { display: block; }
+#current-schedule[data-agenda-view="day"] .current-day { max-width: 1050px; }
+#current-schedule[data-agenda-view="day"] .current-day .ignite-slot { grid-template-columns: 125px minmax(0,1fr); }
+#current-schedule[data-agenda-view="day"] .current-day .ignite-slot-time { font-size: .65rem; }
+#current-schedule[data-agenda-view="day"] .current-day .ignite-slot-text { font-size: .95rem; }
+.current-deadline-strip + .current-support-grid { margin-top: 14px; }
+.current-week[hidden] { display: none; }
+.current-week { padding-top: 8px; }
+.current-week .ignite-week-heading { margin-bottom: 12px; }
+.current-day .ignite-slot-text .ignite-check { padding: 0; font-size: inherit; }
+.current-day .ignite-slot-time { overflow-wrap: anywhere; }
+.current-planning-note { border-left: 2px solid #815366; background: #1d1419; padding: 8px 10px; margin-top: 10px; color: #bca7b1; font: .72rem/1.55 var(--font-body); }
+.current-support-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 14px; }
+.current-pilates-grid { display: grid; grid-template-columns: repeat(4,minmax(0,1fr)); gap: 8px; }
+.current-pilates-session { border: 1px solid #30272b; background: #111010; padding: 8px 12px; }
+.current-expense-row { display: grid; grid-template-columns: 70px minmax(0,1fr) 90px; align-items: start; gap: 12px; border-bottom: 1px solid #2a2126; padding: 8px 0; }
+.current-expense-row > span { color: #c79daf; font: .62rem var(--font); padding-top: 10px; }
+.current-expense-row b { font-size: .75rem; font-weight: 500; padding-top: 9px; text-align: right; }
+.current-expense-total { display: flex; justify-content: space-between; padding: 16px 0 6px; font-size: .75rem; }
+.current-expense-total strong { color: #ff829d; }
+.current-itinerary { margin-top: 14px; }
+.current-trip-row { display: grid; grid-template-columns: 75px minmax(0,1fr); gap: 14px; padding: 12px 0; border-bottom: 1px solid #2b2226; }
+.current-trip-row:last-child { border-bottom: 0; }
+.current-trip-row time { color: #eb7a99; font-size: .66rem; }
+.current-trip-row time small { display: block; font-size: .5rem; color: #9a8790; }
+.current-trip-row > span { font: .83rem/1.5 var(--font-body); color: #cbbdc4; }
+@media (max-width: 1100px) { .current-pilates-grid { grid-template-columns: repeat(2,minmax(0,1fr)); } }
+@media (max-width: 760px) {
+  .current-plan .ignite-hero { padding: 10px 0 6px; }
+  .current-plan .ignite-hero h1 { font-size: 1.5rem; }
+  .current-plan .month-links { padding: 8px 0; }
+  .current-section-nav { gap: 18px; padding: 9px 0; }
+  .current-deadline-strip { font-size: .5rem; gap: 3px 12px; padding: 6px 0; }
+  .current-support-grid { grid-template-columns: 1fr; }
+  .current-expense-row { grid-template-columns: 48px minmax(0,1fr) 65px; gap: 8px; }
+  .current-week .ignite-week-heading h3 { font-size: 1.05rem; }
+  .current-plan .ignite-section-heading { margin-bottom: 10px; }
+  .current-plan .current-schedule-heading { display: flex; }
+  .current-date-picker > span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  .current-agenda-toolbar { gap: 8px; }
+  .current-day-controls button { padding: 8px 10px; }
+  .current-date-picker input { width: 143px; min-width: 0; padding: 7px; font-size: .62rem; }
+  #current-day-nav button { flex: 0 0 62px; }
+  .current-agenda-caption { font-size: .53rem; }
+  #current-schedule[data-agenda-view="day"] .current-day .ignite-slot { grid-template-columns: 82px minmax(0,1fr); }
+  #current-schedule[data-agenda-view="day"] .current-day .ignite-slot-time { font-size: .58rem; }
+  #current-schedule[data-agenda-view="day"] .current-day .ignite-slot-text { font-size: .87rem; }
+}

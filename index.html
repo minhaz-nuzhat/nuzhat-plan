@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>NUZHAT // IGNITE LOCK-IN</title>
+  <title>NUZHAT // NOV 22 – DEC 22</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
@@ -1311,9 +1311,70 @@
   </style>
   <link rel="stylesheet" href="desktop.css" media="(min-width: 761px)" />
   <link rel="stylesheet" href="mobile.css" media="(max-width: 760px)" />
-  <link rel="stylesheet" href="ignite.css?v=compact-2" />
+  <link rel="stylesheet" href="ignite.css?v=dhaka-1" />
+  <link rel="stylesheet" href="current-plan.css?v=agenda-2" />
 </head>
-<body class="october-campaign-active ignite-active">
+<body class="current-plan-active">
+
+  <main class="ignite current-plan" id="current-plan" aria-labelledby="current-plan-title">
+    <header class="ignite-header">
+      <a class="ignite-brand" href="#current-plan">// NUZHAT <span>PLAN MGR</span></a>
+      <span class="ignite-range">NOV 22 — DEC 22, 2026</span>
+    </header>
+    <div class="ignite-shell">
+      <section class="ignite-hero">
+        <p class="ignite-eyebrow"><span class="ignite-status-dot"></span> IGNITE DONE / NEXT STOP: DHAKA</p>
+        <h1 id="current-plan-title">Close the loops. <em>Go home.</em></h1>
+      </section>
+      <nav class="ignite-nav month-links" aria-label="Month plans">
+        <span aria-current="page">Current plan</span>
+        <button type="button" data-open-month="october">October</button>
+        <button type="button" data-open-month="november">November</button>
+        <button type="button" data-open-month="december">December</button>
+        <button type="button" data-open-month="archive">Earlier months</button>
+      </nav>
+      <nav class="current-section-nav" aria-label="Current plan sections">
+        <a href="#current-schedule">Schedule</a><a href="#current-deliverables">Deadlines</a><a href="#current-pilates">Pilates</a><a href="#current-shopping">Shopping</a><a href="#current-budget">Expenses</a><a href="#current-travel">Dhaka</a>
+      </nav>
+      <section class="ignite-section" id="current-schedule" aria-labelledby="current-schedule-title">
+        <div class="ignite-section-heading current-schedule-heading"><h2 id="current-schedule-title">Schedule</h2><div class="current-view-switch" aria-label="Schedule view"><button type="button" data-agenda-view="day" aria-pressed="true">Day</button><button type="button" data-agenda-view="week" aria-pressed="false">Week</button></div></div>
+        <div class="current-agenda-tools">
+          <div class="current-agenda-toolbar">
+            <div class="current-day-controls"><button type="button" id="current-prev-day" aria-label="Previous day">←</button><button type="button" id="current-today">Today</button><button type="button" id="current-next-day" aria-label="Next day">→</button></div>
+            <label class="current-date-picker"><span>Jump to date</span><input type="date" id="current-date-picker" min="2026-11-22" max="2026-12-22" /></label>
+          </div>
+          <nav id="current-week-nav" aria-label="Schedule weeks" hidden></nav>
+          <nav id="current-day-nav" aria-label="Days in selected week"></nav>
+          <p class="current-agenda-caption" id="current-agenda-caption" aria-live="polite"></p>
+        </div>
+        <div id="current-schedule-grid"></div>
+      </section>
+      <section class="ignite-section" id="current-deliverables" aria-labelledby="current-deliverables-title">
+        <div class="ignite-section-heading"><h2 id="current-deliverables-title">02 / Before I leave</h2><span>CHECKS SAVE ON THIS DEVICE</span></div>
+        <div class="current-deadline-strip" aria-label="Key dates"><span>DEC 15 · tests + release plan + shopping</span><span>DEC 20 · Cowork delivery</span><span>DEC 23 · flight</span></div>
+        <div class="current-support-grid" id="current-deadlines"></div>
+      </section>
+      <section class="ignite-section" id="current-pilates" aria-labelledby="current-pilates-title">
+        <div class="ignite-section-heading"><h2 id="current-pilates-title">03 / Pilates · Sundays + Wednesdays</h2><span id="current-pilates-count" aria-live="polite">0 / 8 ATTENDED</span></div>
+        <p class="ignite-section-note">Eight classes: Nov 25 through Dec 20. Book all slots Nov 25; class times are still TBD. Nov 22 is skipped.</p>
+        <div class="current-pilates-grid" id="current-pilates-list"></div>
+      </section>
+      <section class="ignite-section" id="current-shopping" aria-labelledby="current-shopping-title">
+        <div class="ignite-section-heading"><h2 id="current-shopping-title">04 / Shopping for Dhaka</h2><span>FINISH BY DECEMBER 15</span></div>
+        <div class="current-support-grid" id="current-shopping-list"></div>
+      </section>
+      <section class="ignite-section" id="current-budget" aria-labelledby="current-budget-title">
+        <div class="ignite-section-heading"><h2 id="current-budget-title">05 / Expenditure + appointments</h2><span>SPECIFIED PAYMENTS, NOT A COMPLETE BUDGET</span></div>
+        <div class="ignite-panel" id="current-budget-list"></div>
+      </section>
+      <section class="ignite-section" id="current-travel" aria-labelledby="current-travel-title">
+        <div class="ignite-section-heading"><h2 id="current-travel-title">06 / Home for the weddings</h2><span>DEC 23 – JAN 23 · TRAVEL + FAMILY</span></div>
+        <div class="current-support-grid" id="current-travel-summary"></div>
+        <div class="ignite-panel current-itinerary" id="current-travel-list"></div>
+      </section>
+      <footer class="ignite-footer">// WORK CLOSED. BAGS PACKED. FAMILY FIRST. <a href="#current-plan">Back to top ↑</a></footer>
+    </div>
+  </main>
 
   <main class="ignite" id="ignite-plan" aria-labelledby="ignite-title">
     <header class="ignite-header">
@@ -5998,6 +6059,7 @@
     initTasks();
     renderDayNavigation('september');
   </script>
-  <script src="ignite.js?v=compact-2"></script>
+  <script src="ignite.js?v=dhaka-1"></script>
+  <script src="current-plan.js?v=agenda-2"></script>
 </body>
 </html>
